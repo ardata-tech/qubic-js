@@ -1,0 +1,17 @@
+{
+  "name": "qubic-connect",
+  "version": "1.0.0",
+  "description": "Qubic Connect is an NPM library designed to facilitate seamless interaction with the Qubic network.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "@types/node": "^14.0.0"
+  }
+}
