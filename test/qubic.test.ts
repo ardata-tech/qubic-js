@@ -30,4 +30,14 @@ describe("Qubic SDK Structure", () => {
     const result = await contract.callMethod("getData", []);
     expect(result).toContain("mock-result-for-getData");
   });
+
+  test("should encode data using utils", () => {
+    const encodedData = qubic.utils.encodeData("some data");
+    expect(encodedData).toBe("736f6d652064617461"); // "some data" in hex
+  });
+
+  test("should hash data using utils", () => {
+    const hashedData = qubic.utils.hashData("some data");
+    expect(hashedData).toBe("mock-hash-some data");
+  });
 });

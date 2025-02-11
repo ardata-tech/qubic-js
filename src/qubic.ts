@@ -1,13 +1,13 @@
 import { QubicProvider } from "./providers/QubicProvider";
 import { Wallet } from "./wallet/Wallet";
 import { Contract } from "./contract/Contract";
-import * as utils from "./utils";
+import { Utils } from './utils/Utils';
 
 class Qubic {
   public provider: QubicProvider;
   public wallet: Wallet;
   public contract: (address: string) => Contract;
-  public utils = utils;
+  public utils = Utils;
 
   constructor(providerUrl: string) {
     this.provider = new QubicProvider(providerUrl);
