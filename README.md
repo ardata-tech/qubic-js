@@ -37,13 +37,7 @@ import QubicConnect from 'qubic-connect';
 ### Initialize the Connection
 
 ```javascript
-const qubic = new QubicConnect({
-  network: 'mainnet', // Options: 'mainnet', 'testnet'
-  snapId: 'npm:@qubic/metamask-snap', // MetaMask Snap integration
-});
-
-await qubic.connect();
-console.log('Connected:', qubic.isConnected());
+// Sample code here
 ```
 
 ---
@@ -53,14 +47,7 @@ console.log('Connected:', qubic.isConnected());
 To request connection to the Qubic network via MetaMask:
 
 ```javascript
-async function connectWallet() {
-  try {
-    const accounts = await qubic.requestAccounts();
-    console.log('Connected accounts:', accounts);
-  } catch (error) {
-    console.error('Error connecting wallet:', error);
-  }
-}
+// Sample code here
 ```
 
 ---
@@ -68,10 +55,7 @@ async function connectWallet() {
 ## 💡 Fetching Account Balance
 
 ```javascript
-async function getBalance() {
-  const balance = await qubic.getBalance();
-  console.log('Qubic Balance:', balance);
-}
+// Sample code here
 ```
 
 ---
@@ -79,14 +63,7 @@ async function getBalance() {
 ## 💰 Sending Transactions
 
 ```javascript
-async function sendTransaction() {
-  const txHash = await qubic.sendTransaction({
-    to: '0xRecipientAddress',
-    value: '1000000000000000000', // 1 Qubic in Wei
-  });
-
-  console.log('Transaction Hash:', txHash);
-}
+// Sample code here
 ```
 
 ---
@@ -96,71 +73,14 @@ async function sendTransaction() {
 ### Reading Data from a Smart Contract
 
 ```javascript
-const contract = qubic.getContract({
-  address: '0xSmartContractAddress',
-  abi: [
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getValue",
-      "outputs": [{ "name": "", "type": "uint256" }],
-      "type": "function",
-    },
-  ],
-});
-
-async function readContract() {
-  const value = await contract.methods.getValue().call();
-  console.log('Contract Value:', value);
-}
+// Sample code here
 ```
 
 ### Writing Data to a Smart Contract
 
 ```javascript
-async function writeContract() {
-  const txHash = await contract.methods.setValue(42).send();
-  console.log('Transaction Hash:', txHash);
-}
+// Sample code here
 ```
-
----
-
-## 📝 API Reference
-
-### `new QubicConnect(options)`
-Creates a new Qubic Connect instance.
-
-- `options.network` - (`'mainnet' | 'testnet'`) Network selection.
-- `options.snapId` - MetaMask Snap identifier.
-
-### `qubic.connect()`
-Connects to the Qubic network.
-
-### `qubic.requestAccounts()`
-Requests wallet connection via MetaMask Snap.
-
-### `qubic.getBalance()`
-Fetches the user's Qubic token balance.
-
-### `qubic.sendTransaction(tx)`
-Sends a Qubic transaction.
-
-- `tx.to` - Recipient address.
-- `tx.value` - Amount in Wei.
-
-### `qubic.getContract(options)`
-Returns a contract instance for interaction.
-
-- `options.address` - Smart contract address.
-- `options.abi` - Smart contract ABI.
-
----
-
-## 📌 Requirements
-
-- Node.js 14+
-- MetaMask installed with Snap support
 
 ---
 
