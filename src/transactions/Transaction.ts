@@ -1,5 +1,5 @@
-import { HttpClient } from '../lib'
-import { Endpoints } from '../constants';
+import { HttpClient } from '../rpc/lib'
+import { Endpoints } from '../config/constants';
 
 export class TransactionQubicRpc {
   private readonly httpClient: HttpClient;
@@ -23,5 +23,4 @@ export class TransactionQubicRpc {
           : Endpoints.GET_V2_TRANSACTIONS + `/${txHash}`
       );
   };
-   
 }
