@@ -1,5 +1,5 @@
 import { HttpClient } from '../rpc/lib'
-import { Endpoints } from '../config/constants';
+import { Endpoints } from '../constants';
 
 export class TransactionQubicRpc {
   private readonly httpClient: HttpClient;
