@@ -1,8 +1,8 @@
 import { QubicProvider } from "./providers/QubicProvider";
-import { Chain } from "./chain/Chain";
-import { Wallet } from "./wallet/Wallet";
-import { Contract } from "./contract/Contract";
-import { Utils } from './utils/Utils';
+import { Chain } from "./chain";
+import { Wallet } from "./wallet";
+import { Contract } from "./contract";
+import { Utils } from './utils';
 
 class Qubic {
   public provider: QubicProvider;
