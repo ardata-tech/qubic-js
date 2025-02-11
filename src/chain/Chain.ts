@@ -54,7 +54,7 @@ export class Chain {
 
   async getBlockHeight(): Promise<number> {
     console.log(`[Mock Chain] Fetching block height`);
-    return 1050000; // Mock block height
+    return 1050000;
   }
 
   async getLatestStats(): Promise<any> {

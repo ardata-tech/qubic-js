@@ -31,6 +31,4 @@ export class Wallet {
     console.log(`[Mock Wallet] Broadcasting transaction`, tx);
     return "mock-broadcast-tx-hash";
   }
-
-  // ... other methods ...
 }
