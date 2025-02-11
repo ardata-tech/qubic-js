@@ -9,8 +9,8 @@ describe("Contract Module", () => {
     contract = new Contract(provider, "mock-contract-address");
   });
 
-  test("should interact with a contract", async () => {
-    const result = await contract.callMethod("getData", []);
+  test("should query smart contract", async () => {
+    const result = await contract.querySmartContract("getData", []);
     expect(result).toContain("mock-result-for-getData");
   });
 });

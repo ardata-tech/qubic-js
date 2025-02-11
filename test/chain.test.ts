@@ -9,30 +9,58 @@ describe("Chain Module", () => {
     chain = new Chain(provider);
   });
 
+  test("should fetch latest tick", async () => {
+    const latestTick = await chain.getLatestTick();
+    expect(latestTick).toHaveProperty("tick", "latest-tick");
+  });
+
+  test("should fetch tick data", async () => {
+    const tickData = await chain.getTickData("mock-tick");
+    expect(tickData).toHaveProperty("data", "mock-tick-data");
+  });
+
+  test("should fetch RPC status", async () => {
+    const rpcStatus = await chain.getRpcStatus();
+    expect(rpcStatus).toHaveProperty("status", "mock-rpc-status");
+  });
+
+  test("should fetch chain hash", async () => {
+    const chainHash = await chain.getChainHash();
+    expect(chainHash).toBe("mock-chain-hash");
+  });
+
+  test("should fetch quorum tick data", async () => {
+    const quorumTickData = await chain.getQuorumTickData();
+    expect(quorumTickData).toHaveProperty("quorum", "mock-quorum-tick-data");
+  });
+
+  test("should fetch store hash", async () => {
+    const storeHash = await chain.getStoreHash();
+    expect(storeHash).toBe("mock-store-hash");
+  });
+
+  test("should perform health check", async () => {
+    const healthCheck = await chain.getHealthCheck();
+    expect(healthCheck).toHaveProperty("status", "healthy");
+  });
+
+  test("should fetch computors", async () => {
+    const computors = await chain.getComputors();
+    expect(computors).toHaveLength(2);
+  });
+
+  test("should fetch tick info", async () => {
+    const tickInfo = await chain.getTickInfo("mock-tick");
+    expect(tickInfo).toHaveProperty("info", "mock-tick-info");
+  });
+
   test("should fetch block height", async () => {
     const blockHeight = await chain.getBlockHeight();
     expect(blockHeight).toBe(1050000);
   });
 
-  test("should fetch block data", async () => {
-    const blockNumber = 100;
-    const block = await chain.getBlock(blockNumber);
-    expect(block).toHaveProperty("blockNumber", blockNumber);
-    expect(block).toHaveProperty("transactions");
-  });
-
-  test("should fetch network info", async () => {
-    const networkInfo = await chain.getNetworkInfo();
-    expect(networkInfo).toHaveProperty("chainId", "qubic-mainnet");
-  });
-
-  test("should fetch peer count", async () => {
-    const peerCount = await chain.getPeerCount();
-    expect(peerCount).toBe(8);
-  });
-
-  test("should fetch gas price", async () => {
-    const gasPrice = await chain.getGasPrice();
-    expect(gasPrice).toBe(20);
+  test("should fetch latest stats", async () => {
+    const latestStats = await chain.getLatestStats();
+    expect(latestStats).toHaveProperty("stats", "mock-latest-stats");
   });
 });
