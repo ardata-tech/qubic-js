@@ -3,6 +3,7 @@ import { Chain } from "./chain";
 import { Wallet } from "./wallet";
 import { Contract } from "./contract";
 import { Utils } from './utils';
+import { IQubicProviderOptions } from "./types";
 
 class Qubic {
   public provider: QubicProvider;
@@ -11,15 +12,15 @@ class Qubic {
   public contract: (address: string) => Contract;
   public utils = Utils;
 
-  constructor(providerUrl: string) {
-    this.provider = new QubicProvider(providerUrl);
+  constructor(options: IQubicProviderOptions) {
+    this.provider = new QubicProvider(options);
     this.chain = new Chain(this.provider);
     this.wallet = new Wallet(this.provider);
     this.contract = (address: string) => new Contract(this.provider, address);
   }
 
-  setProvider(providerUrl: string) {
-    this.provider = new QubicProvider(providerUrl);
+  setProvider(options: IQubicProviderOptions) {
+    this.provider = new QubicProvider(options);
     this.chain = new Chain(this.provider);
     this.wallet = new Wallet(this.provider);
   }
