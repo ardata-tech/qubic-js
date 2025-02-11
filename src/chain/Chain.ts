@@ -1,8 +1,10 @@
-export class Chain {
-  private providerUrl: string;
+import { QubicProvider } from "../providers/QubicProvider";
 
-  constructor(providerUrl: string) {
-    this.providerUrl = providerUrl;
+export class Chain {
+  private provider: QubicProvider;
+
+  constructor(provider: QubicProvider) {
+    this.provider = provider;
   }
 
   async getBlockHeight(): Promise<number> {
