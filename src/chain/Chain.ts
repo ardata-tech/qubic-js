@@ -33,7 +33,7 @@ export class Chain {
   async getLatestTick(): Promise<number | null> {
     try {
       const response: IGetLatestTick = await this.httpClient.call(
-        `/v${this.providerOptions.version}/latestTick`,
+        `/${this.apiVersion}/latestTick`,
         "GET"
       );
       return response?.latestTick;
@@ -128,6 +128,15 @@ export class Chain {
     }
   }
 
+  /**
+   * Retrieves the store hash for the specified tick number.
+   *
+   * This method sends a GET request to the `/ticks/{tickNumber}/store-hash` endpoint
+   * to retrieve the store hash for the given tick number.
+   *
+   * @param {number} tickNumber - The tick number for which to fetch the store hash.
+   * @returns {Promise<IGetChainHash | null>} A promise that resolves to the store hash, or null if an error occurred.
+   */
   async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
     try {
       return await this.httpClient.call(

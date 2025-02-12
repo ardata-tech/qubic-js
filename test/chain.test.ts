@@ -5,63 +5,115 @@ describe("Chain Module", () => {
   let chain: Chain;
 
   beforeAll(() => {
-    const provider = new QubicProvider({ providerUrl: 'https://rpc.qubic.org', version: 1});
+    const provider = new QubicProvider({
+      providerUrl: "https://rpc.qubic.org",
+      version: 1,
+    });
     chain = new Chain(provider);
   });
 
   test("should fetch latest tick", async () => {
-    const latestTick = await chain.getLatestTick();
-      expect(typeof latestTick)
-      .toBe("number");
+    const result = await chain.getLatestTick();
+    expect(result).not.toBeNull();
+    expect(typeof result).toBe("number");
   });
 
-  // test("should fetch tick data", async () => {
-  //   const tickData = await chain.getTickData("mock-tick");
-  //   expect(tickData).toHaveProperty("data", "mock-tick-data");
-  // });
+  test("should fetch tick data", async () => {
+    const result = await chain.getTickData(19231746);
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("tickData");
+    expect(result?.tickData).toHaveProperty("computorIndex");
+    expect(result?.tickData).toHaveProperty("epoch");
+    expect(result?.tickData).toHaveProperty("tickNumber");
+    expect(result?.tickData).toHaveProperty("timestamp");
+    expect(result?.tickData).toHaveProperty("varStruct");
+    expect(result?.tickData).toHaveProperty("timeLock");
+    expect(result?.tickData).toHaveProperty("transactionIds");
+    expect(result?.tickData).toHaveProperty("contractFees");
+    expect(result?.tickData).toHaveProperty("signatureHex");
+  });
 
-  // test("should fetch RPC status", async () => {
-  //   const rpcStatus = await chain.getRpcStatus();
-  //   expect(rpcStatus).toHaveProperty("status", "mock-rpc-status");
-  // });
+  test("should fetch RPC status", async () => {
+    const result = await chain.getRpcStatus();
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("lastProcessedTick");
+    expect(result).toHaveProperty("lastProcessedTicksPerEpoch");
+    expect(result).toHaveProperty("skippedTicks");
+    expect(result).toHaveProperty("processedTickIntervalsPerEpoch");
+    expect(result).toHaveProperty("emptyTicksPerEpoch");
+  });
 
-  // test("should fetch chain hash", async () => {
-  //   const chainHash = await chain.getChainHash();
-  //   expect(chainHash).toBe("mock-chain-hash");
-  // });
+  test("should fetch chain hash", async () => {
+    const result = await chain.getChainHash(19231746);
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("hexDigest");
+  });
 
-  // test("should fetch quorum tick data", async () => {
-  //   const quorumTickData = await chain.getQuorumTickData();
-  //   expect(quorumTickData).toHaveProperty("quorum", "mock-quorum-tick-data");
-  // });
+  test("should fetch quorum tick data", async () => {
+    const result = await chain.getQuorumTickData(19231746);
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("quorumTickData");
+    expect(result?.quorumTickData).toHaveProperty("quorumTickStructure");
+    expect(result?.quorumTickData).toHaveProperty("quorumDiffPerComputor");
+  });
 
-  // test("should fetch store hash", async () => {
-  //   const storeHash = await chain.getStoreHash();
-  //   expect(storeHash).toBe("mock-store-hash");
-  // });
+  test("should fetch store hash", async () => {
+    const result = await chain.getStoreHash(19231746);
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("hexDigest");
+  });
 
-  // test("should perform health check", async () => {
-  //   const healthCheck = await chain.getHealthCheck();
-  //   expect(healthCheck).toHaveProperty("status", "healthy");
-  // });
+  test("should perform health check", async () => {
+    const result = await chain.getHealthCheck();
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("status", true);
+  });
 
-  // test("should fetch computors", async () => {
-  //   const computors = await chain.getComputors();
-  //   expect(computors).toHaveLength(2);
-  // });
+  test("should fetch computors", async () => {
+    const result = await chain.getComputors(147);
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("computors");
+    expect(result?.computors).toHaveProperty("epoch");
+    expect(result?.computors).toHaveProperty("identities");
+    expect(result?.computors).toHaveProperty("signatureHex");
+  });
 
-  // test("should fetch tick info", async () => {
-  //   const tickInfo = await chain.getTickInfo("mock-tick");
-  //   expect(tickInfo).toHaveProperty("info", "mock-tick-info");
-  // });
+  test("should fetch tick info", async () => {
+    const result = await chain.getTickInfo();
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("tickInfo");
+    expect(result?.tickInfo).toHaveProperty("tick");
+    expect(result?.tickInfo).toHaveProperty("duration");
+    expect(result?.tickInfo).toHaveProperty("epoch");
+    expect(result?.tickInfo).toHaveProperty("initialTick");
+  });
 
-  // test("should fetch block height", async () => {
-  //   const blockHeight = await chain.getBlockHeight();
-  //   expect(blockHeight).toBe(1050000);
-  // });
+  test("should fetch block height", async () => {
+    const result = await chain.getBlockHeight();
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("blockHeight");
+    expect(result?.blockHeight).toHaveProperty("tick");
+    expect(result?.blockHeight).toHaveProperty("duration");
+    expect(result?.blockHeight).toHaveProperty("epoch");
+    expect(result?.blockHeight).toHaveProperty("initialTick");
+  });
 
-  // test("should fetch latest stats", async () => {
-  //   const latestStats = await chain.getLatestStats();
-  //   expect(latestStats).toHaveProperty("stats", "mock-latest-stats");
-  // });
+  test("should fetch latest stats", async () => {
+    const result = await chain.getLatestStats();
+    expect(result).not.toBeNull();
+    expect(result).toHaveProperty("data");
+    expect(result?.data).toHaveProperty("timestamp");
+    expect(result?.data).toHaveProperty("circulatingSupply");
+    expect(result?.data).toHaveProperty("activeAddresses");
+    expect(result?.data).toHaveProperty("price");
+    expect(result?.data).toHaveProperty("marketCap");
+    expect(result?.data).toHaveProperty("epoch");
+    expect(result?.data).toHaveProperty("currentTick");
+    expect(result?.data).toHaveProperty("ticksInCurrentEpoch");
+    expect(result?.data).toHaveProperty("emptyTicksInCurrentEpoch");
+    expect(result?.data).toHaveProperty("epochTickQuality");
+    expect(result?.data).toHaveProperty("burnedQus");
+  });
+  
+
 });

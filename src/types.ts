@@ -7,7 +7,7 @@ type IGetLatestTick = {
   latestTick: number | null;
 };
 
-type IGetTickData = {
+type TickData = {
   computorIndex: number;
   epoch: number;
   tickNumber: number;
@@ -17,6 +17,10 @@ type IGetTickData = {
   transactionIds: string[];
   contractFees: string[];
   signatureHex: string;
+};
+
+type IGetTickData = {
+  tickData: TickData;
 };
 
 type LastProcessedTick = {
@@ -82,7 +86,6 @@ type QuorumDiffPerComputor = {
 };
 
 type QuorumTickData = {
-  quorumTickData: number;
   quorumTickStructure: QuorumTickStructure;
   quorumDiffPerComputor: QuorumDiffPerComputor;
 };
