@@ -1,22 +1,24 @@
 export class HttpClient {
-  private baseUrl: string;
+  private readonly baseUrl: string;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  async post<T>(endpoint: string, body: object): Promise<T> {
+  async call<T>(endpoint: string, method: string, body?: object): Promise<T> {
     try {
       const response = await fetch(this.baseUrl + endpoint, {
-        method: "POST",
+        method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        ...(body && { body: JSON.stringify(body) }),
       });
 
       if (!response.ok) {
-        throw new Error(`[HttpClient] HTTP Error: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `[HttpClient] HTTP Error: ${response.status} ${response.statusText}`
+        );
       }
 
       const data = await response.json();

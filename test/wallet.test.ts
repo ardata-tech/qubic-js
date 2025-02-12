@@ -5,7 +5,10 @@ describe("Wallet Module", () => {
   let wallet: Wallet;
 
   beforeAll(() => {
-    const provider = new QubicProvider("https://mock.qubic.org");
+    const provider = new QubicProvider({
+      providerUrl: "https://rpc.qubic.org",
+      version: 1,
+    });
     wallet = new Wallet(provider);
   });
 
