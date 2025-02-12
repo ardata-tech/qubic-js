@@ -1,30 +1,32 @@
-export type IQubicProviderOptions =  {
-    providerUrl: string;
-    version: number;
-}
+type IQubicProviderOptions = {
+  providerUrl: string;
+  version: number;
+};
 
-export type IChainGetLatestTick = {
-    latestTick: number | null;
-} 
+type IGetLatestTick = {
+  latestTick: number | null;
+};
 
-export type IChainGetTickData = {
+type IGetTickData = {
   computorIndex: number;
   epoch: number;
   tickNumber: number;
   timestamp: string;
   varStruct: string;
   timeLock: string;
-  transactionIds: [string];
-  contractFees: [];
+  transactionIds: string[];
+  contractFees: string[];
   signatureHex: string;
 };
 
-type LastProcessedTick= {
+type LastProcessedTick = {
   tickNumber: number;
   epoch: number;
-}
+};
 
-type LastProcessedTicksPerEpoch = Record<string, number>
+type LastProcessedTicksPerEpoch = {
+  [key: string]: number;
+};
 
 type SkippedTick = {
   startTick: number;
@@ -38,23 +40,22 @@ type Interval = {
 
 type ProcessedTickIntervalsPerEpochItem = {
   epoch: number;
-  intervals: [Interval];
+  intervals: Interval[];
 };
 
-type EmptyTicksPerEpoch = Record<string, number>
+type EmptyTicksPerEpoch = Record<string, number>;
 
-export interface IChainGetRpcStatus {
+interface IGetRpcStatus {
   lastProcessedTick: LastProcessedTick;
   lastProcessedTicksPerEpoch: LastProcessedTicksPerEpoch;
-  skippedTicks: [SkippedTick];
+  skippedTicks: SkippedTick[];
   processedTickIntervalsPerEpoch: [ProcessedTickIntervalsPerEpochItem];
   emptyTicksPerEpoch: EmptyTicksPerEpoch;
-};
-
-export interface IChainHash {
-  hexDigest: string;
 }
 
+interface IChainHash {
+  hexDigest: string;
+}
 
 type QuorumTickStructure = {
   epoch: number;
@@ -76,7 +77,9 @@ type AdditionalProp = {
   signatureHex: string;
 };
 
-type QuorumDiffPerComputor = Record<string, AdditionalProp>
+type QuorumDiffPerComputor = {
+  [key: string]: AdditionalProp;
+};
 
 type QuorumTickData = {
   quorumTickData: number;
@@ -84,20 +87,55 @@ type QuorumTickData = {
   quorumDiffPerComputor: QuorumDiffPerComputor;
 };
 
-export interface IGetQuorumTickData {
+interface IGetQuorumTickData {
   quorumTickData: QuorumTickData;
 }
 
-export interface IGetHealthCheck{
-  status: boolean
+interface IGetHealthCheck {
+  status: boolean;
 }
 
 type Computors = {
   epoch: number;
-  identities: [string];
-  signatureHex:string
+  identities: string[];
+  signatureHex: string;
 };
 
-export interface IGetComputors {
+interface IGetComputors {
   computors: Computors;
 }
+
+type TickInfo = {
+  tick: number;
+  duration: number;
+  epoch: number;
+  initialTick: number;
+};
+
+interface IGetTickInfo {
+  tickInfo: TickInfo;
+}
+
+type BlockHeight = {
+  tick: number;
+  duration: number;
+  epoch: number;
+  initialTick: number;
+};
+
+interface IGetBlockHeight {
+  blockHeight: BlockHeight;
+}
+
+export {
+  IQubicProviderOptions,
+  IGetTickInfo,
+  IGetComputors,
+  IGetHealthCheck,
+  IGetQuorumTickData,
+  IChainHash,
+  IGetRpcStatus,
+  IGetTickData,
+  IGetLatestTick,
+  IGetBlockHeight,
+};

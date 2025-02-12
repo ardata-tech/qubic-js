@@ -1,14 +1,16 @@
 import { HttpClient } from "../providers/HttpClient";
 import { QubicProvider } from "../providers/QubicProvider";
 import {
-  IChainGetLatestTick,
+  IGetLatestTick,
   IQubicProviderOptions,
-  IChainGetTickData,
-  IChainGetRpcStatus,
+  IGetTickData,
+  IGetRpcStatus,
   IChainHash,
   IGetQuorumTickData,
   IGetHealthCheck,
   IGetComputors,
+  IGetTickInfo,
+  IGetBlockHeight,
 } from "../types";
 
 export class Chain {
@@ -29,7 +31,7 @@ export class Chain {
    */
   async getLatestTick(): Promise<number | null> {
     try {
-      const response: IChainGetLatestTick = await this.httpClient.call(
+      const response: IGetLatestTick = await this.httpClient.call(
         `/v${this.providerOptions.version}/latestTick`,
         "GET"
       );
@@ -47,11 +49,11 @@ export class Chain {
    * to retrieve the tick data for the given tick number.
    *
    * @param {number} tickNumber The tick number for which to fetch the tick data.
-   * @returns {Promise<IChainGetTickData | null>} A promise that resolves to the tick data, or null if an error occurred.
+   * @returns {Promise<IGetTickData | null>} A promise that resolves to the tick data, or null if an error occurred.
    */
-  async getTickData(tickNumber: number): Promise<IChainGetTickData | null> {
+  async getTickData(tickNumber: number): Promise<IGetTickData | null> {
     try {
-      const response: IChainGetTickData = await this.httpClient.call(
+      const response: IGetTickData = await this.httpClient.call(
         `/${this.apiVersion}/ticks/${tickNumber}/tick-data`,
         "GET"
       );
@@ -69,9 +71,9 @@ export class Chain {
    *
    * @returns {Promise<any>} A promise that resolves to the RPC status.
    */
-  async getRpcStatus(): Promise<IChainGetRpcStatus | null> {
+  async getRpcStatus(): Promise<IGetRpcStatus | null> {
     try {
-      const response: IChainGetRpcStatus = await this.httpClient.call(
+      const response: IGetRpcStatus = await this.httpClient.call(
         `/${this.apiVersion}/status`,
         "GET"
       );
@@ -168,7 +170,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      return null
+      return null;
     }
   }
 
@@ -178,15 +180,14 @@ export class Chain {
    * This method sends a GET request to the `/tick-info` endpoint
    * to retrieve the current tick information.
    *
-   * @returns {Promise<any>} A promise that resolves to the tick info.
+   * @returns {Promise<IGetTickInfo | null>} A promise that resolves to the tick info.
    */
-  async getTickInfo(): Promise<any> {
+  async getTickInfo(): Promise<IGetTickInfo | null> {
     try {
-      return await this.httpClient.call(
-        `/${this.apiVersion}/tick-info`,
-        "GET"
-      );
-    } catch (error) {}
+      return await this.httpClient.call(`/${this.apiVersion}/tick-info`, "GET");
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
@@ -195,12 +196,14 @@ export class Chain {
    * This method sends a GET request to the `/block-height` endpoint
    * to retrieve the current block height.
    *
-   * @returns {Promise<any>} A promise that resolves to the block height.
+   * @returns {Promise<IGetBlockHeight | null>} A promise that resolves to the block height.
    */
-  async getBlockHeight(): Promise<any> {
+  async getBlockHeight(): Promise<IGetBlockHeight | null> {
     try {
-      return await this.httpClient.call(`/block-height`, "GET");
-    } catch (error) {}
+      return await this.httpClient.call(`/${this.apiVersion}/block-height`, "GET");
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
@@ -213,7 +216,7 @@ export class Chain {
    */
   async getLatestStats(): Promise<any> {
     try {
-      return await this.httpClient.call(`/latest-stats`, "GET");
+      return await this.httpClient.call(`/${this.apiVersion}/latest-stats`, "GET");
     } catch (error) {}
   }
 }
