@@ -13,6 +13,7 @@ import {
   IGetBlockHeight,
   IGetLatestStats,
 } from "../types";
+import QubicLogger from "../utils/QubicLogger";
 
 export class Chain {
   private readonly httpClient: HttpClient;
@@ -33,12 +34,12 @@ export class Chain {
   async getLatestTick(): Promise<number | null> {
     try {
       const response: IGetLatestTick = await this.httpClient.call(
-        `/v${this.providerOptions.version}/latestTick`,
+        `/${this.apiVersion}/latestTick`,
         "GET"
       );
       return response?.latestTick;
     } catch (error) {
-      console.error("Error fetching latest tick:", error);
+      QubicLogger.error("Error fetching latest tick:", error);
       return null;
     }
   }
@@ -60,6 +61,7 @@ export class Chain {
       );
       return response;
     } catch (error) {
+      QubicLogger.error("Error fetching tick data:", error);
       return null;
     }
   }
@@ -80,7 +82,7 @@ export class Chain {
       );
       return response;
     } catch (error) {
-      console.error("Error fetching latest tick:", error);
+      QubicLogger.error("Error fetching RPC status:", error);
       return null;
     }
   }
@@ -101,6 +103,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
+      QubicLogger.error("Error fetching chain hash:", error);
       return null;
     }
   }
@@ -124,17 +127,25 @@ export class Chain {
         "GET"
       );
     } catch (error) {
+      QubicLogger.error("Error fetching quorum tick data:", error);
       return null;
     }
   }
 
+  /**
+   * Retrieves the store hash for the specified tick number.
+   *
+   * This method sends a GET request to the `/ticks/{tickNumber}/store-hash` endpoint
+   * to retrieve the store hash for the given tick number.
+   *
+   * @param {number} tickNumber - The tick number for which to fetch the store hash.
+   * @returns {Promise<IGetChainHash | null>} A promise that resolves to the store hash, or null if an error occurred.
+   */
   async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
     try {
-      return await this.httpClient.call(
-        `/${this.apiVersion}/ticks/${tickNumber}/store-hash`,
-        "GET"
-      );
-    } catch (error) {
+      return await this.httpClient.call(`/${this.apiVersion}/ticks/${tickNumber}/store-hash`, "GET");
+    } catch (error: any) {
+      QubicLogger.error(error);
       return null;
     }
   }
@@ -154,6 +165,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
+      QubicLogger.error("Error fetching health check:", error);
       return null;
     }
   }
@@ -171,6 +183,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
+      QubicLogger.error("Error fetching computors:", error);
       return null;
     }
   }
@@ -187,6 +200,7 @@ export class Chain {
     try {
       return await this.httpClient.call(`/${this.apiVersion}/tick-info`, "GET");
     } catch (error) {
+      QubicLogger.error("Error fetching tick info:", error);
       return null;
     }
   }
@@ -206,6 +220,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
+      QubicLogger.error("Error fetching block height:", error);
       return null;
     }
   }
@@ -225,7 +240,8 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      return null
+      QubicLogger.error("Error fetching latest stats:", error);
+      return null;
     }
   }
 }

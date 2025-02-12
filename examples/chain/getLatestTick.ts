@@ -3,6 +3,7 @@ import Qubic from "../../src/qubic";
 async function getLatestTick() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
+    // Initialize the Qubic instance with the provider URL
     providerUrl: "https://rpc.qubic.org",
     version: 1,
   });

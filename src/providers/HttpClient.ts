@@ -6,7 +6,7 @@ export class HttpClient {
   }
 
   async call<T>(endpoint: string, method: string, body?: object): Promise<T> {
-    try {
+
       const response = await fetch(this.baseUrl + endpoint, {
         method,
         headers: {
@@ -23,9 +23,5 @@ export class HttpClient {
 
       const data = await response.json();
       return data as T;
-    } catch (error) {
-      console.error("[HttpClient] Request failed:", error);
-      throw error;
-    }
   }
 }

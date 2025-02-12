@@ -1,6 +1,7 @@
 import Qubic from "../../src/qubic";
 
 async function getChainHash() {
+  // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
     version: 1,
