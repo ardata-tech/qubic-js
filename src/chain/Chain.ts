@@ -1,13 +1,24 @@
 import { HttpClient } from "../providers/HttpClient";
 import { QubicProvider } from "../providers/QubicProvider";
-import { IChainGetLatestTick, IQubicProviderOptions } from "../types";
+import {
+  IChainGetLatestTick,
+  IQubicProviderOptions,
+  IChainGetTickData,
+  IChainGetRpcStatus,
+  IChainHash,
+  IGetQuorumTickData,
+  IGetHealthCheck,
+  IGetComputors,
+} from "../types";
 
 export class Chain {
   private readonly httpClient: HttpClient;
-  private readonly providerOptions: IQubicProviderOptions
+  private readonly providerOptions: IQubicProviderOptions;
+  private readonly apiVersion: string = "v1";
 
   constructor(provider: QubicProvider) {
     this.providerOptions = provider.getProvider();
+    this.apiVersion = `v${this.providerOptions.version}`;
     this.httpClient = new HttpClient(this.providerOptions.providerUrl);
   }
 
@@ -30,21 +41,24 @@ export class Chain {
   }
 
   /**
-   * Fetches the tick data for the specified tick.
+   * Retrieves the tick data for the specified tick.
    *
    * This method sends a GET request to the `/ticks/{tickNumber}/tick-data` endpoint
    * to retrieve the tick data for the given tick number.
    *
-   * @param {string} tickNumber - The tick number for which to fetch the tick data.
-   * @returns {Promise<any>} A promise that resolves to the tick data.
+   * @param {number} tickNumber The tick number for which to fetch the tick data.
+   * @returns {Promise<IChainGetTickData | null>} A promise that resolves to the tick data, or null if an error occurred.
    */
-  async getTickData(tickNumber: string): Promise<any> {
+  async getTickData(tickNumber: number): Promise<IChainGetTickData | null> {
     try {
-      return await this.httpClient.call(
-        `/v${this.providerOptions.version}/ticks/${tickNumber}/tick-data`,
+      const response: IChainGetTickData = await this.httpClient.call(
+        `/${this.apiVersion}/ticks/${tickNumber}/tick-data`,
         "GET"
       );
-    } catch (error) {}
+      return response;
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
@@ -55,100 +69,107 @@ export class Chain {
    *
    * @returns {Promise<any>} A promise that resolves to the RPC status.
    */
-  async getRpcStatus(): Promise<any> {
+  async getRpcStatus(): Promise<IChainGetRpcStatus | null> {
     try {
-      return await this.httpClient.call(`/status`, "GET");
+      const response: IChainGetRpcStatus = await this.httpClient.call(
+        `/${this.apiVersion}/status`,
+        "GET"
+      );
+      return response;
     } catch (error) {
       console.error("Error fetching latest tick:", error);
+      return null;
     }
   }
 
   /**
-   * Fetches the chain hash for a given tick number.
+   * Fetches the chain hash for the given tick number.
    *
    * This method sends a GET request to the `/ticks/{tickNumber}/chain-hash` endpoint
-   * to retrieve the chain hash associated with the given tick number.
+   * to retrieve the chain hash for the given tick number.
    *
-   * @param tickNumber The tick number for which to retrieve the chain hash.
-   * @returns A promise that resolves to an object containing the chain hash.
+   * @param {number} tickNumber The tick number for which to fetch the chain hash.
+   * @returns {Promise<IGetChainHash | null>} A promise that resolves to the chain hash, or null if an error occurred.
    */
-  async getChainHash(tickNumber: number): Promise<any> {
-    console.log(`[Mock Chain] Fetching chain hash`);
+  async getChainHash(tickNumber: number): Promise<IChainHash | null> {
     try {
       return await this.httpClient.call(
-        `/v${this.providerOptions.version}/ticks/${tickNumber}/chain-hash`,
+        `/${this.apiVersion}/ticks/${tickNumber}/chain-hash`,
         "GET"
       );
-    } catch (error) {}
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
-   * Fetches the quorum tick data for the specified tick.
+   * Retrieves the quorum tick data for the specified tick number.
    *
    * This method sends a GET request to the `/ticks/{tickNumber}/quorum-tick-data` endpoint
-   * to retrieve the quorum tick data for the given tick number.
+   * to fetch the quorum tick data associated with the given tick number.
    *
    * @param {number} tickNumber - The tick number for which to fetch the quorum tick data.
-   * @returns {Promise<any>} A promise that resolves to the quorum tick data.
+   * @returns {Promise<IGetQuorumTickData | null>} A promise that resolves to the quorum tick data, or null if an error occurred.
    */
-  async getQuorumTickData(tickNumber: number): Promise<any> {
-    console.log(`[Mock Chain] Fetching quorum tick data`);
+
+  async getQuorumTickData(
+    tickNumber: number
+  ): Promise<IGetQuorumTickData | null> {
     try {
       return await this.httpClient.call(
-        `/v${this.providerOptions.version}/ticks/${tickNumber}/quorum-tick-data`,
+        `/${this.apiVersion}/ticks/${tickNumber}/quorum-tick-data`,
         "GET"
       );
-    } catch (error) {}
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
+    try {
+      return await this.httpClient.call(
+        `/${this.apiVersion}/ticks/${tickNumber}/store-hash`,
+        "GET"
+      );
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
-   * Fetches the store hash for the specified tick.
+   * Performs a health check for the Qubic network.
    *
-   * This method sends a GET request to the `/ticks/{tickNumber}/store-hash` endpoint
-   * to retrieve the store hash for the given tick.
+   * This method sends a GET request to the `/healthcheck` endpoint to check the
+   * health of the Qubic network.
    *
-   * @param {number} tickNumber - The tick number for which to fetch the store hash.
-   * @returns {Promise<any>} A promise that resolves to the store hash.
+   * @returns {Promise<IGetHealthCheck | null>} A promise that resolves to the health check result, or null if an error occurred.
    */
-  async getStoreHash(tickNumber: number): Promise<any> {
+  async getHealthCheck(): Promise<IGetHealthCheck | null> {
     try {
       return await this.httpClient.call(
-        `/v${this.providerOptions.version}/ticks/${tickNumber}/store-hash`,
+        `/${this.apiVersion}/healthcheck`,
         "GET"
       );
-    } catch (error) {}
-  }
-
-  /**
-   * Performs a health check of the Qubic network.
-   *
-   * @returns An object with a single property, `status`, which is either `"healthy"` or `"unhealthy"`.
-   */
-  async getHealthCheck(): Promise<any> {
-    try {
-      return await this.httpClient.call(
-        `/v${this.providerOptions.version}/healthcheck`,
-        "GET"
-      );
-    } catch (error) {}
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
    * Fetches the list of computors for the specified epoch.
    *
-   * This method sends a GET request to the `/epochs/{epoch}/computors` endpoint
-   * to retrieve the computors associated with the given epoch.
-   *
-   * @param {number} epoch - The epoch number for which to fetch the computors.
-   * @returns {Promise<any>} A promise that resolves to the computors data.
+   * @param {number} epoch The epoch for which to fetch the computors.
+   * @returns {Promise<IGetComputors | null>} A promise that resolves to the list of computors, or null if an error occurred.
    */
-  async getComputors(epoch: number): Promise<any> {
+  async getComputors(epoch: number): Promise<IGetComputors | null> {
     try {
       return await this.httpClient.call(
-        `/v${this.providerOptions.version}/epochs/${epoch}/computors`,
+        `/${this.apiVersion}/epochs/${epoch}/computors`,
         "GET"
       );
-    } catch (error) {}
+    } catch (error) {
+      return null
+    }
   }
 
   /**
@@ -162,7 +183,7 @@ export class Chain {
   async getTickInfo(): Promise<any> {
     try {
       return await this.httpClient.call(
-        `/v${this.providerOptions.version}/tick-info`,
+        `/${this.apiVersion}/tick-info`,
         "GET"
       );
     } catch (error) {}
