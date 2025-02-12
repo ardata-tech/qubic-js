@@ -11,6 +11,7 @@ import {
   IGetComputors,
   IGetTickInfo,
   IGetBlockHeight,
+  IGetLatestStats,
 } from "../types";
 
 export class Chain {
@@ -200,7 +201,10 @@ export class Chain {
    */
   async getBlockHeight(): Promise<IGetBlockHeight | null> {
     try {
-      return await this.httpClient.call(`/${this.apiVersion}/block-height`, "GET");
+      return await this.httpClient.call(
+        `/${this.apiVersion}/block-height`,
+        "GET"
+      );
     } catch (error) {
       return null;
     }
@@ -214,9 +218,14 @@ export class Chain {
    *
    * @returns {Promise<any>} A promise that resolves to the latest statistics.
    */
-  async getLatestStats(): Promise<any> {
+  async getLatestStats(): Promise<IGetLatestStats | null> {
     try {
-      return await this.httpClient.call(`/${this.apiVersion}/latest-stats`, "GET");
-    } catch (error) {}
+      return await this.httpClient.call(
+        `/${this.apiVersion}/latest-stats`,
+        "GET"
+      );
+    } catch (error) {
+      return null
+    }
   }
 }

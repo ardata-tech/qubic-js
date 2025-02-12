@@ -127,6 +127,25 @@ interface IGetBlockHeight {
   blockHeight: BlockHeight;
 }
 
+
+type LatestStatsData = {
+  timestamp: string;
+  circulatingSupply: string;
+  activeAddresses: number;
+  price: number;
+  marketCap: string;
+  epoch: number;
+  currentTick: number;
+  ticksInCurrentEpoch: number;
+  emptyTicksInCurrentEpoch: number;
+  epochTickQuality: number;
+  burnedQus: string;
+};
+
+interface IGetLatestStats {
+  data: LatestStatsData
+}
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -138,4 +157,5 @@ export {
   IGetTickData,
   IGetLatestTick,
   IGetBlockHeight,
+  IGetLatestStats,
 };
