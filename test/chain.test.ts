@@ -11,7 +11,8 @@ describe("Chain Module", () => {
 
   test("should fetch latest tick", async () => {
     const latestTick = await chain.getLatestTick();
-    expect(latestTick).toHaveProperty("tick", "latest-tick");
+      expect(typeof latestTick)
+      .toBe("number");
   });
 
   // test("should fetch tick data", async () => {

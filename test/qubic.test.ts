@@ -4,7 +4,7 @@ describe("Qubic SDK Structure", () => {
   let qubic: Qubic;
 
   beforeAll(() => {
-    qubic = new Qubic("https://mock.qubic.org");
+    qubic = new Qubic({ providerUrl: "https://rpc.qubic.org", version: 1 });
   });
 
   test("should initialize with a provider", () => {
@@ -12,7 +12,7 @@ describe("Qubic SDK Structure", () => {
   });
 
   test("should set a new provider", () => {
-    qubic.setProvider("https://new.mock.qubic.org");
+    qubic.setProvider({ providerUrl: "https://rpc.qubic.org", version: 1 });
     expect(qubic.provider).toBeDefined();
   });
 });

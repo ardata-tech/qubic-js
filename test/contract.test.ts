@@ -5,7 +5,7 @@ describe("Contract Module", () => {
   let contract: Contract;
 
   beforeAll(() => {
-    const provider = new QubicProvider("https://mock.qubic.org");
+    const provider = new QubicProvider({providerUrl:"https://rpc.qubic.org",version:1});
     contract = new Contract(provider, "mock-contract-address");
   });
 
