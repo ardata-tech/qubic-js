@@ -7,7 +7,7 @@ export class QubicProvider {
     this.options = providerOptions;
   }
 
-  getProvider(): IQubicProviderOptions {
+  getProviderOptions(): IQubicProviderOptions {
     return this.options
   }
 }
