@@ -114,6 +114,4 @@ describe("Chain Module", () => {
     expect(result?.data).toHaveProperty("epochTickQuality");
     expect(result?.data).toHaveProperty("burnedQus");
   });
-  
-
 });
