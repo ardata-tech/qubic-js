@@ -21,7 +21,7 @@ export class Chain {
   private readonly apiVersion: string;
 
   constructor(provider: QubicProvider) {
-    this.providerOptions = provider.getProvider();
+    this.providerOptions = provider.getProviderOptions();
     this.apiVersion = `v${this.providerOptions.version}`;
     this.httpClient = new HttpClient(this.providerOptions.providerUrl);
   }
