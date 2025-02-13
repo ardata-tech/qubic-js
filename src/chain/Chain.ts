@@ -47,9 +47,6 @@ export class Chain {
   /**
    * Retrieves the tick data for the specified tick.
    *
-   * This method sends a GET request to the `/ticks/{tickNumber}/tick-data` endpoint
-   * to retrieve the tick data for the given tick number.
-   *
    * @param {number} tickNumber The tick number for which to fetch the tick data.
    * @returns {Promise<IGetTickData | null>} A promise that resolves to the tick data, or null if an error occurred.
    */
@@ -69,9 +66,6 @@ export class Chain {
   /**
    * Fetches the RPC status.
    *
-   * This method sends a GET request to the `/status` endpoint
-   * to retrieve the RPC status.
-   *
    * @returns {Promise<any>} A promise that resolves to the RPC status.
    */
   async getRpcStatus(): Promise<IGetRpcStatus | null> {
@@ -90,9 +84,6 @@ export class Chain {
   /**
    * Fetches the chain hash for the given tick number.
    *
-   * This method sends a GET request to the `/ticks/{tickNumber}/chain-hash` endpoint
-   * to retrieve the chain hash for the given tick number.
-   *
    * @param {number} tickNumber The tick number for which to fetch the chain hash.
    * @returns {Promise<IGetChainHash | null>} A promise that resolves to the chain hash, or null if an error occurred.
    */
@@ -110,9 +101,6 @@ export class Chain {
 
   /**
    * Retrieves the quorum tick data for the specified tick number.
-   *
-   * This method sends a GET request to the `/ticks/{tickNumber}/quorum-tick-data` endpoint
-   * to fetch the quorum tick data associated with the given tick number.
    *
    * @param {number} tickNumber - The tick number for which to fetch the quorum tick data.
    * @returns {Promise<IGetQuorumTickData | null>} A promise that resolves to the quorum tick data, or null if an error occurred.
@@ -135,9 +123,6 @@ export class Chain {
   /**
    * Retrieves the store hash for the specified tick number.
    *
-   * This method sends a GET request to the `/ticks/{tickNumber}/store-hash` endpoint
-   * to retrieve the store hash for the given tick number.
-   *
    * @param {number} tickNumber - The tick number for which to fetch the store hash.
    * @returns {Promise<IGetChainHash | null>} A promise that resolves to the store hash, or null if an error occurred.
    */
@@ -152,9 +137,6 @@ export class Chain {
 
   /**
    * Performs a health check for the Qubic network.
-   *
-   * This method sends a GET request to the `/healthcheck` endpoint to check the
-   * health of the Qubic network.
    *
    * @returns {Promise<IGetHealthCheck | null>} A promise that resolves to the health check result, or null if an error occurred.
    */
@@ -191,9 +173,6 @@ export class Chain {
   /**
    * Fetches the current tick information from the chain.
    *
-   * This method sends a GET request to the `/tick-info` endpoint
-   * to retrieve the current tick information.
-   *
    * @returns {Promise<IGetTickInfo | null>} A promise that resolves to the tick info.
    */
   async getTickInfo(): Promise<IGetTickInfo | null> {
@@ -207,9 +186,6 @@ export class Chain {
 
   /**
    * Fetches the current block height from the chain.
-   *
-   * This method sends a GET request to the `/block-height` endpoint
-   * to retrieve the current block height.
    *
    * @returns {Promise<IGetBlockHeight | null>} A promise that resolves to the block height.
    */
@@ -227,9 +203,6 @@ export class Chain {
 
   /**
    * Fetches the latest statistics from the chain.
-   *
-   * This method sends a GET request to the `/block-height` endpoint
-   * to retrieve the most recent statistics related to the block height.
    *
    * @returns {Promise<any>} A promise that resolves to the latest statistics.
    */
