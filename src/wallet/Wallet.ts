@@ -1,6 +1,10 @@
 import { BaseClass } from "../base-class";
 import { QubicProvider } from "../provider";
-import { IBroadcastTransactionResponse } from "../types";
+import {
+  IBroadcastTransactionResponse,
+  IGetBalanceByIdentity,
+  IGetIssuedAssets,
+} from "../types";
 
 export class Wallet extends BaseClass {
   constructor(provider: QubicProvider) {
@@ -43,9 +47,12 @@ export class Wallet extends BaseClass {
    * @param {string} identity - The identity for which to fetch issued assets.
    * @returns {Promise<any>} A promise that resolves to the list of issued assets, or null if an error occurred.
    */
-  async getIssuedAssets(identity: string): Promise<any> {
+  async getIssuedAssets(identity: string): Promise<IGetIssuedAssets|null> {
     return await this.httpClient
-      .call(`/${this.version}/assets/${identity}/issued`, "GET")
+      .call<IGetIssuedAssets>(
+        `/${this.version}/assets/${identity}/issued`,
+        "GET"
+      )
       .catch((error) => {
         this.logger.error("Error fetching issued assets:", error);
         return null;
@@ -67,9 +74,11 @@ export class Wallet extends BaseClass {
       });
   }
 
-  async getBalanceById(Id: string): Promise<any> {
+  async getBalanceByIdentity(
+    Id: string
+  ): Promise<IGetBalanceByIdentity | null> {
     return await this.httpClient
-      .call(`/${this.version}/balances/${Id}`, "GET")
+      .call<IGetBalanceByIdentity>(`/${this.version}/balances/${Id}`, "GET")
       .catch((error) => {
         this.logger.error("Error fetching balance:", error);
         return null;
@@ -85,10 +94,7 @@ export class Wallet extends BaseClass {
   async getApprovedTransactions(tickNumber: number): Promise<any> {
     //Get a list of approved transactions for the given tick.
     return await this.httpClient
-      .call(
-        `/${this.version}/ticks/${tickNumber}/approved-transactions`,
-        "GET"
-      )
+      .call(`/${this.version}/ticks/${tickNumber}/approved-transactions`, "GET")
       .catch((error) => {
         this.logger.error("Error fetching approved transactions:", error);
         return null;

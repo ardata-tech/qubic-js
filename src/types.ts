@@ -167,6 +167,40 @@ interface IBroadcastTransactionResponse {
   transactionId: string;
 }
 
+type Balance = {
+  id: string;
+  balance: string;
+  validForTick: number;
+  latestIncomingTransferTick: number;
+  latestOutgoingTransferTick: number;
+  incomingAmount: string;
+  outgoingAmount: string;
+  numberOfIncomingTransfers: number;
+  numberOfOutgoingTransfers: number;
+};
+
+interface IGetBalanceByIdentity {
+  balance: Balance;
+}
+
+/**
+ * TODO:
+ * this is not yet finalized
+ * need to get the actual response to map it to the interface
+*/
+interface IGetPossessedAssets {
+  possessedAssets: []
+}
+
+/**
+ * TODO:
+ * this is not yet finalized
+ * need to get the actual response to map it to the interface
+*/
+interface IGetIssuedAssets {
+  issuedAssets: []
+} 
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -182,4 +216,7 @@ export {
   IPostQuerySmartContractBody,
   IPostQuerySmartContractResponse,
   IBroadcastTransactionResponse,
+  IGetBalanceByIdentity,
+  IGetPossessedAssets,
+  IGetIssuedAssets,
 };

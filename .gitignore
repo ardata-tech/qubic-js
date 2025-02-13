@@ -12,6 +12,7 @@ yarn-error.log*
 logs
 *.log
 logs/*
+test/logs/*
 
 # OS generated files
 .DS_Store
