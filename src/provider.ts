@@ -20,5 +20,4 @@ export class QubicProvider {
   getProvider(): IQubicProviderOptions {
     return this.options
   }
-
 }
