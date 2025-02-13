@@ -149,6 +149,24 @@ interface IGetLatestStats {
   data: LatestStatsData
 }
 
+            
+interface IPostQuerySmartContractBody {
+  contractIndex: number;
+  inputType: number;
+  inputSize: number;
+  requestData: string;
+}
+
+interface IPostQuerySmartContractResponse {
+  responseData: string;
+}
+
+interface IBroadcastTransactionResponse {
+  peersBroadcasted: number;
+  encodedTransaction: string;
+  transactionId: string;
+}
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -161,4 +179,7 @@ export {
   IGetLatestTick,
   IGetBlockHeight,
   IGetLatestStats,
+  IPostQuerySmartContractBody,
+  IPostQuerySmartContractResponse,
+  IBroadcastTransactionResponse,
 };

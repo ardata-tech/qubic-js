@@ -10,7 +10,12 @@ describe("Contract Module", () => {
   });
 
   test("should query smart contract", async () => {
-    const result = await contract.querySmartContract("getData", []);
+    const result = await contract.querySmartContract({
+      contractIndex: 0,
+      inputType: 0,
+      inputSize: 0,
+      requestData: "string"
+    });
     expect(result).toContain("mock-result-for-getData");
   });
 });
