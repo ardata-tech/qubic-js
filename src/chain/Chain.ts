@@ -18,7 +18,7 @@ import logger from "../logger";
 export class Chain {
   private readonly httpClient: HttpClient;
   private readonly providerOptions: IQubicProviderOptions;
-  private readonly apiVersion: string = "v1";
+  private readonly apiVersion: string;
 
   constructor(provider: QubicProvider) {
     this.providerOptions = provider.getProvider();
@@ -66,7 +66,7 @@ export class Chain {
   /**
    * Fetches the RPC status.
    *
-   * @returns {Promise<any>} A promise that resolves to the RPC status.
+   * @returns {Promise<IGetRpcStatus | null>} A promise that resolves to the RPC status.
    */
   async getRpcStatus(): Promise<IGetRpcStatus | null> {
     try {
@@ -105,7 +105,6 @@ export class Chain {
    * @param {number} tickNumber - The tick number for which to fetch the quorum tick data.
    * @returns {Promise<IGetQuorumTickData | null>} A promise that resolves to the quorum tick data, or null if an error occurred.
    */
-
   async getQuorumTickData(
     tickNumber: number
   ): Promise<IGetQuorumTickData | null> {
