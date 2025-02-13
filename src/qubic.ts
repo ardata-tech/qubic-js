@@ -18,12 +18,6 @@ class Qubic {
     this.wallet = new Wallet(this.provider);
     this.contract = (address: string) => new Contract(this.provider, address);
   }
-
-  private setProvider(options: IQubicProviderOptions) {
-    this.provider = new QubicProvider(options);
-    this.chain = new Chain(this.provider);
-    this.wallet = new Wallet(this.provider);
-  }
 }
 
 export default Qubic;

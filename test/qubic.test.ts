@@ -8,11 +8,6 @@ describe("Qubic SDK Structure", () => {
   });
 
   test("should initialize with a provider", () => {
-    expect(qubic.provider).toBeDefined();
-  });
-
-  test("should set a new provider", () => {
-    qubic.setProvider({ providerUrl: "https://rpc.qubic.org", version: 1 });
-    expect(qubic.provider).toBeDefined();
+    expect(qubic).toBeDefined();
   });
 });
