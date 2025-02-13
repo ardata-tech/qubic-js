@@ -1,4 +1,4 @@
-import { HttpClient } from "./HttpClient";
+import { HttpClient } from "./http";
 
 export class RpcClient {
   private readonly httpClient: HttpClient;

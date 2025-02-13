@@ -1,4 +1,4 @@
-import { QubicProvider } from "../src/providers/QubicProvider";
+import { QubicProvider } from "../src/provider";
 import { Contract } from "../src/contract";
 
 describe("Contract Module", () => {

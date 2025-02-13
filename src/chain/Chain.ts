@@ -1,5 +1,5 @@
-import { HttpClient } from "../providers/HttpClient";
-import { QubicProvider } from "../providers/QubicProvider";
+import { HttpClient } from "../http";
+import { QubicProvider } from "../provider";
 import {
   IGetLatestTick,
   IQubicProviderOptions,

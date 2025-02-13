@@ -1,4 +1,4 @@
-import { QubicProvider } from "../providers/QubicProvider";
+import { QubicProvider } from "../provider";
 
 export class Wallet {
   private provider: QubicProvider;

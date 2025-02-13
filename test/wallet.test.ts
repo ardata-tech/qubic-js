@@ -1,4 +1,4 @@
-import { QubicProvider } from "../src/providers/QubicProvider";
+import { QubicProvider } from "../src/provider";
 import { Wallet } from "../src/wallet";
 
 describe("Wallet Module", () => {
