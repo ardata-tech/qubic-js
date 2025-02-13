@@ -101,7 +101,7 @@ export class Wallet extends BaseClass {
    * @param {number} txId - The transaction ID for which to fetch the status.
    * @returns {Promise<any>} A promise that resolves to the transaction status, or null if an error occurred.
    */
-  async geTransactionsStatus(txId: number): Promise<any> {
+  async getTransactionsStatus(txId: number): Promise<any> {
     return await this.httpClient
       .call(`/${this.version}/tx-status/${txId}`, "GET")
       .catch((error) => {
@@ -116,7 +116,7 @@ export class Wallet extends BaseClass {
    * @param {number} txId - The transaction ID for which to fetch transaction details.
    * @returns {Promise<any>} A promise that resolves to the transaction details, or null if an error occurred.
    */
-  async geTransactions(txId: number): Promise<any> {
+  async getTransactions(txId: number): Promise<any> {
     return await this.httpClient
       .call(`/${this.version}/transactions/${txId}`, "GET")
       .catch((error) => {
