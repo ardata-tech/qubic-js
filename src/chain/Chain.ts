@@ -13,7 +13,7 @@ import {
   IGetBlockHeight,
   IGetLatestStats,
 } from "../types";
-import QubicLogger from "../utils/QubicLogger";
+import logger from "../logger";
 
 export class Chain {
   private readonly httpClient: HttpClient;
@@ -39,7 +39,7 @@ export class Chain {
       );
       return response?.latestTick;
     } catch (error) {
-      QubicLogger.error("Error fetching latest tick:", error);
+      logger.error("Error fetching latest tick:", error);
       return null;
     }
   }
@@ -58,7 +58,7 @@ export class Chain {
       );
       return response;
     } catch (error) {
-      QubicLogger.error("Error fetching tick data:", error);
+      logger.error("Error fetching tick data:", error);
       return null;
     }
   }
@@ -76,7 +76,7 @@ export class Chain {
       );
       return response;
     } catch (error) {
-      QubicLogger.error("Error fetching RPC status:", error);
+      logger.error("Error fetching RPC status:", error);
       return null;
     }
   }
@@ -94,7 +94,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching chain hash:", error);
+      logger.error("Error fetching chain hash:", error);
       return null;
     }
   }
@@ -115,7 +115,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching quorum tick data:", error);
+      logger.error("Error fetching quorum tick data:", error);
       return null;
     }
   }
@@ -130,7 +130,7 @@ export class Chain {
     try {
       return await this.httpClient.call(`/${this.apiVersion}/ticks/${tickNumber}/store-hash`, "GET");
     } catch (error: any) {
-      QubicLogger.error(error);
+      logger.error(error);
       return null;
     }
   }
@@ -147,7 +147,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching health check:", error);
+      logger.error("Error fetching health check:", error);
       return null;
     }
   }
@@ -165,7 +165,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching computors:", error);
+      logger.error("Error fetching computors:", error);
       return null;
     }
   }
@@ -179,7 +179,7 @@ export class Chain {
     try {
       return await this.httpClient.call(`/${this.apiVersion}/tick-info`, "GET");
     } catch (error) {
-      QubicLogger.error("Error fetching tick info:", error);
+      logger.error("Error fetching tick info:", error);
       return null;
     }
   }
@@ -196,7 +196,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching block height:", error);
+      logger.error("Error fetching block height:", error);
       return null;
     }
   }
@@ -213,7 +213,7 @@ export class Chain {
         "GET"
       );
     } catch (error) {
-      QubicLogger.error("Error fetching latest stats:", error);
+      logger.error("Error fetching latest stats:", error);
       return null;
     }
   }
