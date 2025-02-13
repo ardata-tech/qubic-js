@@ -5,7 +5,7 @@ import { Contract } from "./contract";
 import { Utils } from './utils';
 import { IQubicProviderOptions } from "./types";
 
-class Qubic {
+export default class Qubic {
   private provider: QubicProvider;
   public chain: Chain;
   public wallet: Wallet;
@@ -19,5 +19,3 @@ class Qubic {
     this.contract = (address: string) => new Contract(this.provider, address);
   }
 }
-
-export default Qubic;

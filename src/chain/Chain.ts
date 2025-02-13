@@ -13,7 +13,7 @@ import {
   IGetBlockHeight,
   IGetLatestStats,
 } from "../types";
-import logger from "../logger";
+import { logger } from "../logger";
 
 export class Chain {
   private readonly httpClient: HttpClient;
