@@ -10,7 +10,6 @@ export class Contract {
   }
 
   async querySmartContract(method: string, params: any[]): Promise<any> {
-    console.log(`[Mock Contract] Querying smart contract method '${method}' on ${this.address}`, params);
     return `mock-result-for-${method}`;
   }
 }
