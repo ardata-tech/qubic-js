@@ -1,8 +1,6 @@
-import { HttpClient } from "../http";
 import { QubicProvider } from "../provider";
 import {
   IGetLatestTick,
-  IQubicProviderOptions,
   IGetTickData,
   IGetRpcStatus,
   IChainHash,
@@ -13,17 +11,12 @@ import {
   IGetBlockHeight,
   IGetLatestStats,
 } from "../types";
-import { logger } from "../logger";
+import { BaseClass } from "../base-class";
 
-export class Chain {
-  private readonly httpClient: HttpClient;
-  private readonly providerOptions: IQubicProviderOptions;
-  private readonly apiVersion: string;
+export class Chain extends BaseClass {
 
   constructor(provider: QubicProvider) {
-    this.providerOptions = provider.getProviderOptions();
-    this.apiVersion = `v${this.providerOptions.version}`;
-    this.httpClient = new HttpClient(this.providerOptions.providerUrl);
+    super(provider);
   }
 
   /**
@@ -34,12 +27,12 @@ export class Chain {
   async getLatestTick(): Promise<number | null> {
     try {
       const response: IGetLatestTick = await this.httpClient.call(
-        `/${this.apiVersion}/latestTick`,
+        `/${this.version}/latestTick`,
         "GET"
       );
       return response?.latestTick;
     } catch (error) {
-      logger.error("Error fetching latest tick:", error);
+      this.logger.error("Error fetching latest tick:", error);
       return null;
     }
   }
@@ -53,12 +46,12 @@ export class Chain {
   async getTickData(tickNumber: number): Promise<IGetTickData | null> {
     try {
       const response: IGetTickData = await this.httpClient.call(
-        `/${this.apiVersion}/ticks/${tickNumber}/tick-data`,
+        `/${this.version}/ticks/${tickNumber}/tick-data`,
         "GET"
       );
       return response;
     } catch (error) {
-      logger.error("Error fetching tick data:", error);
+      this.logger.error("Error fetching tick data:", error);
       return null;
     }
   }
@@ -71,12 +64,12 @@ export class Chain {
   async getRpcStatus(): Promise<IGetRpcStatus | null> {
     try {
       const response: IGetRpcStatus = await this.httpClient.call(
-        `/${this.apiVersion}/status`,
+        `/${this.version}/status`,
         "GET"
       );
       return response;
     } catch (error) {
-      logger.error("Error fetching RPC status:", error);
+      this.logger.error("Error fetching RPC status:", error);
       return null;
     }
   }
@@ -90,11 +83,11 @@ export class Chain {
   async getChainHash(tickNumber: number): Promise<IChainHash | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/ticks/${tickNumber}/chain-hash`,
+        `/${this.version}/ticks/${tickNumber}/chain-hash`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching chain hash:", error);
+      this.logger.error("Error fetching chain hash:", error);
       return null;
     }
   }
@@ -110,11 +103,11 @@ export class Chain {
   ): Promise<IGetQuorumTickData | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/ticks/${tickNumber}/quorum-tick-data`,
+        `/${this.version}/ticks/${tickNumber}/quorum-tick-data`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching quorum tick data:", error);
+      this.logger.error("Error fetching quorum tick data:", error);
       return null;
     }
   }
@@ -127,9 +120,9 @@ export class Chain {
    */
   async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
     try {
-      return await this.httpClient.call(`/${this.apiVersion}/ticks/${tickNumber}/store-hash`, "GET");
+      return await this.httpClient.call(`/${this.version}/ticks/${tickNumber}/store-hash`, "GET");
     } catch (error: any) {
-      logger.error(error);
+      this.logger.error(error);
       return null;
     }
   }
@@ -142,11 +135,11 @@ export class Chain {
   async getHealthCheck(): Promise<IGetHealthCheck | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/healthcheck`,
+        `/${this.version}/healthcheck`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching health check:", error);
+      this.logger.error("Error fetching health check:", error);
       return null;
     }
   }
@@ -160,11 +153,11 @@ export class Chain {
   async getComputors(epoch: number): Promise<IGetComputors | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/epochs/${epoch}/computors`,
+        `/${this.version}/epochs/${epoch}/computors`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching computors:", error);
+      this.logger.error("Error fetching computors:", error);
       return null;
     }
   }
@@ -176,9 +169,9 @@ export class Chain {
    */
   async getTickInfo(): Promise<IGetTickInfo | null> {
     try {
-      return await this.httpClient.call(`/${this.apiVersion}/tick-info`, "GET");
+      return await this.httpClient.call(`/${this.version}/tick-info`, "GET");
     } catch (error) {
-      logger.error("Error fetching tick info:", error);
+      this.logger.error("Error fetching tick info:", error);
       return null;
     }
   }
@@ -191,11 +184,11 @@ export class Chain {
   async getBlockHeight(): Promise<IGetBlockHeight | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/block-height`,
+        `/${this.version}/block-height`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching block height:", error);
+      this.logger.error("Error fetching block height:", error);
       return null;
     }
   }
@@ -208,11 +201,11 @@ export class Chain {
   async getLatestStats(): Promise<IGetLatestStats | null> {
     try {
       return await this.httpClient.call(
-        `/${this.apiVersion}/latest-stats`,
+        `/${this.version}/latest-stats`,
         "GET"
       );
     } catch (error) {
-      logger.error("Error fetching latest stats:", error);
+      this.logger.error("Error fetching latest stats:", error);
       return null;
     }
   }

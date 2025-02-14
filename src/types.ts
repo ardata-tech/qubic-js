@@ -149,6 +149,58 @@ interface IGetLatestStats {
   data: LatestStatsData
 }
 
+            
+interface IPostQuerySmartContractBody {
+  contractIndex: number;
+  inputType: number;
+  inputSize: number;
+  requestData: string;
+}
+
+interface IPostQuerySmartContractResponse {
+  responseData: string;
+}
+
+interface IBroadcastTransactionResponse {
+  peersBroadcasted: number;
+  encodedTransaction: string;
+  transactionId: string;
+}
+
+type Balance = {
+  id: string;
+  balance: string;
+  validForTick: number;
+  latestIncomingTransferTick: number;
+  latestOutgoingTransferTick: number;
+  incomingAmount: string;
+  outgoingAmount: string;
+  numberOfIncomingTransfers: number;
+  numberOfOutgoingTransfers: number;
+};
+
+interface IGetBalanceByIdentity {
+  balance: Balance;
+}
+
+/**
+ * TODO:
+ * this is not yet finalized
+ * need to get the actual response to map it to the interface
+*/
+interface IGetPossessedAssets {
+  possessedAssets: []
+}
+
+/**
+ * TODO:
+ * this is not yet finalized
+ * need to get the actual response to map it to the interface
+*/
+interface IGetIssuedAssets {
+  issuedAssets: []
+} 
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -161,4 +213,10 @@ export {
   IGetLatestTick,
   IGetBlockHeight,
   IGetLatestStats,
+  IPostQuerySmartContractBody,
+  IPostQuerySmartContractResponse,
+  IBroadcastTransactionResponse,
+  IGetBalanceByIdentity,
+  IGetPossessedAssets,
+  IGetIssuedAssets,
 };
