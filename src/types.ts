@@ -201,6 +201,61 @@ interface IGetIssuedAssets {
   issuedAssets: []
 } 
 
+type ApprovedTransactions = {
+  sourceId: string;
+  destId: string;
+  amount: string;
+  tickNumber: number;
+  inputType: number;
+  inputSize: number;
+  inputHex: string;
+  signatureHex: string;
+  txId: string;
+};
+
+interface IGetApproveTransactions {
+  approvedTransactions: ApprovedTransactions[];
+}
+
+type TransactionStatus = {
+  txId: string;
+  moneyFlew: boolean;
+};
+    
+interface IGetTransactionsStatus{
+  transactionStatus:TransactionStatus
+}
+
+type Transaction = {
+  sourceId: string;
+  destId: string;
+  amount: string;
+  tickNumber: number;
+  inputType: number;
+  inputSize: number;
+  inputHex: string;
+  signatureHex: string;
+  txId: string;
+};
+    
+interface IGetTransaction{
+  transaction: Transaction
+}
+
+/**
+ * TODO:
+ * this is not yet finalized
+ * need to get the actual transferTransactionsPerTick to map it to the interface
+*/
+
+interface IGetTransferTransaction{
+  transferTransactionsPerTick:[]
+}
+
+interface IGetOwnedAssets {
+  ownedAssets:[]
+}
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -219,4 +274,9 @@ export {
   IGetBalanceByIdentity,
   IGetPossessedAssets,
   IGetIssuedAssets,
+  IGetApproveTransactions,
+  IGetTransactionsStatus,
+  IGetTransaction,
+  IGetTransferTransaction,
+  IGetOwnedAssets,
 };

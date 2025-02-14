@@ -1,6 +1,6 @@
 import Qubic from "../../src/qubic";
 
-async function getIssuedAssets() {
+async function getTransactions() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -8,12 +8,12 @@ async function getIssuedAssets() {
   });
 
   try {
-    const identity = "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-    const response = await qubic.wallet.getIssuedAssets(identity);
-    console.log(JSON.stringify(response));
+    const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
+    const response = await qubic.wallet.getTransactions(txId);
+    console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-getIssuedAssets();
+getTransactions();

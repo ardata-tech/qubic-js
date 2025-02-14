@@ -4,6 +4,12 @@ import {
   IBroadcastTransactionResponse,
   IGetBalanceByIdentity,
   IGetIssuedAssets,
+  IGetApproveTransactions,
+  IGetTransactionsStatus,
+  IGetTransaction,
+  IGetTransferTransaction,
+  IGetOwnedAssets,
+  IGetPossessedAssets,
 } from "../types";
 
 export class Wallet extends QubicBase {
@@ -17,9 +23,9 @@ export class Wallet extends QubicBase {
    * @param {string} identity - The identity for which to fetch owned assets.
    * @returns {Promise<any>} A promise that resolves to the list of owned assets, or null if an error occurred.
    */
-  async getOwnedAssets(identity: string): Promise<any> {
+  async getOwnedAssets(identity: string): Promise<IGetOwnedAssets|null> {
     return await this.httpClient
-      .call(`/${this.version}/assets/${identity}/owned`, "GET")
+      .call<IGetOwnedAssets>(`/${this.version}/assets/${identity}/owned`, "GET")
       .catch((error) => {
         this.logger.error("Error fetching issued assets:", error);
         return null;
@@ -32,9 +38,12 @@ export class Wallet extends QubicBase {
    * @param {string} identity - The identity for which to fetch possessed assets.
    * @returns {Promise<any>} A promise that resolves to the list of possessed assets, or null if an error occurred.
    */
-  async getPossessedAssets(identity: string): Promise<any> {
+  async getPossessedAssets(identity: string): Promise<IGetPossessedAssets|null> {
     return this.httpClient
-      .call(`/${this.version}/assets/${identity}/possessed`, "GET")
+      .call<IGetPossessedAssets>(
+        `/${this.version}/assets/${identity}/possessed`,
+        "GET"
+      )
       .catch((error) => {
         this.logger.error("Error fetching possessed assets:", error);
         return null;
@@ -47,7 +56,7 @@ export class Wallet extends QubicBase {
    * @param {string} identity - The identity for which to fetch issued assets.
    * @returns {Promise<any>} A promise that resolves to the list of issued assets, or null if an error occurred.
    */
-  async getIssuedAssets(identity: string): Promise<IGetIssuedAssets|null> {
+  async getIssuedAssets(identity: string): Promise<IGetIssuedAssets | null> {
     return await this.httpClient
       .call<IGetIssuedAssets>(
         `/${this.version}/assets/${identity}/issued`,
@@ -74,6 +83,12 @@ export class Wallet extends QubicBase {
       });
   }
 
+  /**
+   * Retrieves the balance of a specific identity.
+   *
+   * @param {string} Id The identity for which to fetch the balance.
+   * @returns {Promise<IGetBalanceByIdentity | null>} A promise that resolves to the balance, or null if an error occurred.
+   */
   async getBalanceByIdentity(
     Id: string
   ): Promise<IGetBalanceByIdentity | null> {
@@ -91,10 +106,14 @@ export class Wallet extends QubicBase {
    * @param {number} tickNumber - The tick number for which to fetch approved transactions.
    * @returns {Promise<any>} A promise that resolves to the list of approved transactions, or null if an error occurred.
    */
-  async getApprovedTransactions(tickNumber: number): Promise<any> {
-    //Get a list of approved transactions for the given tick.
+  async getApprovedTransactions(
+    tickNumber: number
+  ): Promise<IGetApproveTransactions | null> {
     return await this.httpClient
-      .call(`/${this.version}/ticks/${tickNumber}/approved-transactions`, "GET")
+      .call<IGetApproveTransactions>(
+        `/${this.version}/ticks/${tickNumber}/approved-transactions`,
+        "GET"
+      )
       .catch((error) => {
         this.logger.error("Error fetching approved transactions:", error);
         return null;
@@ -107,9 +126,11 @@ export class Wallet extends QubicBase {
    * @param {number} txId - The transaction ID for which to fetch the status.
    * @returns {Promise<any>} A promise that resolves to the transaction status, or null if an error occurred.
    */
-  async getTransactionsStatus(txId: number): Promise<any> {
+  async getTransactionsStatus(
+    txId: string
+  ): Promise<IGetTransactionsStatus | null> {
     return await this.httpClient
-      .call(`/${this.version}/tx-status/${txId}`, "GET")
+      .call<IGetTransactionsStatus>(`/${this.version}/tx-status/${txId}`, "GET")
       .catch((error) => {
         this.logger.error("Error fetching transactions status:", error);
         return null;
@@ -122,9 +143,9 @@ export class Wallet extends QubicBase {
    * @param {number} txId - The transaction ID for which to fetch transaction details.
    * @returns {Promise<any>} A promise that resolves to the transaction details, or null if an error occurred.
    */
-  async getTransactions(txId: number): Promise<any> {
+  async getTransactions(txId: string): Promise<IGetTransaction | null> {
     return await this.httpClient
-      .call(`/${this.version}/transactions/${txId}`, "GET")
+      .call<IGetTransaction>(`/${this.version}/transactions/${txId}`, "GET")
       .catch((error) => {
         this.logger.error("Error fetching latest tick:", error);
         return null;
@@ -137,9 +158,11 @@ export class Wallet extends QubicBase {
    * @param {number} identity - The identity for which to fetch transfer transactions.
    * @returns {Promise<any>} A promise that resolves to the list of transfer transactions, or null if an error occurred.
    */
-  async getTransferTransactions(identity: number): Promise<any> {
+  async getTransferTransactions(
+    identity: string
+  ): Promise<IGetTransferTransaction | null> {
     return await this.httpClient
-      .call(
+      .call<IGetTransferTransaction>(
         `/${this.version}/identities/${identity}/transfer-transactions`,
         "GET"
       )
