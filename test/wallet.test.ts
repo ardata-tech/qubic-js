@@ -12,10 +12,35 @@ describe("Wallet Module", () => {
     wallet = new Wallet(provider);
   });
 
-  // test("should fetch balance", async () => {
-  //   const balance = await wallet.getBalanceByAddress("mock-address");
-  //   expect(balance).toBe(1000);
-  // });
+  test("should fetch balance by identity", async () => {
+    const balance = await wallet.getBalanceByIdentity(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+    );
+    expect(balance).not.toBeNull();
+    expect(balance).toHaveProperty("balance", "id");
+    expect(balance).toHaveProperty("balance", "balance");
+    expect(balance).toHaveProperty("balance", "validForTick");
+    expect(balance).toHaveProperty("balance", "latestIncomingTransferTick");
+    expect(balance).toHaveProperty("balance", "incomingAmount");
+    expect(balance).toHaveProperty("balance", "outgoingAmount");
+    expect(balance).toHaveProperty("balance", "numberOfIncomingTransfers");
+    expect(balance).toHaveProperty("balance", "numberOfOutgoingTransfers");
+  });
+
+  test("should fetch balance by identity", async () => {
+    // TODO:
+    // commenting this for now because I dont have an address yet
+    //
+    // const balance = await wallet.getBalanceByAddress("");
+    // expect(balance).not.toBeNull();
+
+
+
+  });
+
+
+
+
 
   test("should create and sign a transaction", async () => {
     const tx = await wallet.createTransaction("mock-from", "mock-to", 500);

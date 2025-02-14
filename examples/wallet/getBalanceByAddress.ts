@@ -1,6 +1,6 @@
 import Qubic from "../../src/qubic";
 
-async function getBalanceByIdentity() {
+async function getBalanceByAddress() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -8,13 +8,11 @@ async function getBalanceByIdentity() {
   });
 
   try {
-    const response = await qubic.wallet.getBalanceByIdentity(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
-    );
-    console.log("response",JSON.stringify(response));
+    const response = await qubic.wallet.getBalanceByAddress("");
+    console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-getBalanceByIdentity();
+getBalanceByAddress();

@@ -74,9 +74,16 @@ export class Wallet extends BaseClass {
       });
   }
 
+  /**
+   * Retrieves the balance of a specific identity.
+   *
+   * @param {string} Id The identity for which to fetch the balance.
+   * @returns {Promise<IGetBalanceByIdentity | null>} A promise that resolves to the balance, or null if an error occurred.
+   */
   async getBalanceByIdentity(
     Id: string
   ): Promise<IGetBalanceByIdentity | null> {
+    console.log('passss --->>')
     return await this.httpClient
       .call<IGetBalanceByIdentity>(`/${this.version}/balances/${Id}`, "GET")
       .catch((error) => {
