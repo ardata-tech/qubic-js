@@ -1,4 +1,4 @@
-import { BaseClass } from "../base-class";
+import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
 import {
   IBroadcastTransactionResponse,
@@ -6,7 +6,7 @@ import {
   IGetIssuedAssets,
 } from "../types";
 
-export class Wallet extends BaseClass {
+export class Wallet extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }

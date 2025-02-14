@@ -4,7 +4,7 @@ import { Logger } from "winston";
 import { QubicProvider } from "./provider";
 import { IQubicProviderOptions } from "./types";
 
-export class BaseClass {
+export class QubicBase {
   httpClient: HttpClient;
   providerOptions: IQubicProviderOptions;
   version: string;

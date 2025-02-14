@@ -1,11 +1,11 @@
-import { BaseClass } from "../base-class";
+import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
 import {
   IPostQuerySmartContractBody,
   IPostQuerySmartContractResponse,
 } from "../types";
 
-export class Contract extends BaseClass {
+export class Contract extends QubicBase {
   private address: string;
 
   constructor(provider: QubicProvider, contractAddress: string) {

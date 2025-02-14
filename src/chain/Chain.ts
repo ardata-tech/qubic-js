@@ -11,9 +11,9 @@ import {
   IGetBlockHeight,
   IGetLatestStats,
 } from "../types";
-import { BaseClass } from "../base-class";
+import { QubicBase } from "../base";
 
-export class Chain extends BaseClass {
+export class Chain extends QubicBase {
 
   constructor(provider: QubicProvider) {
     super(provider);
