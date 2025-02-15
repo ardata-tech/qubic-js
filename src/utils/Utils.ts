@@ -1,10 +1,10 @@
-import { QubicDefinitions } from './QubicDefinitions';
 import crypto from '../crypto';
 
 export class QubicKeyHelper {
     private readonly SEED_ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
     private readonly PRIVATE_KEY_LENGTH = 32;
     private readonly PUBLIC_KEY_LENGTH = 32;
+    private readonly DIGEST_LENGTH = 32;
     private readonly CHECKSUM_LENGTH = 4;
     private readonly ID_LENGTH = 60;
 
@@ -141,8 +141,8 @@ export class QubicKeyHelper {
 
     private async calculateChecksum(publicKey: Uint8Array): Promise<string> {
         const { K12 } = await crypto;
-        const digest = new Uint8Array(QubicDefinitions.DIGEST_LENGTH);
-        K12(publicKey, digest, QubicDefinitions.DIGEST_LENGTH);
+        const digest = new Uint8Array(this.DIGEST_LENGTH);
+        K12(publicKey, digest, this.DIGEST_LENGTH);
         
         let checksumValue = 0;
         for (let i = 0; i < this.CHECKSUM_LENGTH - 1; i++) {
