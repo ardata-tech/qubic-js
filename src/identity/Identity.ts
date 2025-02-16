@@ -15,7 +15,7 @@ import {
   IGetPossessedAssets,
 } from "../types";
 
-export class Wallet extends QubicBase {
+export class Identity extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }

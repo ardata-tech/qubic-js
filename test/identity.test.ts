@@ -1,19 +1,19 @@
 import { QubicProvider } from "../src/provider";
-import { Wallet } from "../src/wallet";
+import { Identity } from "../src/identity";
 
-describe("Wallet Module", () => {
-  let wallet: Wallet;
+describe("Identity Module", () => {
+  let identity: Identity;
 
   beforeAll(() => {
     const provider = new QubicProvider({
       providerUrl: "https://rpc.qubic.org",
       version: 1,
     });
-    wallet = new Wallet(provider);
+    identity = new Identity(provider);
   });
 
   test("should fetch balance by identity", async () => {
-    const balance = await wallet.getBalanceByIdentity(
+    const balance = await identity.getBalanceByIdentity(
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
     );
     expect(balance).not.toBeNull();
@@ -35,7 +35,7 @@ describe("Wallet Module", () => {
   });
 
   test("should fetch Issued Assets", async () => {
-    const result = await wallet.getIssuedAssets(
+    const result = await identity.getIssuedAssets(
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
     );
     expect(result).not.toBeNull();
@@ -44,7 +44,7 @@ describe("Wallet Module", () => {
   });
 
   test("should fetch owned Assets", async () => {
-    const result = await wallet.getOwnedAssets(
+    const result = await identity.getOwnedAssets(
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
     );
     expect(result).not.toBeNull();
@@ -53,7 +53,7 @@ describe("Wallet Module", () => {
   });
 
   test("should fetch possessed assets", async () => {
-    const result = await wallet.getPossessedAssets(
+    const result = await identity.getPossessedAssets(
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
     );
     expect(result).not.toBeNull();
@@ -63,7 +63,7 @@ describe("Wallet Module", () => {
 
   test("should fetch transactions", async () => {
     const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-    const result = await wallet.getTransactions(txId);
+    const result = await identity.getTransactions(txId);
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("transaction");
     expect(result).toHaveProperty("transaction.sourceId");
@@ -79,7 +79,7 @@ describe("Wallet Module", () => {
 
   test("should fetch transactions status", async () => {
     const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-    const result = await wallet.getTransactionsStatus(txId);
+    const result = await identity.getTransactionsStatus(txId);
     console.log("result", result);
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("transactionStatus");
@@ -90,9 +90,9 @@ describe("Wallet Module", () => {
 
 
   test("should fetch transfer transactions", async () => {
-    const identity =
+    const id =
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-    const result = await wallet.getTransferTransactions(identity);
+    const result = await identity.getTransferTransactions(id);
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("transferTransactionsPerTick");
     expect(Array.isArray(result?.transferTransactionsPerTick)).toBe(true);
@@ -101,25 +101,25 @@ describe("Wallet Module", () => {
 
 
   test("should fetch approved transactions", async () => {
-    const result = await wallet.getApprovedTransactions(19231746);
+    const result = await identity.getApprovedTransactions(19231746);
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("approvedTransactions");
     expect(Array.isArray(result?.approvedTransactions)).toBe(true);
   });
 
   test("should create and sign a transaction", async () => {
-    const tx = await wallet.createTransaction("mock-from", "mock-to", 500);
+    const tx = await identity.createTransaction("mock-from", "mock-to", 500);
     expect(tx).toHaveProperty("from");
     expect(tx).toHaveProperty("to");
 
-    const signedTx = await wallet.signTransaction(tx);
+    const signedTx = await identity.signTransaction(tx);
     expect(signedTx).toHaveProperty("signature");
   });
 
   test("should send a transaction", async () => {
-    const tx = await wallet.createTransaction("mock-from", "mock-to", 500);
-    const signedTx = await wallet.signTransaction(tx);
-    const txHash = await wallet.sendTransaction(signedTx);
+    const tx = await identity.createTransaction("mock-from", "mock-to", 500);
+    const signedTx = await identity.signTransaction(tx);
+    const txHash = await identity.sendTransaction(signedTx);
     expect(txHash).toBe("mock-tx-hash");
   });
 
@@ -127,7 +127,7 @@ describe("Wallet Module", () => {
   // commenting this for now because I dont have an address yet
   //
   // test("should fetch balance by address", async () => {
-  //   const balance = await wallet.getBalanceByAddress("");
+  //   const balance = await identity.getBalanceByAddress("");
   //   expect(balance).not.toBeNull();
   // });
 
@@ -135,13 +135,13 @@ describe("Wallet Module", () => {
   // commenting this for now because I need to compose the transaction
   //
   // test("should broadcast a transaction", async () => {
-  //   const tx = await wallet.createTransaction("mock-from", "mock-to", 500);
-  //   const broadcastTxHash = await wallet.broadcastTransaction(tx);
+  //   const tx = await identity.createTransaction("mock-from", "mock-to", 500);
+  //   const broadcastTxHash = await identity.broadcastTransaction(tx);
   //   expect(broadcastTxHash).toBe("mock-broadcast-tx-hash");
   // });
 
   test("should create ID package", async () => {
-    const idPackage = await wallet.createIdPackage('whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel');
+    const idPackage = await identity.createIdPackage('whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel');
     expect(idPackage).not.toBeNull();
     expect(idPackage).toHaveProperty("id");
     expect(idPackage).toHaveProperty("publicKey");
