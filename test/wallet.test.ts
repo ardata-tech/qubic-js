@@ -140,5 +140,13 @@ describe("Wallet Module", () => {
   //   expect(broadcastTxHash).toBe("mock-broadcast-tx-hash");
   // });
 
+  test("should create ID package", async () => {
+    const idPackage = await wallet.createIdPackage('whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel');
+    expect(idPackage).not.toBeNull();
+    expect(idPackage).toHaveProperty("id");
+    expect(idPackage).toHaveProperty("publicKey");
+    expect(idPackage).toHaveProperty("privateKey");
 
+    console.log(`ID Package: ${JSON.stringify(idPackage)}`);
+  });
 });
