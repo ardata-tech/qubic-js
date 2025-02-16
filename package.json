@@ -23,5 +23,6 @@
     "axios": "^1.7.9",
     "bignumber.js": "^9.1.2",
     "winston": "^3.17.0"
-  }
+  },
+  "type": "module"
 }
