@@ -1,6 +1,8 @@
 import crypto from '../crypto';
 import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
+import { QubicConstants } from '../constants';
+import BigNumber from 'bignumber.js';
 import {
   IBroadcastTransactionResponse,
   IGetBalanceByIdentity,
@@ -210,14 +212,75 @@ export class Wallet extends QubicBase {
    * 
    * Creates a complete ID Package based on the provided seed
    * 
-   * @param seed 
-   * @returns 
+   * @param {string} seed The seed to generate the ID package from.
+   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} The generated ID package.
    */
   async createIdPackage(seed: string): Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }> {
     const { schnorrq, K12 } = await crypto
-    const privateKey = this.privateKey(seed, 0, K12);
+    const privateKey = this.generatePrivateKey(seed, 0, K12);
     const publicKey = schnorrq.generatePublicKey(privateKey);
     const publicId = await this.getIdentity(publicKey)
     return {publicKey, privateKey, publicId };
+  }
+
+  private generatePrivateKey(seed: string, index: number, K12: any): Uint8Array {
+    const byteSeed = this.seedToBytes(seed);
+    const preimage = byteSeed.slice();
+    while (index-- > 0) {
+        for (let i = 0; i < preimage.length; i++) {
+            if (++preimage[i] > QubicConstants.SEED_ALPHABET.length) {
+                preimage[i] = 1;
+            } else {
+                break;
+            }
+        }
+    }
+    const key = new Uint8Array(QubicConstants.PRIVATE_KEY_LENGTH);
+    K12(preimage, key, QubicConstants.PRIVATE_KEY_LENGTH);
+    return key;
+  }
+
+  private seedToBytes(seed: string): Uint8Array {
+    const bytes = new Uint8Array(seed.length);
+    for (let i = 0; i < seed.length; i++) {
+        bytes[i] = QubicConstants.SEED_ALPHABET.indexOf(seed[i]);
+    }
+    return bytes;
+  };
+
+  private async getIdentity(publicKey: Uint8Array, lowerCase: boolean = false): Promise<string> {
+    let newId = '';
+    for (let i = 0; i < 4; i++) {
+        let longNUmber = new BigNumber(0);
+        longNUmber.decimalPlaces(0);
+        publicKey.slice(i * 8, (i + 1) * 8).forEach((val, index) => {
+            longNUmber = longNUmber.plus(new BigNumber((val * 256 ** index).toString(2), 2));
+        });
+        for (let j = 0; j < 14; j++) {
+            newId += String.fromCharCode(longNUmber.mod(26).plus((lowerCase ? 'a' : 'A').charCodeAt(0)).toNumber());
+            longNUmber = longNUmber.div(26);
+        }
+    }
+    
+    // calculate checksum
+    const checksum = await this.getCheckSum(publicKey);
+
+    // convert to int
+    let identityBytesChecksum = (checksum[2] << 16) | (checksum[1] << 8) | checksum[0];
+    identityBytesChecksum = identityBytesChecksum & 0x3FFFF;
+    
+    for (let i = 0; i < 4; i++) {
+        newId += String.fromCharCode(identityBytesChecksum % 26 + (lowerCase ? 'a' : 'A').charCodeAt(0));
+        identityBytesChecksum = identityBytesChecksum / 26;
+    }
+    return newId;
+  }
+
+  private async getCheckSum(publicKey: Uint8Array): Promise<Uint8Array> {
+    const { K12 } = await crypto;
+    const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
+    K12(publicKey, digest, QubicConstants.DIGEST_LENGTH);
+    const checksum = digest.slice(0, QubicConstants.CHECKSUM_LENGTH);
+    return checksum;
   }
 }

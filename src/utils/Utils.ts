@@ -17,18 +17,4 @@ export class Utils {
 
         return seed;
     }
-
-    /**
-     * Convert a seed to bytes.
-     *
-     * @param {string} seed - The seed to convert.
-     * @returns {Uint8Array} The byte representation of the seed.
-     */
-    static seedToBytes(seed: string): Uint8Array {
-        const bytes = new Uint8Array(seed.length);
-        for (let i = 0; i < seed.length; i++) {
-            bytes[i] = QubicConstants.SEED_ALPHABET.indexOf(seed[i]);
-        }
-        return bytes;
-    };
 }
