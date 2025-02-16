@@ -209,6 +209,18 @@ export class Identity extends QubicBase {
   }
 
   /**
+   * Verifies if an identity is valid
+   * @param {string} identity The identity to verify
+   */
+  public async verifyIdentity(identity: string): Promise<boolean> {
+    if(!identity || identity.length != 60 || !/^[A-Z]+$/.test(identity))
+      return false;
+    const publicKey = this.getIdentityBytes(identity);
+    const idFromBytes = await this.getIdentity(publicKey);
+    return identity === idFromBytes;
+  }
+
+  /**
    * 
    * Creates a complete ID Package based on the provided seed
    * 
@@ -261,12 +273,9 @@ export class Identity extends QubicBase {
             longNUmber = longNUmber.div(26);
         }
     }
-    
     const checksum = await this.getCheckSum(publicKey);
-
     let identityBytesChecksum = (checksum[2] << 16) | (checksum[1] << 8) | checksum[0];
     identityBytesChecksum = identityBytesChecksum & 0x3FFFF;
-    
     for (let i = 0; i < 4; i++) {
         newId += String.fromCharCode(identityBytesChecksum % 26 + (lowerCase ? 'a' : 'A').charCodeAt(0));
         identityBytesChecksum = identityBytesChecksum / 26;
@@ -281,4 +290,16 @@ export class Identity extends QubicBase {
     const checksum = digest.slice(0, QubicConstants.CHECKSUM_LENGTH);
     return checksum;
   }
+
+  private getIdentityBytes = function (identity: string): Uint8Array {
+    const publicKeyBytes = new Uint8Array(32);
+    const view = new DataView(publicKeyBytes.buffer, 0);
+    for (let i = 0; i < 4; i++) {
+      view.setBigUint64(i * 8, 0n, true);
+      for (let j = 14; j-- > 0;) {
+        view.setBigUint64(i * 8, view.getBigUint64(i * 8, true) * 26n + BigInt(identity.charCodeAt(i * 14 + j)) - BigInt('A'.charCodeAt(0)), true);
+      }
+    }
+    return publicKeyBytes;
+  };
 }
