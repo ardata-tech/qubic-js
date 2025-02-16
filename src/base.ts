@@ -1,5 +1,5 @@
 import { HttpClient } from "./client/http";
-import { logger as _logger } from "./helpers/logger";
+import { QubicLogger as _logger } from "./logger";
 import { Logger } from "winston";
 import { QubicProvider } from "./provider";
 import { IQubicProviderOptions } from "./types";

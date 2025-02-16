@@ -1,6 +1,6 @@
 import winston from "winston";
 
-export const logger = winston.createLogger({
+export const QubicLogger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
