@@ -16,17 +16,17 @@ describe("Contract Module", () => {
     /** 
      * TODO:
      * Mock the contract.querySmartContract function
-     * uuntill the function is implemented correctly
+     * until the function is implemented correctly
      * this is just a placeholder
      * will use jest mock
 
-    const resquestBody: IPostQuerySmartContractBody = {  
+    const requestBody: IPostQuerySmartContractBody = {  
       contractIndex: 0,
       inputType: 0,
       inputSize: 0,
       requestData: "string"
     }
-    const result = await contract.querySmartContract(resquestBody);
+    const result = await contract.querySmartContract(requestBody);
     */
 
     const querySmartContract = jest.fn(() => ({

@@ -23,5 +23,4 @@ export class QubicConstants {
   public static QUTIL_ADDRESS = "EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVWRF";
   public static QUTIL_SENDMANY_INPUT_TYPE = 1; // input type for send many on Qutil
   public static QUTIL_SENDMANY_FEE = 10; // fee in qubics for send many
-
 }
