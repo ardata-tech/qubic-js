@@ -9,7 +9,7 @@ async function createIdPackage() {
 
   try {
     const seed = qubic.utils.createSeed();
-    const idPackage = await qubic.wallet.createIdPackage(seed);
+    const idPackage = await qubic.identity.createIdPackage(seed);
     console.log("response", JSON.stringify(idPackage));
   } catch (error) {
     console.error("Error fetching: ", error);
