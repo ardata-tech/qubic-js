@@ -1,6 +1,9 @@
 export class QubicConstants {
+  public static SEED_ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
   public static SIGNATURE_LENGTH = 64;
   public static PUBLIC_KEY_LENGTH = 32;
+  public static PRIVATE_KEY_LENGTH = 32;
+  public static CHECKSUM_LENGTH = 3;
   public static MAX_TRANSACTION_SIZE = 1024;
   public static DIGEST_LENGTH = 32;
   public static SPECTRUM_DEPTH = 24;

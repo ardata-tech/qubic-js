@@ -1,3 +1,4 @@
+import crypto from '../crypto';
 import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
 import {
@@ -212,13 +213,11 @@ export class Wallet extends QubicBase {
    * @param seed 
    * @returns 
    */
-      public async createIdPackage(seed: string): Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }> {
-          const { schnorrq, K12 } = await crypto;
-  
-          const privateKey = this.privateKey(seed, 0, K12);
-          const publicKey = schnorrq.generatePublicKey(privateKey);
-          const publicId = await this.getIdentity(publicKey);
-  
-          return {publicKey, privateKey, publicId };
-      }
+  async createIdPackage(seed: string): Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }> {
+    const { schnorrq, K12 } = await crypto
+    const privateKey = this.privateKey(seed, 0, K12);
+    const publicKey = schnorrq.generatePublicKey(privateKey);
+    const publicId = await this.getIdentity(publicKey)
+    return {publicKey, privateKey, publicId };
+  }
 }
