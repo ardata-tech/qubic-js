@@ -204,4 +204,21 @@ export class Wallet extends QubicBase {
   async sendTransaction(signedTx: any): Promise<string> {
     return "mock-tx-hash";
   }
+
+  /**
+   * 
+   * Creates a complete ID Package based on the provided seed
+   * 
+   * @param seed 
+   * @returns 
+   */
+      public async createIdPackage(seed: string): Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }> {
+          const { schnorrq, K12 } = await crypto;
+  
+          const privateKey = this.privateKey(seed, 0, K12);
+          const publicKey = schnorrq.generatePublicKey(privateKey);
+          const publicId = await this.getIdentity(publicKey);
+  
+          return {publicKey, privateKey, publicId };
+      }
 }
