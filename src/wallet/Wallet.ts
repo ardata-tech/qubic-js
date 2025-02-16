@@ -262,10 +262,8 @@ export class Wallet extends QubicBase {
         }
     }
     
-    // calculate checksum
     const checksum = await this.getCheckSum(publicKey);
 
-    // convert to int
     let identityBytesChecksum = (checksum[2] << 16) | (checksum[1] << 8) | checksum[0];
     identityBytesChecksum = identityBytesChecksum & 0x3FFFF;
     
