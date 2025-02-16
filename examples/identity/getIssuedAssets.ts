@@ -9,7 +9,7 @@ async function getIssuedAssets() {
 
   try {
     const identity = "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-    const response = await qubic.wallet.getIssuedAssets(identity);
+    const response = await qubic.identity.getIssuedAssets(identity);
     console.log(JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

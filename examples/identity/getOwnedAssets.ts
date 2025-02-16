@@ -8,7 +8,7 @@ async function getOwnedAssets() {
   });
 
   try {
-    const response = await qubic.wallet.getOwnedAssets(
+    const response = await qubic.identity.getOwnedAssets(
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
     );
     console.log(JSON.stringify(response));

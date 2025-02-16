@@ -10,7 +10,7 @@ async function getBalanceByIdentity() {
 
     const identity =
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-    const response = await qubic.wallet.getBalanceByIdentity(identity);
+    const response = await qubic.identity.getBalanceByIdentity(identity);
     console.log("response", response);
   } catch (error) {
     console.error("Error fetching: ", error);

@@ -9,7 +9,7 @@ async function getTransactions() {
 
   try {
     const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-    const response = await qubic.wallet.getTransactions(txId);
+    const response = await qubic.identity.getTransactions(txId);
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

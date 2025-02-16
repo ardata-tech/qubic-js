@@ -8,7 +8,7 @@ async function getApprovedTransactions() {
   });
 
   try {
-    const response = await qubic.wallet.getApprovedTransactions(19231746);
+    const response = await qubic.identity.getApprovedTransactions(19231746);
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

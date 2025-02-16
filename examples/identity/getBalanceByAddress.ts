@@ -8,7 +8,7 @@ async function getBalanceByAddress() {
   });
 
   try {
-    const response = await qubic.wallet.getBalanceByAddress("");
+    const response = await qubic.identity.getBalanceByAddress("");
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
