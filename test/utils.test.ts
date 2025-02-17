@@ -17,7 +17,7 @@ describe("Utils Module", () => {
   });
 
   test("should convert valid public key string to bytes", () => {
-    const publicKeyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZAB";
+    const publicKeyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCD";
     const bytes = Utils.publicKeyStringToBytes(publicKeyString);
     expect(bytes).toBeInstanceOf(Uint8Array);
     expect(bytes.length).toBe(32);
