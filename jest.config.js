@@ -1,10 +1,18 @@
 export default {
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm", // Enable ESM for TypeScript
   testEnvironment: "node",
   testMatch: ["<rootDir>/test/**/*.test.ts"],
   clearMocks: true,
   coverageDirectory: "coverage",
   collectCoverageFrom: ["src/**/*.ts"],
   extensionsToTreatAsEsm: [".ts", ".tsx"],
-  transform: {}
+  transform: {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      { useESM: true } // Ensure Jest treats TS files as ESM
+    ]
+  },
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
+  }
 };
