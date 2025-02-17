@@ -40,13 +40,17 @@ export class Utils {
      * @returns {Uint8Array} The byte array representation of the public key.
      */
     static publicKeyStringToBytes(s: string): Uint8Array {
+        if (!/^[A-Z]{56}$/.test(s)) {
+            throw new Error("Invalid public key format. Expected 56 uppercase letters (A-Z).");
+        }
+        
         const publicKeyBytes = new Uint8Array(32);
         const view = new DataView(publicKeyBytes.buffer, 0);
 
         for (let i = 0; i < 4; i++) {
             view.setBigUint64(i * 8, 0n, true);
             for (let j = 14; j-- > 0; ) {
-                view.setBigUint64(i * 8, view.getBigUint64(i * 8, true) * 26n + BigInt(s.charCodeAt(i * 14 + j)) - BigInt('A'.charCodeAt(0)), true);
+                view.setBigUint64(i * 8, view.getBigUint64(i * 8, true) * 26n + BigInt(s.charCodeAt(i * 14 + j) - 'A'.charCodeAt(0)), true);
             }
         }
 
