@@ -5,7 +5,7 @@ export default {
   clearMocks: true,
   coverageDirectory: "coverage",
   collectCoverageFrom: ["src/**/*.ts"],
-  extensionsToTreatAsEsm: [".ts", ".tsx", ".js"], // Treat JavaScript files as ESM too
+  extensionsToTreatAsEsm: [".ts", ".tsx"],
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
