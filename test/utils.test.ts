@@ -16,8 +16,8 @@ describe("Utils Module", () => {
     expect(hex.length).toBe(bytes.length * 2);
   });
 
-  test("should convert public key string to bytes", () => {
-    const publicKeyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCD";
+  test("should convert valid public key string to bytes", () => {
+    const publicKeyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZAB";
     const bytes = Utils.publicKeyStringToBytes(publicKeyString);
     expect(bytes).toBeInstanceOf(Uint8Array);
     expect(bytes.length).toBe(32);
@@ -44,7 +44,7 @@ describe("Utils Module", () => {
     expect(publicKeyStr.length).toBe(56);
   });
 
-  test("should convert seed string to bytes", () => {
+  test("should convert valid seed string to bytes", () => {
     const seed = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy";
     const bytes = Utils.seedStringToBytes(seed);
     expect(bytes).toBeInstanceOf(Uint8Array);
