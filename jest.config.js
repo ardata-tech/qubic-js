@@ -1,5 +1,5 @@
 export default {
-  preset: "ts-jest/presets/default-esm", // Use ESM with TypeScript
+  preset: "ts-jest/presets/default-esm",
   testEnvironment: "node",
   testMatch: ["<rootDir>/test/**/*.test.ts"],
   clearMocks: true,
