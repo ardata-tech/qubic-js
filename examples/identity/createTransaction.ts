@@ -1,7 +1,7 @@
 import Qubic from "../../src/qubic";
 import { TransactionBuilder } from '../../src/transaction/TransactionBuilder'
 
-async function createIdPackage() {
+async function main() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -19,17 +19,22 @@ async function createIdPackage() {
     
     const signSeed = "slkdfj";
 
-    const result = new TransactionBuilder()
-    .setSource(identitySourceId)
-    .setDestination(identityDestinationId)
-    .setAmount(10)
-    .setTick(10)
-    .setInputSize(10)
-    .setInputType(1)
-    .setPayload(signSeed)
-    .build()
+    const identityResult = await qubic.identity.verifyIdentity(identitySourceId);
+    console.log("identityResult", identityResult);
+
+    const tx = new TransactionBuilder(qubic.identity)
+    await tx.setSource(identitySourceId);
     
-    console.log(result);
+      // .setSource(identitySourceId))
+      // .setDestination(identityDestinationId)
+      // .setAmount(10)
+      // .setTick(10)
+      // .setInputSize(10)
+      // .setInputType(1)
+      // .setPayload(signSeed)
+      // .build();
+    
+    console.log(tx);
 
 
   } catch (error) {
@@ -37,4 +42,4 @@ async function createIdPackage() {
   }
 }
 
-createIdPackage();
+main();

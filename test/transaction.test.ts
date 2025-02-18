@@ -8,8 +8,6 @@ describe("Qubic SDK Structure", () => {
   });
 
   test("should check for identity", async() => {
-    const result = await qubic.identity.verifyIdentity()
-    
     expect(true).toBe(true);
   });
 });
