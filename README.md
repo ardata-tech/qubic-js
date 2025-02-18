@@ -100,6 +100,12 @@ npm install
 npm test
 ```
 
+### Run Example Scripts
+
+```sh
+npx ts-node examples/identity/createIdPackage.ts
+```
+
 ---
 
 ## 🌐 Links
