@@ -258,6 +258,26 @@ export class Identity extends QubicBase {
   }
 
   /**
+   * Generates a public key and a public identity string from a given private key.
+   * 
+   * @param {Uint8Array} privateKey - The private key as a byte array.
+   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} 
+   *          - The generated ID package containing:
+   *            - `publicKey`: The generated public key as a byte array.
+   *            - `publicId`: The derived public identity string.
+   */
+  async createIdPackageFromPrivateKey(privateKey: Uint8Array): Promise<{ publicKey: Uint8Array, publicId: string }> {
+    const { schnorrq } = await crypto;
+    // Derive the public key from the private key
+    const publicKey = schnorrq.generatePublicKey(privateKey);
+
+    // Compute the public identity from the public key
+    const publicId = await this.getIdentity(publicKey);
+
+    return { publicKey, publicId };
+  }
+
+  /**
    * Generates a private key from a seed using an iterative process.
    * 
    * @param {string} seed - The input seed string.
