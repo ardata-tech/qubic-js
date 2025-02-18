@@ -256,6 +256,13 @@ interface IGetOwnedAssets {
   ownedAssets:[]
 }
 
+interface ITransactionBuilderPayload {
+   issuer: string
+    assetName: number | bigint | Uint8Array
+    price: number | bigint | Uint8Array  
+    numberOfShares: number | bigint | Uint8Array 
+}
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -279,4 +286,5 @@ export {
   IGetTransaction,
   IGetTransferTransaction,
   IGetOwnedAssets,
+  ITransactionBuilderPayload,
 };

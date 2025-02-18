@@ -10,7 +10,7 @@ async function getTransferTransactions() {
   try {
     const identity =
       "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-    const response = await qubic.identity.getTransferTransactions(identity);
+    const response = await qubic.transaction.getTransferTransactions(identity);
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
