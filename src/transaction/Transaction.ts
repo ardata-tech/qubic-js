@@ -1,4 +1,5 @@
 import { QubicBase } from "../base";
+import { QubicConstants } from "../constants";
 import { QubicProvider } from "../provider";
 import {
   IBroadcastTransactionResponse,
@@ -107,18 +108,20 @@ export class Transaction extends QubicBase {
   }
 
   async generateEncodedTransaction(
-    sourcePublicKey:string,
-    signSeed:string,
+    sourcePublicKey: string,
+    signSeed: string,
     action: "SELL" | "BUY" | "CANCEL_SELL" | "CANCEL_BUY"
   ) {
-
     switch (action) {
-      case "SELL": break;
-      case "BUY": break;
-      case "CANCEL_SELL": break;
-      case "CANCEL_BUY": break;
+      case "SELL":
+        break;
+      case "BUY":
+        break;
+      case "CANCEL_SELL":
+        break;
+      case "CANCEL_BUY":
+        break;
     }
-    
   }
 
   async createTransaction(from: string, to: string, amount: number) {
@@ -131,5 +134,96 @@ export class Transaction extends QubicBase {
 
   async sendTransaction(signedTx: any): Promise<string> {
     return "mock-tx-hash";
+  }
+
+  private getPackageData(value: bigint): Uint8Array {
+    let buffer = new ArrayBuffer(8);
+    let dataview = new DataView(buffer);
+    dataview.setBigInt64(0, value, true);
+    return new Uint8Array(buffer);
+  }
+
+  private encodeTransactionToBase64(transaction: Uint8Array) {
+    //todo:
+    //const byteArray = new Uint8Array(transaction);
+    //throwing issue please fix this
+
+    const byteArray: any = new Uint8Array(transaction);
+    const str = String.fromCharCode.apply(null, byteArray);
+    return btoa(str);
+  }
+
+  private getTransactionByteSize() {
+    return (
+      this.identityInstance.getIdentityBytes(this.sourceKey).length +
+      this.identityInstance.getIdentityBytes(this.destinationKey).length +
+      8 + // amount
+      4 + // tick
+      2 + // inputType
+      2 + // inputSize
+      this.inputSize
+      //this.signature.getPackageSize()
+    );
+  }
+
+  /**
+   *
+   * TODO:
+   * need modify it base on the current code
+   */
+  private signAndDigest(seed: string): Promise<{
+    signedData: Uint8Array;
+    digest: Uint8Array;
+    signature: Uint8Array;
+  }> {
+    return crypto.then(({ schnorrq, K12 }) => {
+      const keyHelper = new KeyHelper();
+
+      const privateKey = keyHelper.privateKey(seed, 0, K12);
+      const publicKey = keyHelper.createPublicKey(privateKey, schnorrq, K12);
+
+      const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
+      const toSign = this.packet.slice(0, this.offset);
+
+      K12(toSign, digest, QubicDefinitions.DIGEST_LENGTH);
+      const signature = schnorrq.sign(privateKey, publicKey, digest);
+
+      this.packet.set(signature, this.offset);
+      this.offset += QubicConstants.SIGNATURE_LENGTH;
+
+      const signedData = this.packet.slice(0, this.offset);
+      K12(signedData, digest, QubicConstants.DIGEST_LENGTH);
+
+      return {
+        signedData: signedData,
+        digest: digest,
+        signature: signature,
+      };
+    });
+  }
+
+  /**
+   *
+   * TODO:
+   * need modify it base on the current code
+   */
+  private sign(seed: string): Promise<Uint8Array> {
+    return crypto.then(({ schnorrq, K12 }) => {
+      const keyHelper = new KeyHelper();
+
+      const privateKey = keyHelper.privateKey(seed, 0, K12);
+      const publicKey = keyHelper.createPublicKey(privateKey, schnorrq, K12);
+
+      const digest = new Uint8Array(QubicDefinitions.DIGEST_LENGTH);
+      const toSign = this.packet.slice(0, this.offset);
+
+      K12(toSign, digest, QubicDefinitions.DIGEST_LENGTH);
+      const signatur = schnorrq.sign(privateKey, publicKey, digest);
+
+      this.packet.set(signatur, this.offset);
+      this.offset += QubicDefinitions.SIGNATURE_LENGTH;
+
+      return this.packet.slice(0, this.offset);
+    });
   }
 }

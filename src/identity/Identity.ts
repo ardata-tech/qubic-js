@@ -259,7 +259,7 @@ export class Identity extends QubicBase {
    * @param {string} identity - The identity string to convert.
    * @returns {Uint8Array} - The resulting public key as a byte array.
    */
-  private getIdentityBytes(identity: string): Uint8Array {
+  public getIdentityBytes(identity: string): Uint8Array {
     const publicKeyBytes = new Uint8Array(32);
     const view = new DataView(publicKeyBytes.buffer, 0);
 

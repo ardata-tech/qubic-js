@@ -74,29 +74,6 @@ export class TransactionBuilder {
     return this;
   }
 
-  private encodeTransactionToBase64(transaction: Uint8Array) {
-    //todo:
-    //const byteArray = new Uint8Array(transaction);
-    //throwing issue please fix this
-
-    const byteArray: any = new Uint8Array(transaction);
-    const str = String.fromCharCode.apply(null, byteArray);
-    return btoa(str);
-  }
-  
-  private getTransactionByteSize() {
-    return (
-      this.identityInstance.getIdentityBytes(this.sourceKey).length + 
-      this.identityInstance.getIdentityBytes(this.destinationKey).length +
-      8 + // amount
-      4 + // tick
-      2 + // inputType
-      2 + // inputSize
-      this.inputSize 
-      //this.signature.getPackageSize()
-    );
-  }
-
   public build() {
     return this;
   }
