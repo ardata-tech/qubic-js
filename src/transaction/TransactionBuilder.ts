@@ -6,7 +6,7 @@ class TransactionBuilder {
 
     constructor(payload: ITransactionBuilderPayload) {
         this.payload = payload;
-        this.setSourcePublicKey()
+        this.setSourcePublicKey(this.payload.issuer)
   }
 
     public setSourcePublicKey(sourcePublicKey: string) {
