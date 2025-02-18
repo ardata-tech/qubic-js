@@ -8,14 +8,15 @@ import { Identity } from "../identity";
 
 export class TransactionBuilder {
   private identityInstance: Identity;
-  
-  sourceKey: string | null = null;
-  destinationKey: string | null = null;
-  amout: number = 0;
+  encodeTransaction: string | null = null;
+  sourceKey: string = '';
+  destinationKey: string = '';
+  amout: number | bigint | Uint8Array = 0;
   tick: number = 0;
   inputSize: number = 0;
   inputType: number = 0;
   payload: any = null;
+  id: string | null = null;
 
   constructor(identityInstance: Identity) {
     this.identityInstance = identityInstance;
@@ -30,12 +31,25 @@ export class TransactionBuilder {
     return this;
   }
 
-  public setDestination(destinationKey: string) {
+  public async setDestination(destinationKey: string) {
+    const isValidKey = await this.identityInstance.verifyIdentity(
+      destinationKey
+    );
+    if (!isValidKey) {
+      throw new Error("Invalid destination key");
+    }
     this.destinationKey = destinationKey;
     return this;
   }
 
-  public setAmount(amount: number) {
+  public setAmount(amount: number | bigint | Uint8Array | undefined) {
+    if (amount === undefined) {
+      throw new Error("Invalid amount");
+    }
+    if (amount instanceof Uint8Array) {
+      const view = new DataView(amount.buffer, 0);
+      this.amout = view.getBigUint64(0, true);
+    }
     this.amout = amount;
     return this;
   }
@@ -58,6 +72,29 @@ export class TransactionBuilder {
   public setInputType(inputType: number) {
     this.inputSize = inputType;
     return this;
+  }
+
+  private encodeTransactionToBase64(transaction: Uint8Array) {
+    //todo:
+    //const byteArray = new Uint8Array(transaction);
+    //throwing issue please fix this
+
+    const byteArray: any = new Uint8Array(transaction);
+    const str = String.fromCharCode.apply(null, byteArray);
+    return btoa(str);
+  }
+  
+  private getTransactionByteSize() {
+    return (
+      this.identityInstance.getIdentityBytes(this.sourceKey).length + 
+      this.identityInstance.getIdentityBytes(this.destinationKey).length +
+      8 + // amount
+      4 + // tick
+      2 + // inputType
+      2 + // inputSize
+      this.inputSize 
+      //this.signature.getPackageSize()
+    );
   }
 
   public build() {
