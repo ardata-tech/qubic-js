@@ -109,7 +109,7 @@ export class TransactionBuilder {
   }
 
   public build() {
-    this.computePocketDataSize();
+    this.setMaxPacketDataSize();
     this.addRaw(this.sourceKey);
     this.addRaw(this.destinationKey);
     this.addRaw(this.amout);
@@ -120,7 +120,7 @@ export class TransactionBuilder {
     return this;
   }
 
-  private computePocketDataSize() {
+  private setMaxPacketDataSize() {
     const total =
       this.sourceKey.length +
       this.destinationKey.length +
