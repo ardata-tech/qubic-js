@@ -1,6 +1,8 @@
 import { QubicBase } from "../base";
 import { QubicConstants } from "../constants";
 import { QubicProvider } from "../provider";
+import crypto from "../crypto";
+
 import {
   IBroadcastTransactionResponse,
   IGetApproveTransactions,
@@ -8,6 +10,7 @@ import {
   IGetTransaction,
   IGetTransferTransaction,
 } from "../types";
+import { TransactionBuilder } from "./TransactionBuilder";
 
 export class Transaction extends QubicBase {
   constructor(provider: QubicProvider) {
@@ -95,6 +98,7 @@ export class Transaction extends QubicBase {
   async broadcastTransaction(
     encodedTransaction: string
   ): Promise<IBroadcastTransactionResponse | null> {
+    console.log("broadcastTransaction encodedTransaction:", encodedTransaction);
     try {
       return await this.httpClient.call<IBroadcastTransactionResponse>(
         `/${this.version}/broadcast-transaction`,
@@ -107,25 +111,32 @@ export class Transaction extends QubicBase {
     }
   }
 
-  async generateEncodedTransaction(
-    sourcePublicKey: string,
-    signSeed: string,
-    action: "SELL" | "BUY" | "CANCEL_SELL" | "CANCEL_BUY"
-  ) {
-    switch (action) {
-      case "SELL":
-        break;
-      case "BUY":
-        break;
-      case "CANCEL_SELL":
-        break;
-      case "CANCEL_BUY":
-        break;
-    }
-  }
+  async createTransaction(
+    from: string,
+    to: string,
+    amount: number,
+    seed: string
+  ): Promise<{ id: string; base64EncodedTransaction:string }> {
+    const tb = new TransactionBuilder()
+      .setSourceBytes(this.getIdentityBytes(from))
+      .setDestinationBytes(this.getIdentityBytes(to))
+      .setAmount(amount)
+      .build();
 
-  async createTransaction(from: string, to: string, amount: number) {
-    return { from, to, amount, nonce: Date.now() };
+    const { signedData, digest, signature } = await this.signDigest(
+      seed,
+      tb.getDataPacket(),
+      tb.getDataOffset()
+    );
+    const id = await this.getIdentity(signature, true);
+    tb.setBuiltData(signedData);
+    tb.setDigest(digest);
+    tb.setSignature(signature);
+
+    return {
+      id,
+      base64EncodedTransaction: this.encodeTransactionToBase64(signedData),
+    };
   }
 
   async signTransaction(tx: any): Promise<any> {
@@ -136,94 +147,34 @@ export class Transaction extends QubicBase {
     return "mock-tx-hash";
   }
 
-  private getPackageData(value: bigint): Uint8Array {
-    let buffer = new ArrayBuffer(8);
-    let dataview = new DataView(buffer);
-    dataview.setBigInt64(0, value, true);
-    return new Uint8Array(buffer);
-  }
-
   private encodeTransactionToBase64(transaction: Uint8Array) {
-    //todo:
-    //const byteArray = new Uint8Array(transaction);
-    //throwing issue please fix this
-
-    const byteArray: any = new Uint8Array(transaction);
-    const str = String.fromCharCode.apply(null, byteArray);
+    const byteArray: Uint8Array = new Uint8Array(transaction);
+    const str = String.fromCharCode.apply(null, Array.from(byteArray));
     return btoa(str);
   }
 
-  private getTransactionByteSize() {
-    return (
-      this.identityInstance.getIdentityBytes(this.sourceKey).length +
-      this.identityInstance.getIdentityBytes(this.destinationKey).length +
-      8 + // amount
-      4 + // tick
-      2 + // inputType
-      2 + // inputSize
-      this.inputSize
-      //this.signature.getPackageSize()
-    );
-  }
+  public async signDigest(
+    seed: string,
+    packet: Uint8Array,
+    offset: number
+  ): Promise<any> {
+    const { schnorrq, K12 } = await crypto;
+    const privateKey = this.generatePrivateKey(seed, 0, K12);
+    const publicKey = schnorrq.generatePublicKey(privateKey);
+    const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
 
-  /**
-   *
-   * TODO:
-   * need modify it base on the current code
-   */
-  private signAndDigest(seed: string): Promise<{
-    signedData: Uint8Array;
-    digest: Uint8Array;
-    signature: Uint8Array;
-  }> {
-    return crypto.then(({ schnorrq, K12 }) => {
-      const keyHelper = new KeyHelper();
+    const toSign = packet.slice(0, offset);
+    K12(toSign, digest, QubicConstants.DIGEST_LENGTH);
+    const signature = schnorrq.sign(privateKey, publicKey, digest);
+    packet.set(signature, offset);
+    offset += QubicConstants.SIGNATURE_LENGTH;
+    const signedData = packet.slice(0, offset);
+    K12(signedData, digest, QubicConstants.DIGEST_LENGTH);
 
-      const privateKey = keyHelper.privateKey(seed, 0, K12);
-      const publicKey = keyHelper.createPublicKey(privateKey, schnorrq, K12);
-
-      const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
-      const toSign = this.packet.slice(0, this.offset);
-
-      K12(toSign, digest, QubicDefinitions.DIGEST_LENGTH);
-      const signature = schnorrq.sign(privateKey, publicKey, digest);
-
-      this.packet.set(signature, this.offset);
-      this.offset += QubicConstants.SIGNATURE_LENGTH;
-
-      const signedData = this.packet.slice(0, this.offset);
-      K12(signedData, digest, QubicConstants.DIGEST_LENGTH);
-
-      return {
-        signedData: signedData,
-        digest: digest,
-        signature: signature,
-      };
-    });
-  }
-
-  /**
-   *
-   * TODO:
-   * need modify it base on the current code
-   */
-  private sign(seed: string): Promise<Uint8Array> {
-    return crypto.then(({ schnorrq, K12 }) => {
-      const keyHelper = new KeyHelper();
-
-      const privateKey = keyHelper.privateKey(seed, 0, K12);
-      const publicKey = keyHelper.createPublicKey(privateKey, schnorrq, K12);
-
-      const digest = new Uint8Array(QubicDefinitions.DIGEST_LENGTH);
-      const toSign = this.packet.slice(0, this.offset);
-
-      K12(toSign, digest, QubicDefinitions.DIGEST_LENGTH);
-      const signatur = schnorrq.sign(privateKey, publicKey, digest);
-
-      this.packet.set(signatur, this.offset);
-      this.offset += QubicDefinitions.SIGNATURE_LENGTH;
-
-      return this.packet.slice(0, this.offset);
-    });
+    return {
+      signedData: signedData,
+      digest: digest,
+      signature: signature,
+    };
   }
 }

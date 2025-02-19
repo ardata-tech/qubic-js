@@ -4,53 +4,53 @@
  * necessary information is included for processing the transaction.
  */
 
-import { Identity } from "../identity";
-
+import { QubicConstants } from "../constants";
+import { ITransactionPayload } from "../types";
 export class TransactionBuilder {
-  private identityInstance: Identity;
-  encodeTransaction: string | null = null;
-  sourceKey: string = '';
-  destinationKey: string = '';
-  amout: number | bigint | Uint8Array = 0;
-  tick: number = 0;
-  inputSize: number = 0;
-  inputType: number = 0;
-  payload: any = null;
-  id: string | null = null;
+  private sourceKey: Uint8Array;
+  private destinationKey: Uint8Array;
+  private tick: number = 0;
+  private inputSize: number = 0;
+  private inputType: number = 0;
+  private packet: Uint8Array;
+  private offset: number = 0;
+  private payload: Uint8Array;
+  private amout: Uint8Array;
+  private signature: Uint8Array;
+  private builtData: Uint8Array;
+  private digest: Uint8Array;
 
-  constructor(identityInstance: Identity) {
-    this.identityInstance = identityInstance;
+  constructor() {
+    this.packet = new Uint8Array(0);
+    this.sourceKey = new Uint8Array(0);
+    this.destinationKey = new Uint8Array(0);
+    this.amout = new Uint8Array(0);
+    this.builtData = new Uint8Array(0);
+    this.digest = new Uint8Array(0);
+    this.payload = new Uint8Array(QubicConstants.MAX_TRANSACTION_SIZE).fill(0);
+    this.signature = new Uint8Array(QubicConstants.SIGNATURE_LENGTH).fill(0);
   }
 
-  public async setSource(sourceKey: string) {
-    const isValidKey = await this.identityInstance.verifyIdentity(sourceKey);
-    if (!isValidKey) {
-      throw new Error("Invalid source key");
-    }
-    this.sourceKey = sourceKey;
+  public setSourceBytes(sourceBytes: Uint8Array) {
+    this.sourceKey = sourceBytes;
     return this;
   }
 
-  public async setDestination(destinationKey: string) {
-    const isValidKey = await this.identityInstance.verifyIdentity(
-      destinationKey
-    );
-    if (!isValidKey) {
-      throw new Error("Invalid destination key");
-    }
+  public setDestinationBytes(destinationKey: Uint8Array) {
     this.destinationKey = destinationKey;
     return this;
   }
 
-  public setAmount(amount: number | bigint | Uint8Array | undefined) {
-    if (amount === undefined) {
-      throw new Error("Invalid amount");
-    }
+  public setAmount(amount: number | bigint | Uint8Array) {
+    let amountUint8Array: Uint8Array;
     if (amount instanceof Uint8Array) {
-      const view = new DataView(amount.buffer, 0);
-      this.amout = view.getBigUint64(0, true);
+      amountUint8Array = amount;
+    } else if (typeof amount === "number") {
+      amountUint8Array = this.getPackageData(BigInt(amount));
+    } else {
+      amountUint8Array = this.getPackageData(amount);
     }
-    this.amout = amount;
+    this.amout = amountUint8Array;
     return this;
   }
 
@@ -64,17 +64,112 @@ export class TransactionBuilder {
     return this;
   }
 
-  public setPayload(payload: any) {
-    this.payload = payload;
+  public setPayload(payload: ITransactionPayload) {
+    //todo:
+    //learn how to parse ITransactionPayload to Uint8Array
     return this;
   }
 
   public setInputType(inputType: number) {
-    this.inputSize = inputType;
+    this.inputType = inputType;
     return this;
   }
 
-  public build() {
+  public getDataPacket() {
+    return this.packet;
+  }
+
+  public getDataOffset() {
+    return this.offset;
+  }
+
+  public setBuiltData(builtData: Uint8Array) {
+    this.builtData = builtData;
     return this;
+  }
+
+  public getBuiltData() {
+    return this.builtData;
+  }
+
+  public setDigest(digest: Uint8Array) {
+    this.digest = digest;
+  }
+
+  public getDigest() {
+    return this.digest;
+  }
+
+  public setSignature(signature: Uint8Array) {
+    this.signature = signature;
+  }
+
+  public getSignature() {
+    return this.signature;
+  }
+
+  public build() {
+    this.computePocketDataSize();
+    this.addRaw(this.sourceKey);
+    this.addRaw(this.destinationKey);
+    this.addRaw(this.amout);
+    this.addInt(this.tick);
+    this.addShort(this.inputType);
+    this.addShort(this.inputSize);
+    //this.addRaw(this.payload);
+    return this;
+  }
+
+  private computePocketDataSize() {
+    const total =
+      this.sourceKey.length +
+      this.destinationKey.length +
+      this.amout.length +
+      4 + // tick
+      2 + // inputType
+      2 + // inputSize
+      this.inputSize +
+      this.signature.length;
+    this.packet = new Uint8Array(total);
+  }
+
+  private addRaw(q: Uint8Array) {
+    this.packet.set(q, this.offset);
+    this.offset += q.length;
+    return this;
+  }
+
+  private getPackageData(value: bigint): Uint8Array {
+    let buffer = new ArrayBuffer(8);
+    let dataview = new DataView(buffer);
+    dataview.setBigInt64(0, value, true);
+    return new Uint8Array(buffer);
+  }
+
+  private addShort(q: number /* must be a short */) {
+    this.packet.set(this.FromShort(q), this.offset);
+    this.offset += 2;
+    return this;
+  }
+
+  private addInt(q: number /* must be a short */) {
+    this.packet.set(this.FromInt(q), this.offset);
+    this.offset += 4;
+    return this;
+  }
+
+  private FromInt(num: number): Uint8Array {
+    // If num is a 32-bit integer
+    let buffer = new ArrayBuffer(4); // 4 bytes for a 32-bit integer
+    let dataview = new DataView(buffer);
+    dataview.setInt32(0, num, true); // Use setUint32 if you are dealing with unsigned integers
+    return new Uint8Array(buffer);
+  }
+  private FromShort(num: number): Uint8Array {
+    // If num is a 32-bit integer
+    let buffer = new ArrayBuffer(2); // 4 bytes for a 32-bit integer
+    let dataview = new DataView(buffer);
+    dataview.setInt16(0, num, true); // Use setUint32 if you are dealing with unsigned integers
+    return new Uint8Array(buffer);
   }
 }

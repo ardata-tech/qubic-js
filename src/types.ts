@@ -254,7 +254,7 @@ interface IGetOwnedAssets {
   ownedAssets: [];
 }
 
-interface ITransactionBuilderPayload {
+interface ITransactionPayload {
   issuer: string;
   assetName: number | bigint | Uint8Array;
   price: number | bigint | Uint8Array;
@@ -284,5 +284,5 @@ export {
   IGetTransaction,
   IGetTransferTransaction,
   IGetOwnedAssets,
-  ITransactionBuilderPayload,
+  ITransactionPayload,
 };

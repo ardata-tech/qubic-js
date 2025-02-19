@@ -22,27 +22,6 @@ async function main() {
     const identityResult = await qubic.identity.verifyIdentity(identitySourceId);
     console.log("identityResult", identityResult);
 
-    const tx = new TransactionBuilder(qubic.identity)
-    .setAmount(10)
-    .setTick(10)
-    .setInputSize(10)
-    .setInputType(1)
-    .setPayload(signSeed)
-    await tx.setSource(identitySourceId);
-    await tx.setDestination(identitySourceId);
-    
-      // .setSource(identitySourceId))
-      // .setDestination(identityDestinationId)
-      // .setAmount(10)
-      // .setTick(10)
-      // .setInputSize(10)
-      // .setInputType(1)
-      // .setPayload(signSeed)
-      // .build();
-    
-    console.log(tx);
-
-
   } catch (error) {
     console.error("Error fetching: ", error);
   }
