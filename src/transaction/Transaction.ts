@@ -2,7 +2,7 @@ import { QubicBase } from "../base";
 import { QubicConstants } from "../constants";
 import { QubicProvider } from "../provider";
 import crypto from "../crypto";
-
+import { TransactionBuilder } from "./TransactionBuilder";
 import {
   IBroadcastTransactionResponse,
   IGetApproveTransactions,
@@ -10,7 +10,7 @@ import {
   IGetTransaction,
   IGetTransferTransaction,
 } from "../types";
-import { TransactionBuilder } from "./TransactionBuilder";
+
 
 export class Transaction extends QubicBase {
   constructor(provider: QubicProvider) {

@@ -1,11 +1,6 @@
-/**
- * Transaction Structure: Each transaction consists of several key components, including the source and destination public keys,
- * the amount to be transferred, the tick (timestamp), input type, input size, and a payload. This structure ensures that all
- * necessary information is included for processing the transaction.
- */
-
 import { QubicConstants } from "../constants";
 import { ITransactionPayload } from "../types";
+
 export class TransactionBuilder {
   private sourceKey: Uint8Array;
   private destinationKey: Uint8Array;
