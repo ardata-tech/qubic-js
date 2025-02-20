@@ -1,6 +1,6 @@
-# Qubic TS
+# Qubic.js
 
-**Qubic TS** is an NPM library designed to facilitate seamless interaction with the **Qubic network**. This library enables developers to connect their applications to the Qubic blockchain efficiently.
+**Qubic.js** is an NPM library designed to facilitate seamless interaction with the **Qubic network**. This library enables developers to connect their applications to the Qubic blockchain efficiently.
 
 ## Features
 
@@ -13,14 +13,14 @@
 
 ## 📦 Installation
 
-You can install **Qubic TS** via **npm** or **yarn**:
+You can install **Qubic.js** via **npm** or **yarn**:
 
 ```sh
 # Using npm
-npm install qubic-ts
+npm install qubic
 
 # Using yarn
-yarn add qubic-ts
+yarn add qubic
 ```
 
 ---

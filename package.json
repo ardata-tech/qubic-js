@@ -1,7 +1,7 @@
 {
-  "name": "qubic-ts",
+  "name": "qubic",
   "version": "0.1.4",
-  "description": "Qubic TS is an NPM library designed to facilitate seamless interaction with the Qubic network.",
+  "description": "Qubic.js is an NPM library designed to facilitate seamless interaction with the Qubic network.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
