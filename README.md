@@ -30,7 +30,7 @@ yarn add qubic
 ### Import the Library
 
 ```javascript
-import Qubic from 'qubic-ts';
+import Qubic from 'qubic';
 ```
 
 ### Initialize the Connection
