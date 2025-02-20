@@ -54,8 +54,14 @@ describe("Utils Module", () => {
   test("should convert hex string to base26", () => {
     const hex = "0xC4aE1B5f8872D961cF6C1c9E16A3FCAe2C89e5E6";
     const base26 = Utils.hexToBase26(hex);
-    console.log(base26);
     expect(base26).toBeDefined();
     expect(typeof base26).toBe("string");
+  });
+
+  test("should convert base26 to hex string", () => {
+    const base26 = "wslioomgijdjtuhrjvoswvwgjczbnikuve";
+    const hex = Utils.base26ToHex(base26);
+    expect(hex).toBeDefined();
+    expect(typeof hex).toBe("string");
   });
 });
