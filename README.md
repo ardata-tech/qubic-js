@@ -78,8 +78,8 @@ import Qubic from 'qubic';
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/qubic-ts.git
-cd qubic-connect
+git clone https://github.com/your-repo/qubic-js.git
+cd qubic-js
 npm install
 ```
 
