@@ -1,7 +1,7 @@
 {
-  "name": "qubic-connect",
-  "version": "0.1.0",
-  "description": "Qubic Connect is an NPM library designed to facilitate seamless interaction with the Qubic network.",
+  "name": "qubic-ts",
+  "version": "0.1.1",
+  "description": "Qubic TS is an NPM library designed to facilitate seamless interaction with the Qubic network.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
