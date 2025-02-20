@@ -8,16 +8,20 @@ const main = async () => {
   });
 
   try {
+    //if you don't have wallet yet
+    //create wallet here: https://wallet.qubic.org/
 
-    //params
+    //TODO:
+    //need to fill-up the parameters in order to process the transaction
     const from = "wallet-address-source";
     const to = "wallet-address-destination";
-    const seed = "wallet-seed"
-    const latestTick = await qubic.chain.getLatestTick() || 0;
+    const seed = "wallet-seed";
+    const latestTick = (await qubic.chain.getLatestTick()) || 0;
 
-    //assemble the transaction
-    //create signing
-    //broadcast to RPC endpoint
+    //process flow:
+    //this function will assemble the transaction parameter,
+    //it then process the transaction signing,
+    //after that it will broadcast to RPC via Rest API
     const tx = await qubic.transaction.createTransaction(
       from,
       to,

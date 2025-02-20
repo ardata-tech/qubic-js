@@ -22,7 +22,7 @@ export class TransactionBuilder {
     this.amout = new Uint8Array(0);
     this.builtData = new Uint8Array(0);
     this.digest = new Uint8Array(0);
-    this.payload = new Uint8Array(QubicConstants.MAX_TRANSACTION_SIZE).fill(0);
+    this.payload = new Uint8Array(0);
     this.signature = new Uint8Array(QubicConstants.SIGNATURE_LENGTH).fill(0);
   }
 
@@ -62,6 +62,7 @@ export class TransactionBuilder {
   public setPayload(payload: ITransactionPayload) {
     //todo:
     //learn how to parse ITransactionPayload to Uint8Array
+    this.payload = new Uint8Array(QubicConstants.MAX_TRANSACTION_SIZE).fill(0);
     return this;
   }
 
@@ -111,8 +112,8 @@ export class TransactionBuilder {
     this.addInt(this.tick);
     this.addShort(this.inputType);
     this.addShort(this.inputSize);
-    //this.addRaw(this.payload);
-    return this
+    this.addRaw(this.payload);
+    return this;
   }
 
   private setMaxPacketDataSize() {
