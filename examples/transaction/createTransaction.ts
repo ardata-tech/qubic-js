@@ -23,7 +23,7 @@ const main = async () => {
       to,
       100,
       seed,
-      latestTick + 1
+      latestTick + 3
     );
     console.log("transaction", tx);
   } catch (error) {
