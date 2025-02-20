@@ -200,25 +200,23 @@ export class Identity extends QubicBase {
     return { from, to, amount, nonce: Date.now() };
   }
 
-  async signTransaction(tx: any): Promise<any> {
-    return { ...tx, signature: "mock-signature" };
+  /**
+   * Signs a transaction using a private key and a cryptographic digest.
+   * 
+   * @param {Uint8Array} data - The transaction data to sign.
+   * @param {Uint8Array} digest - The cryptographic digest of the transaction data.
+   * @param {Uint8Array} privateKey - The private key used to sign the transaction.
+   * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
+   */
+  public async signTransaction(data: Uint8Array, digest: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array> {
+    const { schnorrq, K12 } = await crypto;
+    K12(data, digest, QubicConstants.DIGEST_LENGTH);
+    const signedTransaction = schnorrq.sign(privateKey, digest)
+    return signedTransaction;
   }
 
   async sendTransaction(signedTx: any): Promise<string> {
     return "mock-tx-hash";
-  }
-
-  /**
-   * Generates a cryptographic signature for a given message digest using a private key.
-   * 
-   * @param {Uint8Array} privateKey - The private key used to sign the digest.
-   * @param {Uint8Array} digest - The message digest to sign.
-   * @returns {Promise<Uint8Array>} - The generated signature as a byte array.
-   */
-  public async signDigest(privateKey: Uint8Array, digest: Uint8Array): Promise<Uint8Array> {
-    const { schnorrq } = await crypto;
-    const signedDigest = schnorrq.sign(privateKey, digest)
-    return signedDigest;
   }
 
   /**
