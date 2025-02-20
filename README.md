@@ -41,16 +41,6 @@ import Qubic from 'qubic';
 
 ---
 
-## 🔑 Connecting Wallet
-
-To request connection to the Qubic network via MetaMask:
-
-```javascript
-// Sample code here
-```
-
----
-
 ## 💡 Fetching Account Balance
 
 ```javascript
