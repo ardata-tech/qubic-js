@@ -201,7 +201,7 @@ export class Identity extends QubicBase {
   }
 
   /**
-   * Signs a transaction using a private key and a cryptographic digest.
+   * Signs a transaction using a private key and returns the signed transaction.
    * 
    * @param {Uint8Array} data - The transaction data to sign.
    * @param {Uint8Array} privateKey - The private key used to sign the transaction.
