@@ -78,8 +78,13 @@ import Qubic from 'qubic';
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/qubic-js.git
+git clone https://github.com/ardata-tech/qubic-js.git
 cd qubic-js
+```
+
+### Install Dependencies
+
+```sh
 npm install
 ```
 
