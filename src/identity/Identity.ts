@@ -204,15 +204,26 @@ export class Identity extends QubicBase {
    * Signs a transaction using a private key and a cryptographic digest.
    * 
    * @param {Uint8Array} data - The transaction data to sign.
-   * @param {Uint8Array} digest - The cryptographic digest of the transaction data.
    * @param {Uint8Array} privateKey - The private key used to sign the transaction.
    * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
    */
-  public async signTransaction(data: Uint8Array, digest: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array> {
+  public async signTransaction(data: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array> {
+    // Import the necessary cryptographic functions
     const { schnorrq, K12 } = await crypto;
+
+    // Generate a cryptographic digest of the transaction data
+    const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH)
+    
+    // Generate the public key from the private key
     const publicKey = schnorrq.generatePublicKey(privateKey);
+
+    // Sign the transaction using the private key and the digest
     K12(data, digest, QubicConstants.DIGEST_LENGTH);
+    
+    // Sign the transaction using the SchnorrQ signature scheme
     const signedTransaction = schnorrq.sign(privateKey, publicKey, digest)
+
+    // Return the signed transaction
     return signedTransaction;
   }
 
