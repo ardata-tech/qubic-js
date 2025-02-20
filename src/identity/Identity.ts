@@ -10,7 +10,6 @@ import {
 } from "../types";
 
 export class Identity extends QubicBase {
-
   constructor(provider: QubicProvider) {
     super(provider);
   }
@@ -100,11 +99,9 @@ export class Identity extends QubicBase {
       });
   }
 
-
   async createTransaction(from: string, to: string, amount: number) {
     return { from, to, amount, nonce: Date.now() };
   }
-
 
   /**
    * Verifies whether an identity string is valid by checking its length,
@@ -129,4 +126,30 @@ export class Identity extends QubicBase {
     return identity === idFromBytes;
   }
 
+  /**
+   * Generates a public key and a public identity string from a given private key.
+   *
+   * @param {Uint8Array} privateKey - The private key as a byte array.
+   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>}
+   *          - The generated ID package containing:
+   *            - `publicKey`: The generated public key as a byte array.
+   *            - `privateKey`: The corresponding private key as a byte array.
+   *            - `publicId`: The derived public identity string.
+   */
+  async createIdPackageFromPrivateKey(
+    privateKey: Uint8Array
+  ): Promise<{
+    publicKey: Uint8Array;
+    privateKey: Uint8Array;
+    publicId: string;
+  }> {
+    const { schnorrq } = await crypto;
+    // Derive the public key from the private key
+    const publicKey = schnorrq.generatePublicKey(privateKey);
+
+    // Compute the public identity from the public key
+    const publicId = await this.getIdentity(publicKey);
+
+    return { publicKey, privateKey, publicId };
+  }
 }
