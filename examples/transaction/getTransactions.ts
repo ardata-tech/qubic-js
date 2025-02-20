@@ -1,6 +1,6 @@
 import Qubic from "../../src/qubic";
 
-async function getTransactionsStatus() {
+async function getTransactions() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -9,11 +9,11 @@ async function getTransactionsStatus() {
 
   try {
     const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-    const response = await qubic.identity.getTransactionsStatus(txId);
+    const response = await qubic.transaction.getTransactions(txId);
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-getTransactionsStatus();
+getTransactions();

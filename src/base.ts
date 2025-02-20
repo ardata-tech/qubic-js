@@ -106,7 +106,7 @@ export class QubicBase {
    *            - `privateKey`: The corresponding private key as a byte array.
    *            - `publicId`: The derived public identity string.
    */
-  protected async createIdPackage(seed: string): Promise<{
+  public async createIdPackage(seed: string): Promise<{
     publicKey: Uint8Array;
     privateKey: Uint8Array;
     publicId: string;
