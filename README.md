@@ -1,11 +1,10 @@
-# Qubic Connect
+# Qubic TS
 
-**Qubic Connect** is an NPM library designed to facilitate seamless interaction with the **Qubic network**, featuring built-in support for **MetaMask Snap**. This library enables developers to connect their applications to the Qubic blockchain efficiently while leveraging MetaMask’s enhanced security and user-friendly interface.
+**Qubic TS** is an NPM library designed to facilitate seamless interaction with the **Qubic network**. This library enables developers to connect their applications to the Qubic blockchain efficiently.
 
 ## Features
 
 - 🛠 **Easy Integration** – Connect your application to the Qubic network with minimal setup.
-- 🔗 **MetaMask Snap Support** – Interact with Qubic blockchain seamlessly via MetaMask.
 - 🔒 **Secure Transactions** – Leverage MetaMask Snap for enhanced security when signing transactions.
 - 📺 **Smart Contract Interaction** – Read and write data on Qubic smart contracts.
 - ⚡ **Efficient Performance** – Optimized connection handling and transaction execution.
@@ -14,14 +13,14 @@
 
 ## 📦 Installation
 
-You can install **Qubic Connect** via **npm** or **yarn**:
+You can install **Qubic TS** via **npm** or **yarn**:
 
 ```sh
 # Using npm
-npm install qubic-connect
+npm install qubic-ts
 
 # Using yarn
-yarn add qubic-connect
+yarn add qubic-ts
 ```
 
 ---
@@ -31,7 +30,7 @@ yarn add qubic-connect
 ### Import the Library
 
 ```javascript
-import QubicConnect from 'qubic-connect';
+import Qubic from 'qubic-ts';
 ```
 
 ### Initialize the Connection
@@ -89,7 +88,7 @@ To request connection to the Qubic network via MetaMask:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/qubic-connect.git
+git clone https://github.com/your-repo/qubic-ts.git
 cd qubic-connect
 npm install
 ```
