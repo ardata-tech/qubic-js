@@ -9,8 +9,14 @@
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
-  "author": "",
+  "homepage": "https://github.com/ardata-tech/qubic-js",
+  "author": "apquinit <alex@ardata.tech>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ardata-tech/qubic-js.git"
+  },
+  "bugs": "https://github.com/ardata-tech/qubic-js/issues",
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^14.0.0",
