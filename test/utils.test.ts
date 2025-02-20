@@ -50,4 +50,12 @@ describe("Utils Module", () => {
     expect(bytes).toBeInstanceOf(Uint8Array);
     expect(bytes.length).toBe(seed.length);
   });
+
+  test("should convert hex string to base26", () => {
+    const hex = "0xC4aE1B5f8872D961cF6C1c9E16A3FCAe2C89e5E6";
+    const base26 = Utils.hexToBase26(hex);
+    console.log(base26);
+    expect(base26).toBeDefined();
+    expect(typeof base26).toBe("string");
+  });
 });

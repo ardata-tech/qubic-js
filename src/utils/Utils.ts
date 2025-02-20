@@ -156,4 +156,25 @@ export class Utils {
         }
         return bytes;
     }
+
+    /**
+     * Convert a hexadecimal string to a base26 string.
+     *
+     * @param {Uint8Array} hex - The hexadecimal string to convert.
+     * @returns {string} The base26 string representation.
+     */
+    static hexToBase26(hex: string): string {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        let n = BigInt(hex);
+        const base26Array = [];
+        const base = BigInt(alphabet.length);
+    
+        while (n > 0) {
+            base26Array.push(alphabet[Number(n % base)]);
+            n /= base;
+        }
+    
+        return base26Array.reverse().join('');
+    }
+    
 }
