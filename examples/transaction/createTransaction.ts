@@ -8,24 +8,24 @@ const main = async () => {
   });
 
   try {
-    const identity =
-      "CSOXIPNXRTKTCCOEQYNGUOGPOOBCUXZJNOULAFMYBBEUHCHLUZFJZLVEOPGM";
-    const amount = 0;
-    const seed = "slkdfj";
 
-    //this will create transaction base on the parameter
-    //the result will be base64 string that will use to pass to broadcastTransaction
+    //params
+    const from = "wallet-address-source";
+    const to = "wallet-address-destination";
+    const seed = "wallet-seed"
+    const latestTick = await qubic.chain.getLatestTick() || 0;
+
+    //assemble the transaction
+    //create signing
+    //broadcast to RPC endpoint
     const tx = await qubic.transaction.createTransaction(
-      identity,
-      identity,
-      amount,
-      seed
+      from,
+      to,
+      100,
+      seed,
+      latestTick + 1
     );
-    
-    console.log(tx);
-
-    //this will invoke the RPC Qubic API to send / process the transaction
-    await qubic.transaction.broadcastTransaction(tx.base64EncodedTransaction);
+    console.log("transaction", tx);
   } catch (error) {
     console.error("Error fetching: ", error);
   }

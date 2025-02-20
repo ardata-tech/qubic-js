@@ -98,7 +98,6 @@ export class Transaction extends QubicBase {
   async broadcastTransaction(
     encodedTransaction: string
   ): Promise<IBroadcastTransactionResponse | null> {
-    console.log("broadcastTransaction encodedTransaction:", encodedTransaction);
     try {
       return await this.httpClient.call<IBroadcastTransactionResponse>(
         `/${this.version}/broadcast-transaction`,
@@ -115,32 +114,26 @@ export class Transaction extends QubicBase {
     from: string,
     to: string,
     amount: number,
-    seed: string
-  ): Promise<{ id: string; base64EncodedTransaction:string }> {
+    seed: string,
+    tick:number
+  ) {
     const tb = new TransactionBuilder()
       .setSourceBytes(this.getIdentityBytes(from))
       .setDestinationBytes(this.getIdentityBytes(to))
       .setAmount(amount)
+      .setTick(tick)
       .build();
 
-    const { signedData, digest, signature } = await this.signDigest(
-      seed,
+    const IdPackage = await this.createIdPackage(seed);
+    const result = await this.signTransaction(
       tb.getDataPacket(),
-      tb.getDataOffset()
+      tb.getDataOffset(),
+      IdPackage.privateKey
     );
-    const id = await this.getIdentity(signature, true);
-    tb.setBuiltData(signedData);
-    tb.setDigest(digest);
-    tb.setSignature(signature);
 
-    return {
-      id,
-      base64EncodedTransaction: this.encodeTransactionToBase64(signedData),
-    };
-  }
-
-  async signTransaction(tx: any): Promise<any> {
-    return { ...tx, signature: "mock-signature" };
+    const encodedTransaction = this.encodeTransactionToBase64(result);
+    //this will invoke the RPC Qubic API to send / process the transaction
+    return await this.broadcastTransaction(encodedTransaction);
   }
 
   async sendTransaction(signedTx: any): Promise<string> {
@@ -153,28 +146,43 @@ export class Transaction extends QubicBase {
     return btoa(str);
   }
 
-  public async signDigest(
-    seed: string,
-    packet: Uint8Array,
-    offset: number
-  ): Promise<any> {
+  /**
+   * Signs a transaction using a private key and returns the signed transaction.
+   *
+   * @param {Uint8Array} data - The transaction data to sign.
+   * @param {Uint8Array} privateKey - The private key used to sign the transaction.
+   * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
+   */
+  public async signTransaction(
+    data: Uint8Array,
+    offset: number,
+    privateKey: Uint8Array,
+  ): Promise<Uint8Array> {
+    // Import the necessary cryptographic functions
     const { schnorrq, K12 } = await crypto;
-    const privateKey = this.generatePrivateKey(seed, 0, K12);
-    const publicKey = schnorrq.generatePublicKey(privateKey);
+
+    // Generate a cryptographic digest of the transaction data
     const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
 
-    const toSign = packet.slice(0, offset);
-    K12(toSign, digest, QubicConstants.DIGEST_LENGTH);
-    const signature = schnorrq.sign(privateKey, publicKey, digest);
-    packet.set(signature, offset);
-    offset += QubicConstants.SIGNATURE_LENGTH;
-    const signedData = packet.slice(0, offset);
-    K12(signedData, digest, QubicConstants.DIGEST_LENGTH);
+    // Generate the public key from the private key
+    const publicKey = schnorrq.generatePublicKey(privateKey);
 
-    return {
-      signedData: signedData,
-      digest: digest,
-      signature: signature,
-    };
+    const toSign = data.slice(0, offset);
+    // Sign the transaction using the private key and the digest
+    K12(toSign, digest, QubicConstants.DIGEST_LENGTH);
+
+    // Sign the transaction using the SchnorrQ signature scheme
+    const signature = schnorrq.sign(privateKey, publicKey, digest);
+
+    // TODO: 
+    // removing this will cause error on publishing
+     data.set(signature, offset);
+     offset += QubicConstants.SIGNATURE_LENGTH;
+     const signedTransaction = data.slice(0, offset);
+     K12(signedTransaction, digest, QubicConstants.DIGEST_LENGTH);
+
+    // Return the signed transaction
+    return signedTransaction;
   }
+
 }

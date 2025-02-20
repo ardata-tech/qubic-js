@@ -112,7 +112,7 @@ export class TransactionBuilder {
     this.addShort(this.inputType);
     this.addShort(this.inputSize);
     //this.addRaw(this.payload);
-    return this;
+    return this
   }
 
   private setMaxPacketDataSize() {
