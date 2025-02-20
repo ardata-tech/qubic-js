@@ -209,6 +209,19 @@ export class Identity extends QubicBase {
   }
 
   /**
+   * Generates a cryptographic signature for a given message digest using a private key.
+   * 
+   * @param {Uint8Array} privateKey - The private key used to sign the digest.
+   * @param {Uint8Array} digest - The message digest to sign.
+   * @returns {Promise<Uint8Array>} - The generated signature as a byte array.
+   */
+  public async signDigest(privateKey: Uint8Array, digest: Uint8Array): Promise<Uint8Array> {
+    const { schnorrq } = await crypto;
+    const signedDigest = schnorrq.sign(privateKey, digest)
+    return signedDigest;
+  }
+
+  /**
    * Verifies whether an identity string is valid by checking its length,
    * ensuring it contains only uppercase letters, and comparing it with 
    * the derived identity from its public key.

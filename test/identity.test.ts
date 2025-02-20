@@ -98,8 +98,6 @@ describe("Identity Module", () => {
     expect(Array.isArray(result?.transferTransactionsPerTick)).toBe(true);
   });
 
-
-
   test("should fetch approved transactions", async () => {
     const result = await identity.getApprovedTransactions(19231746);
     expect(result).not.toBeNull();
