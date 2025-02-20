@@ -210,8 +210,9 @@ export class Identity extends QubicBase {
    */
   public async signTransaction(data: Uint8Array, digest: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array> {
     const { schnorrq, K12 } = await crypto;
+    const publicKey = schnorrq.generatePublicKey(privateKey);
     K12(data, digest, QubicConstants.DIGEST_LENGTH);
-    const signedTransaction = schnorrq.sign(privateKey, digest)
+    const signedTransaction = schnorrq.sign(privateKey, publicKey, digest)
     return signedTransaction;
   }
 
