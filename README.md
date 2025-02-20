@@ -1,11 +1,10 @@
-# Qubic Connect
+# Qubic.js
 
-**Qubic Connect** is an NPM library designed to facilitate seamless interaction with the **Qubic network**, featuring built-in support for **MetaMask Snap**. This library enables developers to connect their applications to the Qubic blockchain efficiently while leveraging MetaMask’s enhanced security and user-friendly interface.
+**Qubic.js** is an NPM library designed to facilitate seamless interaction with the **Qubic network**. This library enables developers to connect their applications to the Qubic blockchain efficiently.
 
 ## Features
 
 - 🛠 **Easy Integration** – Connect your application to the Qubic network with minimal setup.
-- 🔗 **MetaMask Snap Support** – Interact with Qubic blockchain seamlessly via MetaMask.
 - 🔒 **Secure Transactions** – Leverage MetaMask Snap for enhanced security when signing transactions.
 - 📺 **Smart Contract Interaction** – Read and write data on Qubic smart contracts.
 - ⚡ **Efficient Performance** – Optimized connection handling and transaction execution.
@@ -14,14 +13,14 @@
 
 ## 📦 Installation
 
-You can install **Qubic Connect** via **npm** or **yarn**:
+You can install **Qubic.js** via **npm** or **yarn**:
 
 ```sh
 # Using npm
-npm install qubic-connect
+npm install @ardata-tech/qubic-js
 
 # Using yarn
-yarn add qubic-connect
+yarn add @ardata-tech/qubic-js
 ```
 
 ---
@@ -31,20 +30,10 @@ yarn add qubic-connect
 ### Import the Library
 
 ```javascript
-import QubicConnect from 'qubic-connect';
+import Qubic from '@ardata-tech/qubic-js';
 ```
 
 ### Initialize the Connection
-
-```javascript
-// Sample code here
-```
-
----
-
-## 🔑 Connecting Wallet
-
-To request connection to the Qubic network via MetaMask:
 
 ```javascript
 // Sample code here
@@ -89,8 +78,13 @@ To request connection to the Qubic network via MetaMask:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/qubic-connect.git
-cd qubic-connect
+git clone https://github.com/ardata-tech/qubic-js.git
+cd qubic-js
+```
+
+### Install Dependencies
+
+```sh
 npm install
 ```
 
@@ -98,6 +92,12 @@ npm install
 
 ```sh
 npm test
+```
+
+### Run Example Scripts
+
+```sh
+npx ts-node examples/identity/createIdPackage.ts
 ```
 
 ---

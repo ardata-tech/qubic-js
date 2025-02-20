@@ -156,4 +156,43 @@ export class Utils {
         }
         return bytes;
     }
+
+    /**
+     * Convert a hexadecimal string to a base26 string.
+     *
+     * @param {Uint8Array} hex - The hexadecimal string to convert.
+     * @returns {string} The base26 string representation.
+     */
+    static hexToBase26(hex: string): string {
+        const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+        let n = BigInt(hex);
+        const base26Array = [];
+        const base = BigInt(ALPHABET.length);
+    
+        while (n > 0) {
+            base26Array.push(ALPHABET[Number(n % base)]);
+            n /= base;
+        }
+    
+        return base26Array.reverse().join('');
+    }
+
+    /**
+     * Convert a base26 string to a hexadecimal string.
+     *
+     * @param {string} base26 - The base26 string to convert.
+     * @returns {string} The hexadecimal string representation.
+     */
+    static base26ToHex(base26: string): string {
+        const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+        const alphabetMap = new Map(ALPHABET.split('').map((char, i) => [char, BigInt(i)]));
+        let num = BigInt(0);
+        const base = BigInt(26);
+    
+        for (const char of base26) {
+            num = num * base + alphabetMap.get(char)!;
+        }
+    
+        return '0x' + num.toString(16);
+    }    
 }
