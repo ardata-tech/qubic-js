@@ -17,10 +17,10 @@ You can install **Qubic.js** via **npm** or **yarn**:
 
 ```sh
 # Using npm
-npm install qubic
+npm install @ardata-tech/qubic-js
 
 # Using yarn
-yarn add qubic
+yarn add @ardata-tech/qubic-js
 ```
 
 ---
@@ -30,7 +30,7 @@ yarn add qubic
 ### Import the Library
 
 ```javascript
-import Qubic from 'qubic';
+import Qubic from '@ardata-tech/qubic-js';
 ```
 
 ### Initialize the Connection
