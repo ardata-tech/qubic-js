@@ -1,6 +1,6 @@
 import Qubic from "../../src/qubic";
 
-async function createIdPackage() {
+async function createIdentity() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -9,11 +9,11 @@ async function createIdPackage() {
 
   try {
     const seed = qubic.utils.createSeed();
-    const idPackage = await qubic.identity.createIdPackage(seed);
-    console.log("response", JSON.stringify(idPackage));
+    const identity = await qubic.identity.createIdentity(seed);
+    console.log("response", JSON.stringify(identity));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-createIdPackage();
+createIdentity();
