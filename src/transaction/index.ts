@@ -1,1 +1,1 @@
-export { TransactionModule } from "./Transaction";
+export { TransactionModule } from "./TransactionModule";
