@@ -1,4 +1,4 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
 async function getBalanceByAddress() {
   // Initialize the Qubic instance with the provider URL
@@ -8,7 +8,9 @@ async function getBalanceByAddress() {
   });
 
   try {
-    const response = await qubic.identity.getBalanceByAddress("");
+    const response = await qubic.identity.getBalanceByAddress(
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
+    );
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

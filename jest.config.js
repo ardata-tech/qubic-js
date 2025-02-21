@@ -7,12 +7,9 @@ export default {
   collectCoverageFrom: ["src/**/*.ts"],
   extensionsToTreatAsEsm: [".ts", ".tsx"],
   transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
-      { useESM: true }
-    ]
+    "^.+\\.tsx?$": ["ts-jest", { useESM: true }],
   },
   moduleNameMapper: {
-    "^(\\.{1,2}/.*)\\.js$": "$1"
-  }
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
 };

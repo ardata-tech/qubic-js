@@ -8,6 +8,6 @@ export class QubicProvider {
   }
 
   getProviderOptions(): IQubicProviderOptions {
-    return this.options
+    return this.options;
   }
 }

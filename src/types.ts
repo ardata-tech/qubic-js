@@ -130,7 +130,6 @@ interface IGetBlockHeight {
   blockHeight: BlockHeight;
 }
 
-
 type LatestStatsData = {
   timestamp: string;
   circulatingSupply: string;
@@ -146,10 +145,9 @@ type LatestStatsData = {
 };
 
 interface IGetLatestStats {
-  data: LatestStatsData
+  data: LatestStatsData;
 }
 
-            
 interface IPostQuerySmartContractBody {
   contractIndex: number;
   inputType: number;
@@ -187,19 +185,19 @@ interface IGetBalanceByIdentity {
  * TODO:
  * this is not yet finalized
  * need to get the actual response to map it to the interface
-*/
+ */
 interface IGetPossessedAssets {
-  possessedAssets: []
+  possessedAssets: [];
 }
 
 /**
  * TODO:
  * this is not yet finalized
  * need to get the actual response to map it to the interface
-*/
+ */
 interface IGetIssuedAssets {
-  issuedAssets: []
-} 
+  issuedAssets: [];
+}
 
 type ApprovedTransactions = {
   sourceId: string;
@@ -221,9 +219,9 @@ type TransactionStatus = {
   txId: string;
   moneyFlew: boolean;
 };
-    
-interface IGetTransactionsStatus{
-  transactionStatus:TransactionStatus
+
+interface IGetTransactionsStatus {
+  transactionStatus: TransactionStatus;
 }
 
 type Transaction = {
@@ -237,23 +235,30 @@ type Transaction = {
   signatureHex: string;
   txId: string;
 };
-    
-interface IGetTransaction{
-  transaction: Transaction
+
+interface IGetTransaction {
+  transaction: Transaction;
 }
 
 /**
  * TODO:
  * this is not yet finalized
  * need to get the actual transferTransactionsPerTick to map it to the interface
-*/
+ */
 
-interface IGetTransferTransaction{
-  transferTransactionsPerTick:[]
+interface IGetTransferTransaction {
+  transferTransactionsPerTick: [];
 }
 
 interface IGetOwnedAssets {
-  ownedAssets:[]
+  ownedAssets: [];
+}
+
+interface ITransactionPayload {
+  issuer: string;
+  assetName: number | bigint | Uint8Array;
+  price: number | bigint | Uint8Array;
+  numberOfShares: number | bigint | Uint8Array;
 }
 
 export {
@@ -279,4 +284,5 @@ export {
   IGetTransaction,
   IGetTransferTransaction,
   IGetOwnedAssets,
+  ITransactionPayload,
 };

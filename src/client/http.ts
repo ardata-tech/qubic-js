@@ -6,22 +6,26 @@ export class HttpClient {
   }
 
   async call<T>(endpoint: string, method: string, body?: object): Promise<T> {
+    const response = await fetch(this.baseUrl + endpoint, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      ...(body && { body: JSON.stringify(body) }),
+    });
 
-      const response = await fetch(this.baseUrl + endpoint, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        ...(body && { body: JSON.stringify(body) }),
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `[HttpClient] HTTP Error: ${response.status} ${response.statusText}`
-        );
+    if (!response.ok) {
+      const message = await response.text();
+      if (message) {
+        console.log("error message", message);
       }
 
-      const data = await response.json();
-      return data as T;
+      throw new Error(
+        `[HttpClient] HTTP Error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+    return data as T;
   }
 }

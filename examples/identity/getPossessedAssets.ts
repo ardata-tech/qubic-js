@@ -1,4 +1,4 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
 async function getPossessedAssets() {
   // Initialize the Qubic instance with the provider URL
@@ -9,7 +9,7 @@ async function getPossessedAssets() {
 
   try {
     const response = await qubic.identity.getPossessedAssets(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
     );
     console.log(JSON.stringify(response));
   } catch (error) {

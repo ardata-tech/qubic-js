@@ -5,7 +5,7 @@ import {
   IPostQuerySmartContractResponse,
 } from "../types";
 
-export class Contract extends QubicBase {
+export class ContractService extends QubicBase {
   private address: string;
 
   constructor(provider: QubicProvider, contractAddress: string) {
@@ -14,13 +14,13 @@ export class Contract extends QubicBase {
   }
 
   async querySmartContract(
-    body: IPostQuerySmartContractBody
+    body: IPostQuerySmartContractBody,
   ): Promise<IPostQuerySmartContractResponse | null> {
     try {
       return await this.httpClient.call<IPostQuerySmartContractResponse>(
         `/${this.version}/querySmartContract`,
         "POST",
-        body
+        body,
       );
     } catch (error) {
       this.logger.error("Error fetching latest tick:", error);

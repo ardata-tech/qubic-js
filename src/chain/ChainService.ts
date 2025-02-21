@@ -13,8 +13,7 @@ import {
 } from "../types";
 import { QubicBase } from "../base";
 
-export class Chain extends QubicBase {
-
+export class ChainService extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }
@@ -28,7 +27,7 @@ export class Chain extends QubicBase {
     try {
       const response: IGetLatestTick = await this.httpClient.call(
         `/${this.version}/latestTick`,
-        "GET"
+        "GET",
       );
       return response?.latestTick;
     } catch (error) {
@@ -47,7 +46,7 @@ export class Chain extends QubicBase {
     try {
       const response: IGetTickData = await this.httpClient.call(
         `/${this.version}/ticks/${tickNumber}/tick-data`,
-        "GET"
+        "GET",
       );
       return response;
     } catch (error) {
@@ -65,7 +64,7 @@ export class Chain extends QubicBase {
     try {
       const response: IGetRpcStatus = await this.httpClient.call(
         `/${this.version}/status`,
-        "GET"
+        "GET",
       );
       return response;
     } catch (error) {
@@ -84,7 +83,7 @@ export class Chain extends QubicBase {
     try {
       return await this.httpClient.call(
         `/${this.version}/ticks/${tickNumber}/chain-hash`,
-        "GET"
+        "GET",
       );
     } catch (error) {
       this.logger.error("Error fetching chain hash:", error);
@@ -99,12 +98,12 @@ export class Chain extends QubicBase {
    * @returns {Promise<IGetQuorumTickData | null>} A promise that resolves to the quorum tick data, or null if an error occurred.
    */
   async getQuorumTickData(
-    tickNumber: number
+    tickNumber: number,
   ): Promise<IGetQuorumTickData | null> {
     try {
       return await this.httpClient.call(
         `/${this.version}/ticks/${tickNumber}/quorum-tick-data`,
-        "GET"
+        "GET",
       );
     } catch (error) {
       this.logger.error("Error fetching quorum tick data:", error);
@@ -120,7 +119,10 @@ export class Chain extends QubicBase {
    */
   async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
     try {
-      return await this.httpClient.call(`/${this.version}/ticks/${tickNumber}/store-hash`, "GET");
+      return await this.httpClient.call(
+        `/${this.version}/ticks/${tickNumber}/store-hash`,
+        "GET",
+      );
     } catch (error: any) {
       this.logger.error(error);
       return null;
@@ -134,10 +136,7 @@ export class Chain extends QubicBase {
    */
   async getHealthCheck(): Promise<IGetHealthCheck | null> {
     try {
-      return await this.httpClient.call(
-        `/${this.version}/healthcheck`,
-        "GET"
-      );
+      return await this.httpClient.call(`/${this.version}/healthcheck`, "GET");
     } catch (error) {
       this.logger.error("Error fetching health check:", error);
       return null;
@@ -154,7 +153,7 @@ export class Chain extends QubicBase {
     try {
       return await this.httpClient.call(
         `/${this.version}/epochs/${epoch}/computors`,
-        "GET"
+        "GET",
       );
     } catch (error) {
       this.logger.error("Error fetching computors:", error);
@@ -183,10 +182,7 @@ export class Chain extends QubicBase {
    */
   async getBlockHeight(): Promise<IGetBlockHeight | null> {
     try {
-      return await this.httpClient.call(
-        `/${this.version}/block-height`,
-        "GET"
-      );
+      return await this.httpClient.call(`/${this.version}/block-height`, "GET");
     } catch (error) {
       this.logger.error("Error fetching block height:", error);
       return null;
@@ -200,10 +196,7 @@ export class Chain extends QubicBase {
    */
   async getLatestStats(): Promise<IGetLatestStats | null> {
     try {
-      return await this.httpClient.call(
-        `/${this.version}/latest-stats`,
-        "GET"
-      );
+      return await this.httpClient.call(`/${this.version}/latest-stats`, "GET");
     } catch (error) {
       this.logger.error("Error fetching latest stats:", error);
       return null;

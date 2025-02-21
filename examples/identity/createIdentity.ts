@@ -1,6 +1,6 @@
 import Qubic from "../../src/core";
 
-async function getOwnedAssets() {
+async function createIdentity() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -8,13 +8,12 @@ async function getOwnedAssets() {
   });
 
   try {
-    const response = await qubic.identity.getOwnedAssets(
-      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
-    );
-    console.log(JSON.stringify(response));
+    const seed = qubic.utils.createSeed();
+    const identity = await qubic.identity.createIdentity(seed);
+    console.log("response", JSON.stringify(identity));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-getOwnedAssets();
+createIdentity();

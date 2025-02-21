@@ -1,4 +1,4 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
 async function getBalanceByIdentity() {
   try {
@@ -9,7 +9,7 @@ async function getBalanceByIdentity() {
     });
 
     const identity =
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
     const response = await qubic.identity.getBalanceByIdentity(identity);
     console.log("response", response);
   } catch (error) {

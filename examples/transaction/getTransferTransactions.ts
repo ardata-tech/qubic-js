@@ -1,6 +1,6 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
-async function getApprovedTransactions() {
+async function getTransferTransactions() {
   // Initialize the Qubic instance with the provider URL
   const qubic = new Qubic({
     providerUrl: "https://rpc.qubic.org",
@@ -8,11 +8,13 @@ async function getApprovedTransactions() {
   });
 
   try {
-    const response = await qubic.identity.getApprovedTransactions(19231746);
+    const identity =
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
+    const response = await qubic.transaction.getTransferTransactions(identity);
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);
   }
 }
 
-getApprovedTransactions();
+getTransferTransactions();

@@ -1,4 +1,4 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
 async function verifyIdentity() {
   // Initialize the Qubic instance with the provider URL
@@ -9,7 +9,7 @@ async function verifyIdentity() {
 
   try {
     const seed = qubic.utils.createSeed();
-    const idPackage = await qubic.identity.createIdPackage(seed);
+    const idPackage = await qubic.identity.createIdentity(seed);
     const publicId = idPackage.publicId;
     const verified = await qubic.identity.verifyIdentity(publicId);
     console.log("response", verified);
