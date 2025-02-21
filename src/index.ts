@@ -1,3 +1,4 @@
 import QubicCore from "./core";
 
-export default QubicCore;
+const Qubic = QubicCore;
+export default Qubic;
