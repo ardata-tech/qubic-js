@@ -1,7 +1,6 @@
 import crypto from '../crypto';
 import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
-import { QubicConstants } from '../constants';
 import {
   IGetBalanceByIdentity,
   IGetIssuedAssets,
