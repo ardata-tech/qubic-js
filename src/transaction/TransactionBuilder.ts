@@ -10,7 +10,7 @@ export class TransactionBuilder {
   private packet: Uint8Array;
   private offset: number = 0;
   private payload: Uint8Array;
-  private amout: Uint8Array;
+  private amount: Uint8Array;
   private signature: Uint8Array;
   private builtData: Uint8Array;
   private digest: Uint8Array;
@@ -19,7 +19,7 @@ export class TransactionBuilder {
     this.packet = new Uint8Array(0);
     this.sourceKey = new Uint8Array(0);
     this.destinationKey = new Uint8Array(0);
-    this.amout = new Uint8Array(0);
+    this.amount = new Uint8Array(0);
     this.builtData = new Uint8Array(0);
     this.digest = new Uint8Array(0);
     this.payload = new Uint8Array(0);
@@ -45,7 +45,7 @@ export class TransactionBuilder {
     } else {
       amountUint8Array = this.getPackageData(amount);
     }
-    this.amout = amountUint8Array;
+    this.amount = amountUint8Array;
     return this;
   }
 
@@ -60,8 +60,7 @@ export class TransactionBuilder {
   }
 
   public setPayload(payload: ITransactionPayload) {
-    //todo:
-    //learn how to parse ITransactionPayload to Uint8Array
+    //TODO: learn how to parse ITransactionPayload to Uint8Array
     this.payload = new Uint8Array(QubicConstants.MAX_TRANSACTION_SIZE).fill(0);
     return this;
   }
@@ -108,7 +107,7 @@ export class TransactionBuilder {
     this.setMaxPacketDataSize();
     this.addRaw(this.sourceKey);
     this.addRaw(this.destinationKey);
-    this.addRaw(this.amout);
+    this.addRaw(this.amount);
     this.addInt(this.tick);
     this.addShort(this.inputType);
     this.addShort(this.inputSize);
@@ -120,7 +119,7 @@ export class TransactionBuilder {
     const total =
       this.sourceKey.length +
       this.destinationKey.length +
-      this.amout.length +
+      this.amount.length +
       4 + // tick
       2 + // inputType
       2 + // inputSize
