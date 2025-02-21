@@ -13,29 +13,28 @@ const main = async () => {
     // Fill-up the parameters in order to process the transaction
 
     // Source wallet address
-    const fromWalletAddress = "wallet-address-source";
-    const fromSeed = "wallet-seed";
+    const fromWalletAddress = "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
+    const fromSeed = "sqvryrsucaicyxpqwzjpewkmdhodjntgpqrajykmacyajnoxjdtnbxn";
     const fromIdentity = await qubic.identity.createIdentity(fromSeed);
 
     // Recipient wallet address
-    const toWalletAddress = "wallet-address-destination";
+    const toWalletAddress = "ECRXFGMYUXWETCOUKCRIQDNCEOJAHUXFTQETBZSDVCLEMKPZZMJLVOECGHRB";
 
     // Get the latest tick
     const latestTick = (await qubic.chain.getLatestTick()) || 0;
 
     // Create a transaction
-    const transactionBuilder = await qubic.transaction.createTransaction(
+    const transaction = await qubic.transaction.createTransaction(
       fromWalletAddress,
       toWalletAddress,
       100,
-      latestTick + 5
+      latestTick + 3
     );
-    console.log("transaction", transactionBuilder);
 
     // Sign the transaction
     const signedTransaction = await qubic.transaction.signTransaction(
-      transactionBuilder.getDataPacket(),
-      transactionBuilder.getDataOffset(),
+      transaction.getDataPacket(),
+      transaction.getDataOffset(),
       fromIdentity.privateKey
     );
 
