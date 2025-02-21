@@ -61,36 +61,12 @@ describe("Identity Module", () => {
     expect(Array.isArray(result?.possessedAssets)).toBe(true);
   });
 
-  // TODO: Fix this test
-  // test("should create and sign a transaction", async () => {
-  //   const tx = await identity.createTransaction("mock-from", "mock-to", 500);
-  //   expect(tx).toHaveProperty("from");
-  //   expect(tx).toHaveProperty("to");
-
-  //   const signedTx = await identity.signTransaction(tx);
-  //   expect(signedTx).toHaveProperty("signature");
-  // });
-
-  // TODO: Fix this test
-  // test("should send a transaction", async () => {
-  //   const tx = await identity.createTransaction("mock-from", "mock-to", 500);
-  //   const signedTx = await identity.signTransaction(tx);
-  //   const txHash = await identity.sendTransaction(signedTx);
-  //   expect(txHash).toBe("mock-tx-hash");
-  // });
-
-  // TODO:: Fix this test
-  // test("should fetch balance by address", async () => {
-  //   const balance = await identity.getBalanceByAddress("");
-  //   expect(balance).not.toBeNull();
-  // });
-
-  // TODO:: Fix this test
-  // test("should broadcast a transaction", async () => {
-  //   const tx = await identity.createTransaction("mock-from", "mock-to", 500);
-  //   const broadcastTxHash = await identity.broadcastTransaction(tx);
-  //   expect(broadcastTxHash).toBe("mock-broadcast-tx-hash");
-  // });
+  test("should fetch balance by address", async () => {
+    const balance = await identity.getBalanceByAddress(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+    );
+    expect(balance).not.toBeNull();
+  });
 
   test("should create ID package", async () => {
     const idPackage = await identity.createIdPackage('whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel');
