@@ -48,7 +48,7 @@ const qubic = new Qubic({
 
 ```javascript
 const response = await qubic.identity.getBalanceByAddress(
-  "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
+  walletAddress,
 );
 ```
 
@@ -61,16 +61,19 @@ const response = await qubic.identity.getBalanceByAddress(
 const transaction = await qubic.transaction.createTransaction(
   fromWalletAddress,
   toWalletAddress,
-  100,
+  amount,
   targetTick,
 )
+
 // Sign the transaction
 const signedTransaction = await qubic.transaction.signTransaction(
   transaction,
   privateKey,
 )
+
 // Encode the transaction to base64
 const encodedTransaction = qubic.transaction.encodeTransactionToBase64(signedTransaction)
+
 // Broadcast the transaction
 const response = await qubic.transaction.broadcastTransaction(encodedTransaction);
 ```
