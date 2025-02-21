@@ -6,7 +6,7 @@ import { ContractService } from "./contract";
 import { UtilityService } from './utils';
 import { IQubicProviderOptions } from "./types";
 
-export default class Qubic {
+export default class QubicCore {
   private provider: QubicProvider;
   public chain: ChainService;
   public identity: IdentityService;

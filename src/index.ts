@@ -1,3 +1,3 @@
-import Qubic from "./qubic";
+import QubicCore from "./core";
 
-export default Qubic;
+export default QubicCore;

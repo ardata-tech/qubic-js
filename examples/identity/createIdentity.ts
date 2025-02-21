@@ -1,4 +1,4 @@
-import Qubic from "../../src/qubic";
+import Qubic from "../../src/core";
 
 async function createIdentity() {
   // Initialize the Qubic instance with the provider URL
