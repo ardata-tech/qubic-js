@@ -39,11 +39,7 @@ export class UtilityService {
      * @param {string} s - The public key string.
      * @returns {Uint8Array} The byte array representation of the public key.
      */
-    static publicKeyStringToBytes(s: string): Uint8Array {
-        if (!/^[A-Z]{56}$/.test(s)) {
-            throw new Error("Invalid public key format. Expected 56 uppercase letters (A-Z).");
-        }
-        
+    static publicKeyStringToBytes(s: string): Uint8Array {       
         const publicKeyBytes = new Uint8Array(32);
         const view = new DataView(publicKeyBytes.buffer, 0);
 
