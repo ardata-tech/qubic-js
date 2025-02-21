@@ -9,7 +9,7 @@ async function getBalanceByIdentity() {
     });
 
     const identity =
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
     const response = await qubic.identity.getBalanceByIdentity(identity);
     console.log("response", response);
   } catch (error) {
