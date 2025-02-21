@@ -7,7 +7,7 @@ export class TransactionBuilder {
   private tick: number = 0;
   private inputSize: number = 0;
   private inputType: number = 0;
-  private packet: Uint8Array;
+  private data: Uint8Array;
   private offset: number = 0;
   private payload: Uint8Array;
   private amount: Uint8Array;
@@ -16,7 +16,7 @@ export class TransactionBuilder {
   private digest: Uint8Array;
 
   constructor() {
-    this.packet = new Uint8Array(0);
+    this.data = new Uint8Array(0);
     this.sourceKey = new Uint8Array(0);
     this.destinationKey = new Uint8Array(0);
     this.amount = new Uint8Array(0);
@@ -70,11 +70,11 @@ export class TransactionBuilder {
     return this;
   }
 
-  public getDataPacket() {
-    return this.packet;
+  public getData() {
+    return this.data;
   }
 
-  public getDataOffset() {
+  public getOffset() {
     return this.offset;
   }
 
@@ -104,7 +104,7 @@ export class TransactionBuilder {
   }
 
   public build() {
-    this.setMaxPacketDataSize();
+    this.setMaxDataSize();
     this.addRaw(this.sourceKey);
     this.addRaw(this.destinationKey);
     this.addRaw(this.amount);
@@ -115,7 +115,7 @@ export class TransactionBuilder {
     return this;
   }
 
-  private setMaxPacketDataSize() {
+  private setMaxDataSize() {
     const total =
       this.sourceKey.length +
       this.destinationKey.length +
@@ -125,11 +125,11 @@ export class TransactionBuilder {
       2 + // inputSize
       this.inputSize +
       this.signature.length;
-    this.packet = new Uint8Array(total);
+    this.data = new Uint8Array(total);
   }
 
   private addRaw(q: Uint8Array) {
-    this.packet.set(q, this.offset);
+    this.data.set(q, this.offset);
     this.offset += q.length;
     return this;
   }
@@ -142,13 +142,13 @@ export class TransactionBuilder {
   }
 
   private addShort(q: number /* must be a short */) {
-    this.packet.set(this.FromShort(q), this.offset);
+    this.data.set(this.FromShort(q), this.offset);
     this.offset += 2;
     return this;
   }
 
   private addInt(q: number /* must be a short */) {
-    this.packet.set(this.FromInt(q), this.offset);
+    this.data.set(this.FromInt(q), this.offset);
     this.offset += 4;
     return this;
   }
