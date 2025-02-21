@@ -1,1 +1,1 @@
-export { Identity } from "./Identity";
+export { IdentityModule } from "./Identity";

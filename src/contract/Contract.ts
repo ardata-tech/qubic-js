@@ -5,7 +5,7 @@ import {
   IPostQuerySmartContractResponse,
 } from "../types";
 
-export class Contract extends QubicBase {
+export class ContractModule extends QubicBase {
   private address: string;
 
   constructor(provider: QubicProvider, contractAddress: string) {

@@ -1,1 +1,1 @@
-export { Chain } from "./Chain";
+export { ChainModule } from "./Chain";

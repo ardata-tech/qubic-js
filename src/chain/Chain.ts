@@ -13,7 +13,7 @@ import {
 } from "../types";
 import { QubicBase } from "../base";
 
-export class Chain extends QubicBase {
+export class ChainModule extends QubicBase {
 
   constructor(provider: QubicProvider) {
     super(provider);
