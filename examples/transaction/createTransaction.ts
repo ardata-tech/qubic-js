@@ -8,28 +8,45 @@ const main = async () => {
   });
 
   try {
-    //if you don't have wallet yet
-    //create wallet here: https://wallet.qubic.org/
+    // Create wallet here: https://wallet.qubic.org/ and get the wallet address and seed
+    // Make sure to have enough balance to process the transaction
+    // Fill-up the parameters in order to process the transaction
 
-    //TODO:
-    //need to fill-up the parameters in order to process the transaction
-    const from = "wallet-address-source";
-    const to = "wallet-address-destination";
-    const seed = "wallet-seed";
+    // Source wallet address
+    const fromWalletAddress = "wallet-address-source";
+    const fromSeed = "wallet-seed";
+    const fromIdentity = await qubic.identity.createIdentity(fromSeed);
+
+    // Recipient wallet address
+    const toWalletAddress = "wallet-address-destination";
+
+    // Get the latest tick
     const latestTick = (await qubic.chain.getLatestTick()) || 0;
 
-    //process flow:
-    //this function will assemble the transaction parameter,
-    //it then process the transaction signing,
-    //after that it will broadcast to RPC via Rest API
-    const tx = await qubic.transaction.createTransaction(
-      from,
-      to,
+    // Create a transaction
+    const transactionBuilder = await qubic.transaction.createTransaction(
+      fromWalletAddress,
+      toWalletAddress,
       100,
-      seed,
-      latestTick + 3
+      latestTick + 5
     );
-    console.log("transaction", tx);
+    console.log("transaction", transactionBuilder);
+
+    // Sign the transaction
+    const signedTransaction = await qubic.transaction.signTransaction(
+      transactionBuilder.getDataPacket(),
+      transactionBuilder.getDataOffset(),
+      fromIdentity.privateKey
+    );
+
+    // Encode the transaction to base64
+    const encodedTransaction = qubic.transaction.encodeTransactionToBase64(
+      signedTransaction
+    );
+
+    // Broadcast the transaction
+    const result = await qubic.transaction.broadcastTransaction(encodedTransaction);
+    console.log("result", result);
   } catch (error) {
     console.error("Error fetching: ", error);
   }

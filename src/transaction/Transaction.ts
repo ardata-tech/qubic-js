@@ -93,7 +93,6 @@ export class Transaction extends QubicBase {
     from: string,
     to: string,
     amount: number,
-    seed: string,
     tick:number
   ) {
     const tb = new TransactionBuilder()
@@ -103,19 +102,16 @@ export class Transaction extends QubicBase {
       .setTick(tick)
       .build();
 
-    const IdPackage = await this.createIdPackage(seed);
-    const result = await this.signTransaction(
-      tb.getDataPacket(),
-      tb.getDataOffset(),
-      IdPackage.privateKey
-    );
-
-    const encodedTransaction = this.encodeTransactionToBase64(result);
-    //this will invoke the RPC Qubic API to send / process the transaction
-    return await this.broadcastTransaction(encodedTransaction);
+      return tb;
   }
 
-  private encodeTransactionToBase64(transaction: Uint8Array) {
+  /**
+   * Encodes a transaction to a base64 string.
+   * 
+   * @param {Uint8Array} transaction - The transaction to encode.
+   * @returns {string} - The encoded transaction as a base64 string.
+   */
+  encodeTransactionToBase64(transaction: Uint8Array): string {
     const byteArray: Uint8Array = new Uint8Array(transaction);
     const str = String.fromCharCode.apply(null, Array.from(byteArray));
     return btoa(str);
@@ -128,7 +124,7 @@ export class Transaction extends QubicBase {
    * @param {Uint8Array} privateKey - The private key used to sign the transaction.
    * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
    */
-  public async signTransaction(
+  async signTransaction(
     data: Uint8Array,
     offset: number,
     privateKey: Uint8Array,
