@@ -134,8 +134,7 @@ export class Transaction extends QubicBase {
    * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
    */
   async signTransaction(
-    data: Uint8Array,
-    offset: number,
+    transaction: TransactionBuilder,
     privateKey: Uint8Array,
   ): Promise<Uint8Array> {
     // Import the necessary cryptographic functions
@@ -146,6 +145,10 @@ export class Transaction extends QubicBase {
 
     // Generate the public key from the private key
     const publicKey = schnorrq.generatePublicKey(privateKey);
+
+    // Get the transaction data and offset
+    let data = transaction.getData();
+    let offset = transaction.getOffset();
 
     // Create a copy of the transaction data to sign
     const toSign = data.slice(0, offset);

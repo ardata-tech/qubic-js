@@ -33,8 +33,7 @@ const main = async () => {
 
     // Sign the transaction
     const signedTransaction = await qubic.transaction.signTransaction(
-      transaction.getData(),
-      transaction.getOffset(),
+      transaction,
       fromIdentity.privateKey
     );
 
