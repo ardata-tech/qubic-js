@@ -1,7 +1,7 @@
 import { QubicConstants } from "../constants";
 import { ITransactionPayload } from "../types";
 
-export class TransactionBuilder {
+export class Transaction {
   private sourceKey: Uint8Array;
   private destinationKey: Uint8Array;
   private tick: number = 0;

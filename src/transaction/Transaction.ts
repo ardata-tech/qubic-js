@@ -2,7 +2,7 @@ import { QubicBase } from "../base";
 import { QubicConstants } from "../constants";
 import { QubicProvider } from "../provider";
 import crypto from "../crypto";
-import { TransactionBuilder } from "./TransactionBuilder";
+import { Transaction } from "./TransactionBuilder";
 import {
   IBroadcastTransactionResponse,
   IGetApproveTransactions,
@@ -96,15 +96,15 @@ export class TransactionModule extends QubicBase {
    * @param {string} to - The destination wallet address.
    * @param {number} amount - The amount to transfer.
    * @param {number} tick - The tick number.
-   * @returns {Promise<TransactionBuilder>} - The transaction builder.
+   * @returns {Promise<Transaction>} - The transaction builder.
    */
   async createTransaction(
     from: string,
     to: string,
     amount: number,
     tick:number
-  ): Promise<TransactionBuilder> {
-    const tb = new TransactionBuilder()
+  ): Promise<Transaction> {
+    const tb = new Transaction()
       .setSourceBytes(this.getIdentityBytes(from))
       .setDestinationBytes(this.getIdentityBytes(to))
       .setAmount(amount)
@@ -134,7 +134,7 @@ export class TransactionModule extends QubicBase {
    * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
    */
   async signTransaction(
-    transaction: TransactionBuilder,
+    transaction: Transaction,
     privateKey: Uint8Array,
   ): Promise<Uint8Array> {
     // Import the necessary cryptographic functions
