@@ -99,10 +99,6 @@ export class Identity extends QubicBase {
       });
   }
 
-  async createTransaction(from: string, to: string, amount: number) {
-    return { from, to, amount, nonce: Date.now() };
-  }
-
   /**
    * Verifies whether an identity string is valid by checking its length,
    * ensuring it contains only uppercase letters, and comparing it with

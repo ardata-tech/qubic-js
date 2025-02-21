@@ -89,27 +89,6 @@ export class Transaction extends QubicBase {
       });
   }
 
-  /**
-   * Broadcast a transaction.
-   *
-   * @param {string} encodedTransaction The encoded transaction to be broadcast.
-   * @returns {Promise<IBroadcastTransactionResponse | null>} A promise that resolves to the broadcast transaction response, or null if an error occurred.
-   */
-  async broadcastTransaction(
-    encodedTransaction: string
-  ): Promise<IBroadcastTransactionResponse | null> {
-    try {
-      return await this.httpClient.call<IBroadcastTransactionResponse>(
-        `/${this.version}/broadcast-transaction`,
-        "POST",
-        { encodedTransaction }
-      );
-    } catch (error) {
-      this.logger.error("Error broadcast transaction:", error);
-      return null;
-    }
-  }
-
   async createTransaction(
     from: string,
     to: string,
@@ -134,10 +113,6 @@ export class Transaction extends QubicBase {
     const encodedTransaction = this.encodeTransactionToBase64(result);
     //this will invoke the RPC Qubic API to send / process the transaction
     return await this.broadcastTransaction(encodedTransaction);
-  }
-
-  async sendTransaction(signedTx: any): Promise<string> {
-    return "mock-tx-hash";
   }
 
   private encodeTransactionToBase64(transaction: Uint8Array) {
@@ -167,22 +142,49 @@ export class Transaction extends QubicBase {
     // Generate the public key from the private key
     const publicKey = schnorrq.generatePublicKey(privateKey);
 
+    // Create a copy of the transaction data to sign
     const toSign = data.slice(0, offset);
+
     // Sign the transaction using the private key and the digest
     K12(toSign, digest, QubicConstants.DIGEST_LENGTH);
 
     // Sign the transaction using the SchnorrQ signature scheme
     const signature = schnorrq.sign(privateKey, publicKey, digest);
 
-    // TODO: 
-    // removing this will cause error on publishing
-     data.set(signature, offset);
-     offset += QubicConstants.SIGNATURE_LENGTH;
-     const signedTransaction = data.slice(0, offset);
-     K12(signedTransaction, digest, QubicConstants.DIGEST_LENGTH);
+    // Append the signature to the transaction data
+    data.set(signature, offset);
+
+    // Generate a cryptographic digest of the signed transaction
+    offset += QubicConstants.SIGNATURE_LENGTH;
+
+    // Compute the digest of the signed transaction
+    const signedTransaction = data.slice(0, offset);
+
+    // Sign the transaction using the K12 hash function
+    K12(signedTransaction, digest, QubicConstants.DIGEST_LENGTH);
 
     // Return the signed transaction
     return signedTransaction;
   }
 
+  /**
+   * Broadcast a transaction.
+   *
+   * @param {string} encodedTransaction The encoded transaction to be broadcast.
+   * @returns {Promise<IBroadcastTransactionResponse | null>} A promise that resolves to the broadcast transaction response, or null if an error occurred.
+   */
+    async broadcastTransaction(
+      encodedTransaction: string
+    ): Promise<IBroadcastTransactionResponse | null> {
+      try {
+        return await this.httpClient.call<IBroadcastTransactionResponse>(
+          `/${this.version}/broadcast-transaction`,
+          "POST",
+          { encodedTransaction }
+        );
+      } catch (error) {
+        this.logger.error("Error broadcast transaction:", error);
+        return null;
+      }
+    }
 }
