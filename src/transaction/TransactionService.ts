@@ -168,7 +168,7 @@ export class TransactionService extends QubicBase {
     const signedTransaction = data.slice(0, offset);
 
     // Sign the transaction using the K12 hash function
-    K12(signedTransaction, digest, QubicConstants.DIGEST_LENGTH);
+    // K12(signedTransaction, digest, QubicConstants.DIGEST_LENGTH);
 
     // Return the signed transaction
     return signedTransaction;
