@@ -1,15 +1,15 @@
 import { QubicProvider } from "../src/provider";
-import { Chain } from "../src/chain";
+import { ChainService } from "../src/chain";
 
 describe("Chain Module", () => {
-  let chain: Chain;
+  let chain: ChainService;
 
   beforeAll(() => {
     const provider = new QubicProvider({
       providerUrl: "https://rpc.qubic.org",
       version: 1,
     });
-    chain = new Chain(provider);
+    chain = new ChainService(provider);
   });
 
   test("should fetch latest tick", async () => {

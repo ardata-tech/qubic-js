@@ -1,15 +1,15 @@
 import { QubicProvider } from "../src/provider";
-import { Contract } from "../src/contract";
+import { ContractService } from "../src/contract";
 
 describe("Contract Module", () => {
-  let contract: Contract;
+  let contract: ContractService;
 
   beforeAll(() => {
     const provider = new QubicProvider({
       providerUrl: "https://rpc.qubic.org",
       version: 1,
     });
-    contract = new Contract(provider, "mock-contract-address");
+    contract = new ContractService(provider, "mock-contract-address");
   });
 
   test("should query smart contract", async () => {

@@ -1,15 +1,15 @@
 import { QubicProvider } from "../src/provider";
-import { Identity } from "../src/identity";
+import { IdentityService } from "../src/identity";
 
 describe("Identity Module", () => {
-  let identity: Identity;
+  let identity: IdentityService;
 
   beforeAll(() => {
     const provider = new QubicProvider({
       providerUrl: "https://rpc.qubic.org",
       version: 1,
     });
-    identity = new Identity(provider);
+    identity = new IdentityService(provider);
   });
 
   test("should fetch balance by identity", async () => {
@@ -63,7 +63,7 @@ describe("Identity Module", () => {
   });
 
   test("should create ID package", async () => {
-    const idPackage = await identity.createIdPackage(
+    const idPackage = await identity.createIdentity(
       "whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel",
     );
     expect(idPackage).not.toBeNull();
