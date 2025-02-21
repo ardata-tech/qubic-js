@@ -89,12 +89,21 @@ export class Transaction extends QubicBase {
       });
   }
 
+  /**
+   * Creates a transaction.
+   * 
+   * @param {string} from - The source wallet address.
+   * @param {string} to - The destination wallet address.
+   * @param {number} amount - The amount to transfer.
+   * @param {number} tick - The tick number.
+   * @returns {Promise<TransactionBuilder>} - The transaction builder.
+   */
   async createTransaction(
     from: string,
     to: string,
     amount: number,
     tick:number
-  ) {
+  ): Promise<TransactionBuilder> {
     const tb = new TransactionBuilder()
       .setSourceBytes(this.getIdentityBytes(from))
       .setDestinationBytes(this.getIdentityBytes(to))
