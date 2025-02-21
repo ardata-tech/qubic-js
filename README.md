@@ -36,7 +36,10 @@ import Qubic from '@ardata-tech/qubic-js';
 ### Initialize the Connection
 
 ```javascript
-// Sample code here
+const qubic = new Qubic({
+  providerUrl: "https://rpc.qubic.org",
+  version: 1,
+});
 ```
 
 ---
@@ -44,7 +47,9 @@ import Qubic from '@ardata-tech/qubic-js';
 ## 💡 Fetching Account Balance
 
 ```javascript
-// Sample code here
+const response = await qubic.identity.getBalanceByAddress(
+  "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
+);
 ```
 
 ---
@@ -52,7 +57,22 @@ import Qubic from '@ardata-tech/qubic-js';
 ## 💰 Sending Transactions
 
 ```javascript
-// Sample code here
+// Create a transaction
+const transaction = await qubic.transaction.createTransaction(
+  fromWalletAddress,
+  toWalletAddress,
+  100,
+  targetTick,
+)
+// Sign the transaction
+const signedTransaction = await qubic.transaction.signTransaction(
+  transaction,
+  privateKey,
+)
+// Encode the transaction to base64
+const encodedTransaction = qubic.transaction.encodeTransactionToBase64(signedTransaction)
+// Broadcast the transaction
+const response = await qubic.transaction.broadcastTransaction(encodedTransaction);
 ```
 
 ---
@@ -62,13 +82,13 @@ import Qubic from '@ardata-tech/qubic-js';
 ### Reading Data from a Smart Contract
 
 ```javascript
-// Sample code here
+// Coming soon
 ```
 
 ### Writing Data to a Smart Contract
 
 ```javascript
-// Sample code here
+// Coming soon
 ```
 
 ---
@@ -105,6 +125,5 @@ npx ts-node examples/identity/createIdPackage.ts
 ## 🌐 Links
 
 - [Qubic Network](https://qubic.org/)
-- [MetaMask Snaps](https://metamask.io/snaps/)
 
 ---
