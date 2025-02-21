@@ -100,39 +100,29 @@ export class Identity extends QubicBase {
   }
 
   /**
-   * Verifies whether an identity string is valid by checking its length,
-   * ensuring it contains only uppercase letters, and comparing it with
-   * the derived identity from its public key.
-   *
-   * @param {string} identity - The identity string to verify.
-   * @returns {Promise<boolean>} - Returns `true` if the identity is valid, otherwise `false`.
+   * Creates a new identity package containing a public key, private key, and public identity string.
+   * The identity package is generated from a seed string using the K12 hash function.
+   * 
+   * @param {string} seed - The seed string used to generate the identity.
+   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} identity - The generated identity package.
    */
-  public async verifyIdentity(identity: string): Promise<boolean> {
-    if (!identity || identity.length !== 60 || !/^[A-Z]+$/.test(identity)) {
-      return false;
-    }
-
-    // Convert the identity string into its public key bytes
-    const publicKey = this.getIdentityBytes(identity);
-
-    // Derive the identity from the public key
-    const idFromBytes = await this.getIdentity(publicKey);
-
-    // Compare the original identity with the derived one
-    return identity === idFromBytes;
+  async createIdentity(seed: string): Promise<{
+    publicKey: Uint8Array;
+    privateKey: Uint8Array;
+    publicId: string;
+  }> {
+    const identity = await this.createIdPackage(seed);
+    return identity;
   }
 
   /**
-   * Generates a public key and a public identity string from a given private key.
+   * Loads an identity package from a private key byte array.
+   * The identity package contains a public key, private key, and public identity string.
    *
    * @param {Uint8Array} privateKey - The private key as a byte array.
-   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>}
-   *          - The generated ID package containing:
-   *            - `publicKey`: The generated public key as a byte array.
-   *            - `privateKey`: The corresponding private key as a byte array.
-   *            - `publicId`: The derived public identity string.
+   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} identity - The generated identity package.
    */
-  async createIdPackageFromPrivateKey(
+  async loadIdentityFromPrivateKey(
     privateKey: Uint8Array
   ): Promise<{
     publicKey: Uint8Array;
@@ -148,4 +138,27 @@ export class Identity extends QubicBase {
 
     return { publicKey, privateKey, publicId };
   }
+
+  /**
+   * Verifies whether an identity string is valid by checking its length,
+   * ensuring it contains only uppercase letters, and comparing it with
+   * the derived identity from its public key.
+   *
+   * @param {string} identity - The identity string to verify.
+   * @returns {Promise<boolean>} - Returns `true` if the identity is valid, otherwise `false`.
+   */
+    public async verifyIdentity(identity: string): Promise<boolean> {
+      if (!identity || identity.length !== 60 || !/^[A-Z]+$/.test(identity)) {
+        return false;
+      }
+  
+      // Convert the identity string into its public key bytes
+      const publicKey = this.getIdentityBytes(identity);
+  
+      // Derive the identity from the public key
+      const idFromBytes = await this.getIdentity(publicKey);
+  
+      // Compare the original identity with the derived one
+      return identity === idFromBytes;
+    }
 }

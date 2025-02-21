@@ -20,33 +20,8 @@ export class QubicBase {
     this.logger = _logger;
   }
 
-  protected getIdentityBytes(identity: string): Uint8Array {
-    const publicKeyBytes = new Uint8Array(32);
-    const view = new DataView(publicKeyBytes.buffer, 0);
-
-    // Convert identity characters into numerical values and reconstruct public key
-    for (let i = 0; i < 4; i++) {
-      view.setBigUint64(i * 8, 0n, true);
-      for (let j = 14; j-- > 0; ) {
-        view.setBigUint64(
-          i * 8,
-          view.getBigUint64(i * 8, true) * 26n +
-            BigInt(identity.charCodeAt(i * 14 + j)) -
-            BigInt("A".charCodeAt(0)),
-          true
-        );
-      }
-    }
-
-    return publicKeyBytes;
-  }
-
   /**
    * Derives a public identity string from a given public key.
-   *
-   * @param {Uint8Array} publicKey - The public key as a byte array.
-   * @param {boolean} [lowerCase=false] - Whether to return the identity in lowercase.
-   * @returns {Promise<string>} - The computed public identity string.
    */
   protected async getIdentity(
     publicKey: Uint8Array,
@@ -96,17 +71,34 @@ export class QubicBase {
   }
 
   /**
+   * Converts a public identity string into a byte array.
+   */
+  protected getIdentityBytes(identity: string): Uint8Array {
+    const publicKeyBytes = new Uint8Array(32);
+    const view = new DataView(publicKeyBytes.buffer, 0);
+
+    // Convert identity characters into numerical values and reconstruct public key
+    for (let i = 0; i < 4; i++) {
+      view.setBigUint64(i * 8, 0n, true);
+      for (let j = 14; j-- > 0; ) {
+        view.setBigUint64(
+          i * 8,
+          view.getBigUint64(i * 8, true) * 26n +
+            BigInt(identity.charCodeAt(i * 14 + j)) -
+            BigInt("A".charCodeAt(0)),
+          true
+        );
+      }
+    }
+
+    return publicKeyBytes;
+  }
+
+  /**
    * Generates a complete ID package, including a public-private key pair and
    * a derived public identity, based on the provided seed.
-   *
-   * @param {string} seed - The seed string used to generate the ID package.
-   * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>}
-   *          - The generated ID package containing:
-   *            - `publicKey`: The generated public key as a byte array.
-   *            - `privateKey`: The corresponding private key as a byte array.
-   *            - `publicId`: The derived public identity string.
    */
-  public async createIdPackage(seed: string): Promise<{
+  protected async createIdPackage(seed: string): Promise<{
     publicKey: Uint8Array;
     privateKey: Uint8Array;
     publicId: string;
@@ -127,13 +119,8 @@ export class QubicBase {
 
   /**
    * Generates a private key from a seed using an iterative process.
-   *
-   * @param {string} seed - The input seed string.
-   * @param {number} index - Iteration index for modifying the seed.
-   * @param {any} K12 - Cryptographic hashing function.
-   * @returns {Uint8Array} - The generated private key as a byte array.
    */
-  protected generatePrivateKey(
+  private generatePrivateKey(
     seed: string,
     index: number,
     K12: any
@@ -162,11 +149,8 @@ export class QubicBase {
 
   /**
    * Converts a seed string into a byte array using the predefined alphabet.
-   *
-   * @param {string} seed - The seed string to convert.
-   * @returns {Uint8Array} - The corresponding byte representation.
    */
-  protected seedToBytes(seed: string): Uint8Array {
+  private seedToBytes(seed: string): Uint8Array {
     const bytes = new Uint8Array(seed.length);
 
     // Convert each character in the seed to its corresponding index in the alphabet
@@ -179,11 +163,8 @@ export class QubicBase {
 
   /**
    * Computes a cryptographic checksum for a given public key.
-   *
-   * @param {Uint8Array} publicKey - The public key for which to compute the checksum.
-   * @returns {Promise<Uint8Array>} - The computed checksum as a byte array.
    */
-  protected async getCheckSum(publicKey: Uint8Array): Promise<Uint8Array> {
+  private async getCheckSum(publicKey: Uint8Array): Promise<Uint8Array> {
     const { K12 } = await crypto;
 
     // Compute a cryptographic digest of the public key
