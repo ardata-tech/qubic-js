@@ -1,7 +1,7 @@
 import { randomInt } from 'crypto';
 import { QubicConstants } from '../constants';
 
-export class Utils {
+export class UtilityService {
     /**
      * Create a secure 55-character lowercase seed.
      *

@@ -12,7 +12,7 @@ import {
 } from "../types";
 
 
-export class TransactionModule extends QubicBase {
+export class TransactionService extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }

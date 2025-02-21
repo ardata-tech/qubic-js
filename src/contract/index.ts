@@ -1,1 +1,1 @@
-export { ContractModule } from "./ContractModule";
+export { ContractService } from "./ContractService";

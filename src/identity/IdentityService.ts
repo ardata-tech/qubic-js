@@ -8,7 +8,7 @@ import {
   IGetPossessedAssets,
 } from "../types";
 
-export class IdentityModule extends QubicBase {
+export class IdentityService extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }
