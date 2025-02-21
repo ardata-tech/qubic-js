@@ -7,7 +7,7 @@ describe("Qubic SDK Structure", () => {
     qubic = new Qubic({ providerUrl: "https://rpc.qubic.org", version: 1 });
   });
 
-  test("should check for identity", async() => {
+  test("should check for identity", async () => {
     expect(true).toBe(true);
   });
 

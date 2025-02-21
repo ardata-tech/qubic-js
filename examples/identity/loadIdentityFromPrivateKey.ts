@@ -11,7 +11,8 @@ async function loadIdentityFromPrivateKey() {
     const seed = qubic.utils.createSeed();
     const idPackage = await qubic.identity.createIdentity(seed);
     const privateKey = idPackage.privateKey;
-    const idPackageFromPrivateKey = await qubic.identity.loadIdentityFromPrivateKey(privateKey);
+    const idPackageFromPrivateKey =
+      await qubic.identity.loadIdentityFromPrivateKey(privateKey);
     console.log("response", JSON.stringify(idPackageFromPrivateKey));
   } catch (error) {
     console.error("Error fetching: ", error);

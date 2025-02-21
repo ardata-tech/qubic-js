@@ -25,7 +25,7 @@ export class QubicBase {
    */
   protected async getIdentity(
     publicKey: Uint8Array,
-    lowerCase: boolean = false
+    lowerCase: boolean = false,
   ): Promise<string> {
     let newId = "";
 
@@ -37,7 +37,7 @@ export class QubicBase {
       // Convert each byte chunk into a large numerical representation
       publicKey.slice(i * 8, (i + 1) * 8).forEach((val, index) => {
         longNumber = longNumber.plus(
-          new BigNumber((val * 256 ** index).toString(2), 2)
+          new BigNumber((val * 256 ** index).toString(2), 2),
         );
       });
 
@@ -47,7 +47,7 @@ export class QubicBase {
           longNumber
             .mod(26)
             .plus((lowerCase ? "a" : "A").charCodeAt(0))
-            .toNumber()
+            .toNumber(),
         );
         longNumber = longNumber.div(26);
       }
@@ -62,7 +62,7 @@ export class QubicBase {
     // Append checksum-derived characters to the identity
     for (let i = 0; i < 4; i++) {
       newId += String.fromCharCode(
-        (identityBytesChecksum % 26) + (lowerCase ? "a" : "A").charCodeAt(0)
+        (identityBytesChecksum % 26) + (lowerCase ? "a" : "A").charCodeAt(0),
       );
       identityBytesChecksum /= 26;
     }
@@ -86,7 +86,7 @@ export class QubicBase {
           view.getBigUint64(i * 8, true) * 26n +
             BigInt(identity.charCodeAt(i * 14 + j)) -
             BigInt("A".charCodeAt(0)),
-          true
+          true,
         );
       }
     }
@@ -123,7 +123,7 @@ export class QubicBase {
   private generatePrivateKey(
     seed: string,
     index: number,
-    K12: any
+    K12: any,
   ): Uint8Array {
     // Convert the seed string into a byte array
     const byteSeed = this.seedToBytes(seed);

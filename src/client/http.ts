@@ -17,11 +17,11 @@ export class HttpClient {
     if (!response.ok) {
       const message = await response.text();
       if (message) {
-          console.log("error message", message);
+        console.log("error message", message);
       }
-    
+
       throw new Error(
-        `[HttpClient] HTTP Error: ${response.status} ${response.statusText}`
+        `[HttpClient] HTTP Error: ${response.status} ${response.statusText}`,
       );
     }
 

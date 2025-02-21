@@ -1,4 +1,4 @@
-import crypto from '../crypto';
+import crypto from "../crypto";
 import { QubicBase } from "../base";
 import { QubicProvider } from "../provider";
 import {
@@ -35,12 +35,12 @@ export class IdentityService extends QubicBase {
    * @returns {Promise<any>} A promise that resolves to the list of possessed assets, or null if an error occurred.
    */
   async getPossessedAssets(
-    identity: string
+    identity: string,
   ): Promise<IGetPossessedAssets | null> {
     return this.httpClient
       .call<IGetPossessedAssets>(
         `/${this.version}/assets/${identity}/possessed`,
-        "GET"
+        "GET",
       )
       .catch((error) => {
         this.logger.error("Error fetching possessed assets:", error);
@@ -58,7 +58,7 @@ export class IdentityService extends QubicBase {
     return await this.httpClient
       .call<IGetIssuedAssets>(
         `/${this.version}/assets/${identity}/issued`,
-        "GET"
+        "GET",
       )
       .catch((error) => {
         this.logger.error("Error fetching issued assets:", error);
@@ -88,7 +88,7 @@ export class IdentityService extends QubicBase {
    * @returns {Promise<IGetBalanceByIdentity | null>} A promise that resolves to the balance, or null if an error occurred.
    */
   async getBalanceByIdentity(
-    Id: string
+    Id: string,
   ): Promise<IGetBalanceByIdentity | null> {
     return await this.httpClient
       .call<IGetBalanceByIdentity>(`/${this.version}/balances/${Id}`, "GET")
@@ -101,7 +101,7 @@ export class IdentityService extends QubicBase {
   /**
    * Creates a new identity package containing a public key, private key, and public identity string.
    * The identity package is generated from a seed string using the K12 hash function.
-   * 
+   *
    * @param {string} seed - The seed string used to generate the identity.
    * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} identity - The generated identity package.
    */
@@ -121,9 +121,7 @@ export class IdentityService extends QubicBase {
    * @param {Uint8Array} privateKey - The private key as a byte array.
    * @returns {Promise<{ publicKey: Uint8Array, privateKey: Uint8Array, publicId: string }>} identity - The generated identity package.
    */
-  async loadIdentityFromPrivateKey(
-    privateKey: Uint8Array
-  ): Promise<{
+  async loadIdentityFromPrivateKey(privateKey: Uint8Array): Promise<{
     publicKey: Uint8Array;
     privateKey: Uint8Array;
     publicId: string;
@@ -146,18 +144,18 @@ export class IdentityService extends QubicBase {
    * @param {string} identity - The identity string to verify.
    * @returns {Promise<boolean>} - Returns `true` if the identity is valid, otherwise `false`.
    */
-    public async verifyIdentity(identity: string): Promise<boolean> {
-      if (!identity || identity.length !== 60 || !/^[A-Z]+$/.test(identity)) {
-        return false;
-      }
-  
-      // Convert the identity string into its public key bytes
-      const publicKey = this.getIdentityBytes(identity);
-  
-      // Derive the identity from the public key
-      const idFromBytes = await this.getIdentity(publicKey);
-  
-      // Compare the original identity with the derived one
-      return identity === idFromBytes;
+  public async verifyIdentity(identity: string): Promise<boolean> {
+    if (!identity || identity.length !== 60 || !/^[A-Z]+$/.test(identity)) {
+      return false;
     }
+
+    // Convert the identity string into its public key bytes
+    const publicKey = this.getIdentityBytes(identity);
+
+    // Derive the identity from the public key
+    const idFromBytes = await this.getIdentity(publicKey);
+
+    // Compare the original identity with the derived one
+    return identity === idFromBytes;
+  }
 }

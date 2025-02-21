@@ -8,7 +8,9 @@ async function getBalanceByAddress() {
   });
 
   try {
-    const response = await qubic.identity.getBalanceByAddress("IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO");
+    const response = await qubic.identity.getBalanceByAddress(
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
+    );
     console.log("response", JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

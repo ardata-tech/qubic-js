@@ -13,12 +13,14 @@ const main = async () => {
     // Fill-up the parameters in order to process the transaction
 
     // Source wallet address
-    const fromWalletAddress = "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
+    const fromWalletAddress =
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
     const fromSeed = "sqvryrsucaicyxpqwzjpewkmdhodjntgpqrajykmacyajnoxjdtnbxn";
     const fromIdentity = await qubic.identity.createIdentity(fromSeed);
 
     // Recipient wallet address
-    const toWalletAddress = "ECRXFGMYUXWETCOUKCRIQDNCEOJAHUXFTQETBZSDVCLEMKPZZMJLVOECGHRB";
+    const toWalletAddress =
+      "ECRXFGMYUXWETCOUKCRIQDNCEOJAHUXFTQETBZSDVCLEMKPZZMJLVOECGHRB";
 
     // Get the latest tick
     const latestTick = (await qubic.chain.getLatestTick()) || 0;
@@ -28,22 +30,22 @@ const main = async () => {
       fromWalletAddress,
       toWalletAddress,
       100,
-      latestTick + 3
+      latestTick + 3,
     );
 
     // Sign the transaction
     const signedTransaction = await qubic.transaction.signTransaction(
       transaction,
-      fromIdentity.privateKey
+      fromIdentity.privateKey,
     );
 
     // Encode the transaction to base64
-    const encodedTransaction = qubic.transaction.encodeTransactionToBase64(
-      signedTransaction
-    );
+    const encodedTransaction =
+      qubic.transaction.encodeTransactionToBase64(signedTransaction);
 
     // Broadcast the transaction
-    const result = await qubic.transaction.broadcastTransaction(encodedTransaction);
+    const result =
+      await qubic.transaction.broadcastTransaction(encodedTransaction);
     console.log("result", result);
   } catch (error) {
     console.error("Error fetching: ", error);

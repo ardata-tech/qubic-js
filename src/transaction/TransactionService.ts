@@ -11,7 +11,6 @@ import {
   IGetTransferTransaction,
 } from "../types";
 
-
 export class TransactionService extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
@@ -24,12 +23,12 @@ export class TransactionService extends QubicBase {
    * @returns {Promise<any>} A promise that resolves to the list of approved transactions, or null if an error occurred.
    */
   async getApprovedTransactions(
-    tickNumber: number
+    tickNumber: number,
   ): Promise<IGetApproveTransactions | null> {
     return await this.httpClient
       .call<IGetApproveTransactions>(
         `/${this.version}/ticks/${tickNumber}/approved-transactions`,
-        "GET"
+        "GET",
       )
       .catch((error) => {
         this.logger.error("Error fetching approved transactions:", error);
@@ -44,7 +43,7 @@ export class TransactionService extends QubicBase {
    * @returns {Promise<any>} A promise that resolves to the transaction status, or null if an error occurred.
    */
   async getTransactionsStatus(
-    txId: string
+    txId: string,
   ): Promise<IGetTransactionsStatus | null> {
     return await this.httpClient
       .call<IGetTransactionsStatus>(`/${this.version}/tx-status/${txId}`, "GET")
@@ -76,12 +75,12 @@ export class TransactionService extends QubicBase {
    * @returns {Promise<any>} A promise that resolves to the list of transfer transactions, or null if an error occurred.
    */
   async getTransferTransactions(
-    identity: string
+    identity: string,
   ): Promise<IGetTransferTransaction | null> {
     return await this.httpClient
       .call<IGetTransferTransaction>(
         `/${this.version}/identities/${identity}/transfer-transactions`,
-        "GET"
+        "GET",
       )
       .catch((error) => {
         this.logger.error("Error fetching latest tick:", error);
@@ -91,7 +90,7 @@ export class TransactionService extends QubicBase {
 
   /**
    * Creates a transaction.
-   * 
+   *
    * @param {string} from - The source wallet address.
    * @param {string} to - The destination wallet address.
    * @param {number} amount - The amount to transfer.
@@ -102,7 +101,7 @@ export class TransactionService extends QubicBase {
     from: string,
     to: string,
     amount: number,
-    tick:number
+    tick: number,
   ): Promise<Transaction> {
     const tb = new Transaction()
       .setSourceBytes(this.getIdentityBytes(from))
@@ -111,12 +110,12 @@ export class TransactionService extends QubicBase {
       .setTick(tick)
       .build();
 
-      return tb;
+    return tb;
   }
 
   /**
    * Encodes a transaction to a base64 string.
-   * 
+   *
    * @param {Uint8Array} transaction - The transaction to encode.
    * @returns {string} - The encoded transaction as a base64 string.
    */
@@ -181,18 +180,18 @@ export class TransactionService extends QubicBase {
    * @param {string} encodedTransaction The encoded transaction to be broadcast.
    * @returns {Promise<IBroadcastTransactionResponse | null>} A promise that resolves to the broadcast transaction response, or null if an error occurred.
    */
-    async broadcastTransaction(
-      encodedTransaction: string
-    ): Promise<IBroadcastTransactionResponse | null> {
-      try {
-        return await this.httpClient.call<IBroadcastTransactionResponse>(
-          `/${this.version}/broadcast-transaction`,
-          "POST",
-          { encodedTransaction }
-        );
-      } catch (error) {
-        this.logger.error("Error broadcast transaction:", error);
-        return null;
-      }
+  async broadcastTransaction(
+    encodedTransaction: string,
+  ): Promise<IBroadcastTransactionResponse | null> {
+    try {
+      return await this.httpClient.call<IBroadcastTransactionResponse>(
+        `/${this.version}/broadcast-transaction`,
+        "POST",
+        { encodedTransaction },
+      );
+    } catch (error) {
+      this.logger.error("Error broadcast transaction:", error);
+      return null;
     }
+  }
 }

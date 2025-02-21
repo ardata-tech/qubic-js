@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-import Module from './libFourQ_K12.js';
-import { keccakP160012 } from './keccakp.js'
+import Module from "./libFourQ_K12.js";
+import { keccakP160012 } from "./keccakp.js";
 
 const allocU8 = function (l, v) {
   let ptr = Module._malloc(l);
@@ -76,7 +76,7 @@ const crypto = new Promise(function (resolve) {
         pk.byteOffset,
         m.byteOffset,
         message.length,
-        s.byteOffset
+        s.byteOffset,
       );
       const sig = s.slice();
       free();
@@ -108,7 +108,7 @@ const crypto = new Promise(function (resolve) {
         m.byteOffset,
         message.length,
         s.byteOffset,
-        v.byteOffset
+        v.byteOffset,
       );
       const ver = v[0];
       free();
@@ -152,7 +152,11 @@ const crypto = new Promise(function (resolve) {
         Module._free(shk.byteOffset);
       };
 
-      Module._CompressedSecretAgreement(sk.byteOffset, pk.byteOffset, shk.byteOffset);
+      Module._CompressedSecretAgreement(
+        sk.byteOffset,
+        pk.byteOffset,
+        shk.byteOffset,
+      );
       const key = shk.slice();
       free();
       return key;
@@ -174,7 +178,14 @@ const crypto = new Promise(function (resolve) {
         Module._free(o.byteOffset);
       };
 
-      Module._KangarooTwelve(i.byteOffset, input.length, o.byteOffset, outputLength, 0, 0);
+      Module._KangarooTwelve(
+        i.byteOffset,
+        input.length,
+        o.byteOffset,
+        outputLength,
+        0,
+        0,
+      );
       output.set(o.slice(), outputOffset);
       free();
     };

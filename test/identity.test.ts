@@ -14,29 +14,23 @@ describe("Identity Module", () => {
 
   test("should fetch balance by identity", async () => {
     const balance = await identity.getBalanceByIdentity(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
     );
     expect(balance).not.toBeNull();
     expect(balance).toHaveProperty("balance");
     expect(balance).toHaveProperty("balance.id");
     expect(balance).toHaveProperty("balance.balance");
     expect(balance).toHaveProperty("balance.validForTick");
-    expect(balance).toHaveProperty(
-      "balance.latestIncomingTransferTick"
-    );
+    expect(balance).toHaveProperty("balance.latestIncomingTransferTick");
     expect(balance).toHaveProperty("balance.incomingAmount");
     expect(balance).toHaveProperty("balance.outgoingAmount");
-    expect(balance).toHaveProperty(
-      "balance.numberOfIncomingTransfers"
-    );
-    expect(balance).toHaveProperty(
-      "balance.numberOfOutgoingTransfers"
-    );
+    expect(balance).toHaveProperty("balance.numberOfIncomingTransfers");
+    expect(balance).toHaveProperty("balance.numberOfOutgoingTransfers");
   });
 
   test("should fetch Issued Assets", async () => {
     const result = await identity.getIssuedAssets(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
     );
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("issuedAssets");
@@ -45,7 +39,7 @@ describe("Identity Module", () => {
 
   test("should fetch owned Assets", async () => {
     const result = await identity.getOwnedAssets(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
     );
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("ownedAssets");
@@ -54,7 +48,7 @@ describe("Identity Module", () => {
 
   test("should fetch possessed assets", async () => {
     const result = await identity.getPossessedAssets(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
     );
     expect(result).not.toBeNull();
     expect(result).toHaveProperty("possessedAssets");
@@ -63,13 +57,15 @@ describe("Identity Module", () => {
 
   test("should fetch balance by address", async () => {
     const balance = await identity.getBalanceByAddress(
-      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO"
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
     );
     expect(balance).not.toBeNull();
   });
 
   test("should create ID package", async () => {
-    const idPackage = await identity.createIdPackage('whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel');
+    const idPackage = await identity.createIdPackage(
+      "whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel",
+    );
     expect(idPackage).not.toBeNull();
     expect(idPackage).toHaveProperty("id");
     expect(idPackage).toHaveProperty("publicKey");

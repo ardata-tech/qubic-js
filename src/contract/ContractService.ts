@@ -14,13 +14,13 @@ export class ContractService extends QubicBase {
   }
 
   async querySmartContract(
-    body: IPostQuerySmartContractBody
+    body: IPostQuerySmartContractBody,
   ): Promise<IPostQuerySmartContractResponse | null> {
     try {
       return await this.httpClient.call<IPostQuerySmartContractResponse>(
         `/${this.version}/querySmartContract`,
         "POST",
-        body
+        body,
       );
     } catch (error) {
       this.logger.error("Error fetching latest tick:", error);

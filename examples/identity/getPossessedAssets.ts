@@ -9,7 +9,7 @@ async function getPossessedAssets() {
 
   try {
     const response = await qubic.identity.getPossessedAssets(
-      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO"
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO",
     );
     console.log(JSON.stringify(response));
   } catch (error) {

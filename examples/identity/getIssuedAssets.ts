@@ -8,7 +8,8 @@ async function getIssuedAssets() {
   });
 
   try {
-    const identity = "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
+    const identity =
+      "IMEKBNRUZIGTDBVJHYNLNDTTIKVCRKYEWPDDQMUIRCASJUOBMFCHUUNEFKRO";
     const response = await qubic.identity.getIssuedAssets(identity);
     console.log(JSON.stringify(response));
   } catch (error) {
