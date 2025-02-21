@@ -128,7 +128,7 @@ export class TransactionService extends QubicBase {
   /**
    * Signs a transaction using a private key and returns the signed transaction.
    *
-   * @param {Uint8Array} data - The transaction data to sign.
+   * @param {Uint8Array} transaction - The transaction to sign.
    * @param {Uint8Array} privateKey - The private key used to sign the transaction.
    * @returns {Promise<Uint8Array>} - The signed transaction as a byte array.
    */
@@ -139,7 +139,7 @@ export class TransactionService extends QubicBase {
     // Import the necessary cryptographic functions
     const { schnorrq, K12 } = await crypto;
 
-    // Generate a cryptographic digest of the transaction data
+    // Generate a cryptographic digest of the transaction
     const digest = new Uint8Array(QubicConstants.DIGEST_LENGTH);
 
     // Generate the public key from the private key
