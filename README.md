@@ -5,7 +5,7 @@
 ## Features
 
 - 🛠 **Easy Integration** – Connect your application to the Qubic network with minimal setup.
-- 🔒 **Secure Transactions** – Leverage MetaMask Snap for enhanced security when signing transactions.
+- 🔒 **Secure Transactions** -  Sign and verify transactions with advanced cryptographic security.
 - 📺 **Smart Contract Interaction** – Read and write data on Qubic smart contracts.
 - ⚡ **Efficient Performance** – Optimized connection handling and transaction execution.
 
