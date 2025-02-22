@@ -1,6 +1,6 @@
 {
   "name": "@ardata-tech/qubic-js",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Qubic.js is an NPM library designed to facilitate seamless interaction with the Qubic network.",
   "main": "dist/index.js",
   "scripts": {
