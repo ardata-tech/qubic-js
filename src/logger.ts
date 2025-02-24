@@ -1,10 +1,6 @@
-import winston from "winston";
-
-export const QubicLogger = winston.createLogger({
-  level: "info",
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json(),
-  ),
-  transports: [new winston.transports.Console({ silent: false })],
-});
+export const QubicLogger = {
+  info: console.log,
+  warn: console.warn,
+  error: console.error,
+  debug: console.debug,
+};

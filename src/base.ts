@@ -1,6 +1,5 @@
 import { HttpClient } from "./client/http";
 import { QubicLogger as _logger } from "./logger";
-import { Logger } from "winston";
 import { QubicProvider } from "./provider";
 import { IQubicProviderOptions } from "./types";
 import { QubicConstants } from "./constants";
@@ -11,7 +10,7 @@ export class QubicBase {
   httpClient: HttpClient;
   providerOptions: IQubicProviderOptions;
   version: string;
-  logger: Logger;
+  logger: typeof _logger;
 
   constructor(provider: QubicProvider) {
     this.providerOptions = provider.getProviderOptions();
