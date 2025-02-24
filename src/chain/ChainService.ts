@@ -1,204 +1,98 @@
 import { QubicProvider } from "../provider";
-import {
-  IGetLatestTick,
-  IGetTickData,
-  IGetRpcStatus,
-  IChainHash,
-  IGetQuorumTickData,
-  IGetHealthCheck,
-  IGetComputors,
-  IGetTickInfo,
-  IGetBlockHeight,
-  IGetLatestStats,
-} from "../types";
+import { IQxAssetAskOrders, IQxAssetBidOrders, IQxEntityAskOrders, IQxEntityBidOrders, IQxFees } from "../types";
 import { QubicBase } from "../base";
 
-export class ChainService extends QubicBase {
+export class QxService extends QubicBase {
   constructor(provider: QubicProvider) {
     super(provider);
   }
 
   /**
-   * Retrieves the latest tick of the chain.
+   * Retrieves ask orders for a specific asset and issuer.
    *
-   * @returns {Promise<number | null>} The latest tick of the chain, or null if an error occurred.
+   * @param {string} assetName - The name of the asset.
+   * @param {string} issuerId - The issuer's ID.
+   * @param {string} offset - The offset for pagination.
+   * @returns {Promise<IQxAssetAskOrders | null>} A promise that resolves to asset ask orders or null if an error occurs.
    */
-  async getLatestTick(): Promise<number | null> {
+  async getAskOrders(assetName: string, issuerId: string, offset: string): Promise<IQxAssetAskOrders | null> {
+    const url = `/${this.version}/qx/getAskOrders?assetName=${encodeURIComponent(assetName)}&issuerId=${encodeURIComponent(issuerId)}&offset=${BigInt(offset).toString()}`;
     try {
-      const response: IGetLatestTick = await this.httpClient.call(
-        `/${this.version}/latestTick`,
-        "GET",
-      );
-      return response?.latestTick;
-    } catch (error) {
-      this.logger.error("Error fetching latest tick:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Retrieves the tick data for the specified tick.
-   *
-   * @param {number} tickNumber The tick number for which to fetch the tick data.
-   * @returns {Promise<IGetTickData | null>} A promise that resolves to the tick data, or null if an error occurred.
-   */
-  async getTickData(tickNumber: number): Promise<IGetTickData | null> {
-    try {
-      const response: IGetTickData = await this.httpClient.call(
-        `/${this.version}/ticks/${tickNumber}/tick-data`,
-        "GET",
-      );
+      const response: IQxAssetAskOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching tick data:", error);
+      this.logger.error("Error fetching ask orders:", error);
       return null;
     }
   }
 
   /**
-   * Fetches the RPC status.
+   * Retrieves bid orders for a specific asset and issuer.
    *
-   * @returns {Promise<IGetRpcStatus | null>} A promise that resolves to the RPC status.
+   * @param {string} assetName - The name of the asset.
+   * @param {string} issuerId - The issuer's ID.
+   * @param {string} offset - The offset for pagination.
+   * @returns {Promise<IQxAssetBidOrders | null>} A promise that resolves to asset bid orders or null if an error occurs.
    */
-  async getRpcStatus(): Promise<IGetRpcStatus | null> {
+  async getAssetBidOrders(assetName: string, issuerId: string, offset: string): Promise<IQxAssetBidOrders | null> {
+    const url = `/${this.version}/qx/getAssetBidOrders?assetName=${encodeURIComponent(assetName)}&issuerId=${encodeURIComponent(issuerId)}&offset=${BigInt(offset).toString()}`;
     try {
-      const response: IGetRpcStatus = await this.httpClient.call(
-        `/${this.version}/status`,
-        "GET",
-      );
+      const response: IQxAssetBidOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching RPC status:", error);
+      this.logger.error("Error fetching asset bid orders:", error);
       return null;
     }
   }
 
   /**
-   * Fetches the chain hash for the given tick number.
+   * Retrieves ask orders for a specific entity.
    *
-   * @param {number} tickNumber The tick number for which to fetch the chain hash.
-   * @returns {Promise<IGetChainHash | null>} A promise that resolves to the chain hash, or null if an error occurred.
+   * @param {string} entityId - The entity's ID.
+   * @param {string} offset - The offset for pagination.
+   * @returns {Promise<IQxEntityAskOrders | null>} A promise that resolves to entity ask orders or null if an error occurs.
    */
-  async getChainHash(tickNumber: number): Promise<IChainHash | null> {
+  async getEntityAskOrders(entityId: string, offset: string): Promise<IQxEntityAskOrders | null> {
+    const url = `/${this.version}/qx/getEntityAskOrders?entityId=${encodeURIComponent(entityId)}&offset=${BigInt(offset).toString()}`;
     try {
-      return await this.httpClient.call(
-        `/${this.version}/ticks/${tickNumber}/chain-hash`,
-        "GET",
-      );
+      const response: IQxEntityAskOrders = await this.httpClient.call(url, "GET");
+      return response;
     } catch (error) {
-      this.logger.error("Error fetching chain hash:", error);
+      this.logger.error("Error fetching entity ask orders:", error);
       return null;
     }
   }
 
   /**
-   * Retrieves the quorum tick data for the specified tick number.
+   * Retrieves bid orders for a specific entity.
    *
-   * @param {number} tickNumber - The tick number for which to fetch the quorum tick data.
-   * @returns {Promise<IGetQuorumTickData | null>} A promise that resolves to the quorum tick data, or null if an error occurred.
+   * @param {string} entityId - The entity's ID.
+   * @param {string} offset - The offset for pagination.
+   * @returns {Promise<IQxEntityBidOrders | null>} A promise that resolves to entity bid orders or null if an error occurs.
    */
-  async getQuorumTickData(
-    tickNumber: number,
-  ): Promise<IGetQuorumTickData | null> {
+  async getEntityBidOrders(entityId: string, offset: string): Promise<IQxEntityBidOrders | null> {
+    const url = `/${this.version}/qx/getEntityBidOrders?entityId=${encodeURIComponent(entityId)}&offset=${BigInt(offset).toString()}`;
     try {
-      return await this.httpClient.call(
-        `/${this.version}/ticks/${tickNumber}/quorum-tick-data`,
-        "GET",
-      );
+      const response: IQxEntityBidOrders = await this.httpClient.call(url, "GET");
+      return response;
     } catch (error) {
-      this.logger.error("Error fetching quorum tick data:", error);
+      this.logger.error("Error fetching entity bid orders:", error);
       return null;
     }
   }
 
   /**
-   * Retrieves the store hash for the specified tick number.
+   * Retrieves the fees associated with Qx transactions.
    *
-   * @param {number} tickNumber - The tick number for which to fetch the store hash.
-   * @returns {Promise<IGetChainHash | null>} A promise that resolves to the store hash, or null if an error occurred.
+   * @returns {Promise<IQxFees | null>} A promise that resolves to the Qx fees or null if an error occurs.
    */
-  async getStoreHash(tickNumber: number): Promise<IChainHash | null> {
+  async getFees(): Promise<IQxFees | null> {
+    const url = `/${this.version}/qx/getFees`;
     try {
-      return await this.httpClient.call(
-        `/${this.version}/ticks/${tickNumber}/store-hash`,
-        "GET",
-      );
-    } catch (error: any) {
-      this.logger.error(error);
-      return null;
-    }
-  }
-
-  /**
-   * Performs a health check for the Qubic network.
-   *
-   * @returns {Promise<IGetHealthCheck | null>} A promise that resolves to the health check result, or null if an error occurred.
-   */
-  async getHealthCheck(): Promise<IGetHealthCheck | null> {
-    try {
-      return await this.httpClient.call(`/${this.version}/healthcheck`, "GET");
+      const response: IQxFees = await this.httpClient.call(url, "GET");
+      return response;
     } catch (error) {
-      this.logger.error("Error fetching health check:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Fetches the list of computors for the specified epoch.
-   *
-   * @param {number} epoch The epoch for which to fetch the computors.
-   * @returns {Promise<IGetComputors | null>} A promise that resolves to the list of computors, or null if an error occurred.
-   */
-  async getComputors(epoch: number): Promise<IGetComputors | null> {
-    try {
-      return await this.httpClient.call(
-        `/${this.version}/epochs/${epoch}/computors`,
-        "GET",
-      );
-    } catch (error) {
-      this.logger.error("Error fetching computors:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Fetches the current tick information from the chain.
-   *
-   * @returns {Promise<IGetTickInfo | null>} A promise that resolves to the tick info.
-   */
-  async getTickInfo(): Promise<IGetTickInfo | null> {
-    try {
-      return await this.httpClient.call(`/${this.version}/tick-info`, "GET");
-    } catch (error) {
-      this.logger.error("Error fetching tick info:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Fetches the current block height from the chain.
-   *
-   * @returns {Promise<IGetBlockHeight | null>} A promise that resolves to the block height.
-   */
-  async getBlockHeight(): Promise<IGetBlockHeight | null> {
-    try {
-      return await this.httpClient.call(`/${this.version}/block-height`, "GET");
-    } catch (error) {
-      this.logger.error("Error fetching block height:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Fetches the latest statistics from the chain.
-   *
-   * @returns {Promise<any>} A promise that resolves to the latest statistics.
-   */
-  async getLatestStats(): Promise<IGetLatestStats | null> {
-    try {
-      return await this.httpClient.call(`/${this.version}/latest-stats`, "GET");
-    } catch (error) {
-      this.logger.error("Error fetching latest stats:", error);
+      this.logger.error("Error fetching fees:", error);
       return null;
     }
   }
