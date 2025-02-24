@@ -4,6 +4,7 @@ import { TransactionService } from "./transaction";
 import { IdentityService } from "./identity";
 import { ContractService } from "./contract";
 import { UtilityService } from "./utils";
+import { QxService } from "./qx";
 import { IQubicProviderOptions } from "./types";
 
 export default class QubicCore {
@@ -13,6 +14,7 @@ export default class QubicCore {
   public transaction: TransactionService;
   public contract: (address: string) => ContractService;
   public utils = UtilityService;
+  public qx: QxService;
 
   constructor(options: IQubicProviderOptions) {
     this.provider = new QubicProvider(options);
@@ -21,5 +23,6 @@ export default class QubicCore {
     this.transaction = new TransactionService(this.provider);
     this.contract = (address: string) =>
       new ContractService(this.provider, address);
+    this.qx = new QxService(this.provider);
   }
 }

@@ -261,6 +261,13 @@ interface ITransactionPayload {
   numberOfShares: number | bigint | Uint8Array;
 }
 
+interface IQxFees {
+  assetIssuanceFee: number;
+  transferFee: number;
+  tradeFee: number;
+}
+
+
 export {
   IQubicProviderOptions,
   IGetTickInfo,
@@ -285,4 +292,5 @@ export {
   IGetTransferTransaction,
   IGetOwnedAssets,
   ITransactionPayload,
+  IQxFees,
 };
