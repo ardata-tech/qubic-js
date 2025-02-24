@@ -261,12 +261,53 @@ interface ITransactionPayload {
   numberOfShares: number | bigint | Uint8Array;
 }
 
+interface QxAssetAskOrder {
+  entityId: string;
+  price: string;
+  numberOfShares: string;
+}
+
+interface QxAssetBidOrder {
+  entityId: string;
+  price: string;
+  numberOfShares: string;
+}
+
+interface QxEntityAskOrder {
+  issuerId: string;
+  assetName: string;
+  price: string;
+  numberOfShares: string;
+}
+
+interface QxEntityBidOrder {
+  issuerId: string;
+  assetName: string;
+  price: string;
+  numberOfShares: string;
+}
+
+interface IQxAssetAskOrders {
+  orders: QxAssetAskOrder[];
+}
+
+interface IQxAssetBidOrders {
+  orders: QxAssetBidOrder[];
+}
+
+interface IQxEntityAskOrders {
+  orders: QxEntityAskOrder[];
+}
+
+interface IQxEntityBidOrders {
+  orders: QxEntityBidOrder[];
+}
+
 interface IQxFees {
   assetIssuanceFee: number;
   transferFee: number;
   tradeFee: number;
 }
-
 
 export {
   IQubicProviderOptions,
@@ -292,5 +333,9 @@ export {
   IGetTransferTransaction,
   IGetOwnedAssets,
   ITransactionPayload,
+  IQxAssetAskOrders,
+  IQxAssetBidOrders,
+  IQxEntityAskOrders,
+  IQxEntityBidOrders,
   IQxFees,
 };
