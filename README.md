@@ -120,7 +120,7 @@ npm test
 ### Run Example Scripts
 
 ```sh
-npx ts-node examples/identity/createIdPackage.ts
+npx ts-node examples/identity/createIdentity.ts
 ```
 
 ---
