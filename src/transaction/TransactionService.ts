@@ -31,7 +31,6 @@ export class TransactionService extends QubicBase {
         "GET",
       )
       .catch((error) => {
-        this.logger.error("Error fetching approved transactions:", error);
         return null;
       });
   }
@@ -48,7 +47,6 @@ export class TransactionService extends QubicBase {
     return await this.httpClient
       .call<IGetTransactionsStatus>(`/${this.version}/tx-status/${txId}`, "GET")
       .catch((error) => {
-        this.logger.error("Error fetching transactions status:", error);
         return null;
       });
   }
@@ -63,7 +61,6 @@ export class TransactionService extends QubicBase {
     return await this.httpClient
       .call<IGetTransaction>(`/${this.version}/transactions/${txId}`, "GET")
       .catch((error) => {
-        this.logger.error("Error fetching latest tick:", error);
         return null;
       });
   }
@@ -83,7 +80,6 @@ export class TransactionService extends QubicBase {
         "GET",
       )
       .catch((error) => {
-        this.logger.error("Error fetching latest tick:", error);
         return null;
       });
   }
@@ -187,7 +183,6 @@ export class TransactionService extends QubicBase {
         { encodedTransaction },
       );
     } catch (error) {
-      this.logger.error("Error broadcast transaction:", error);
       return null;
     }
   }

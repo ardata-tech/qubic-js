@@ -23,7 +23,6 @@ export class ContractService extends QubicBase {
         body,
       );
     } catch (error) {
-      this.logger.error("Error fetching latest tick:", error);
       return null;
     }
   }

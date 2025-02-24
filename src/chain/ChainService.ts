@@ -31,7 +31,6 @@ export class ChainService extends QubicBase {
       );
       return response?.latestTick;
     } catch (error) {
-      this.logger.error("Error fetching latest tick:", error);
       return null;
     }
   }
@@ -50,7 +49,6 @@ export class ChainService extends QubicBase {
       );
       return response;
     } catch (error) {
-      this.logger.error("Error fetching tick data:", error);
       return null;
     }
   }
@@ -68,7 +66,6 @@ export class ChainService extends QubicBase {
       );
       return response;
     } catch (error) {
-      this.logger.error("Error fetching RPC status:", error);
       return null;
     }
   }
@@ -86,7 +83,6 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      this.logger.error("Error fetching chain hash:", error);
       return null;
     }
   }
@@ -106,7 +102,6 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      this.logger.error("Error fetching quorum tick data:", error);
       return null;
     }
   }
@@ -124,7 +119,6 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error: any) {
-      this.logger.error(error);
       return null;
     }
   }
@@ -138,7 +132,6 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/healthcheck`, "GET");
     } catch (error) {
-      this.logger.error("Error fetching health check:", error);
       return null;
     }
   }
@@ -156,7 +149,6 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      this.logger.error("Error fetching computors:", error);
       return null;
     }
   }
@@ -170,7 +162,6 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/tick-info`, "GET");
     } catch (error) {
-      this.logger.error("Error fetching tick info:", error);
       return null;
     }
   }
@@ -184,7 +175,6 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/block-height`, "GET");
     } catch (error) {
-      this.logger.error("Error fetching block height:", error);
       return null;
     }
   }
@@ -198,7 +188,6 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/latest-stats`, "GET");
     } catch (error) {
-      this.logger.error("Error fetching latest stats:", error);
       return null;
     }
   }

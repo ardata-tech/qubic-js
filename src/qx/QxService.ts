@@ -21,7 +21,6 @@ export class QxService extends QubicBase {
       const response: IQxAssetAskOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching ask orders:", error);
       return null;
     }
   }
@@ -40,7 +39,6 @@ export class QxService extends QubicBase {
       const response: IQxAssetBidOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching asset bid orders:", error);
       return null;
     }
   }
@@ -58,7 +56,6 @@ export class QxService extends QubicBase {
       const response: IQxEntityAskOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching entity ask orders:", error);
       return null;
     }
   }
@@ -76,7 +73,6 @@ export class QxService extends QubicBase {
       const response: IQxEntityBidOrders = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching entity bid orders:", error);
       return null;
     }
   }
@@ -92,7 +88,6 @@ export class QxService extends QubicBase {
       const response: IQxFees = await this.httpClient.call(url, "GET");
       return response;
     } catch (error) {
-      this.logger.error("Error fetching fees:", error);
       return null;
     }
   }

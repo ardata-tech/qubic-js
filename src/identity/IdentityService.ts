@@ -23,7 +23,6 @@ export class IdentityService extends QubicBase {
     return await this.httpClient
       .call<IGetOwnedAssets>(`/${this.version}/assets/${identity}/owned`, "GET")
       .catch((error) => {
-        this.logger.error("Error fetching issued assets:", error);
         return null;
       });
   }
@@ -43,7 +42,6 @@ export class IdentityService extends QubicBase {
         "GET",
       )
       .catch((error) => {
-        this.logger.error("Error fetching possessed assets:", error);
         return null;
       });
   }
@@ -61,7 +59,6 @@ export class IdentityService extends QubicBase {
         "GET",
       )
       .catch((error) => {
-        this.logger.error("Error fetching issued assets:", error);
         return null;
       });
   }
@@ -76,7 +73,6 @@ export class IdentityService extends QubicBase {
     return await this.httpClient
       .call(`/${this.version}/balances/${addressID}`, "GET")
       .catch((error) => {
-        this.logger.error("Error fetching balance:", error);
         return null;
       });
   }
@@ -93,7 +89,6 @@ export class IdentityService extends QubicBase {
     return await this.httpClient
       .call<IGetBalanceByIdentity>(`/${this.version}/balances/${Id}`, "GET")
       .catch((error) => {
-        this.logger.error("Error fetching balance:", error);
         return null;
       });
   }
