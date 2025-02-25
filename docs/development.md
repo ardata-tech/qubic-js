@@ -65,11 +65,3 @@ We welcome contributions from the community! To contribute:
    git push origin feature/new-feature
    ```
 5. **Open a pull request** on the main repository.
-
-## 📌 Next Steps
-- [Getting Started](getting-started.md)
-- [Chain](chain.md)
-- [Identity](identity.md)
-- [Transactions](transaction.md)
-- [Utilities](utils.md)
-- [QX](qx.md)

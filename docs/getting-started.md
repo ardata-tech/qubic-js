@@ -51,3 +51,4 @@ Now that you have **Qubic.js** installed and initialized, you can explore:
 - [Transactions](transaction.md)
 - [Utilities](utils.md)
 - [QX](qx.md)
+- [Development & Contribution](development.md)

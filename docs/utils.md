@@ -54,3 +54,4 @@ console.log(hexString);
 
 ## 📌 Next Steps
 - [QX](qx.md)
+- [Development & Contribution](development.md)

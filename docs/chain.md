@@ -88,4 +88,4 @@ console.log(latestStats);
 - [Transactions](transaction.md)
 - [Utilities](utils.md)
 - [QX](qx.md)
-
+- [Development & Contribution](development.md)

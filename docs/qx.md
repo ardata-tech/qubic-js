@@ -60,3 +60,6 @@ Retrieve the transaction fees associated with QX operations:
 const qxFees = await qubic.qx.getFees();
 console.log(qxFees);
 ```
+
+## 📌 Next Steps
+- [Development & Contribution](development.md)
