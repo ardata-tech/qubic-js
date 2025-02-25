@@ -86,5 +86,6 @@ console.log(latestStats);
 ## 📌 Next Steps
 - [Identity](identity.md)
 - [Transactions](transaction.md)
-- [Interacting with QX](qx.md)
+- [Utilities](utils.md)
+- [QX](qx.md)
 

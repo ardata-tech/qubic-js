@@ -49,4 +49,5 @@ Now that you have **Qubic.js** installed and initialized, you can explore:
 - [Chain](chain.md)
 - [Identity](identity.md)
 - [Transactions](transaction.md)
-- [Interacting with QX](qx.md)
+- [Utilities](utils.md)
+- [QX](qx.md)

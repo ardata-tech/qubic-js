@@ -73,4 +73,5 @@ console.log(isValid); // true or false
 
 ## 📌 Next Steps
 - [Transactions](transaction.md)
-- [Interacting with QX](qx.md)
+- [Utilities](utils.md)
+- [QX](qx.md)

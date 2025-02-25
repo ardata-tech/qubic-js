@@ -83,4 +83,5 @@ console.log(transferTransactions);
 ```
 
 ## 📌 Next Steps
-- [Interacting with QX](qx.md)
+- [Utilities](utils.md)
+- [QX](qx.md)
