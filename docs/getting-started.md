@@ -32,16 +32,16 @@ Qubic.js allows for customizable configurations using parameters:
 ```javascript
 const qubic = new Qubic({
   providerUrl: "https://rpc.custom-qubic.org",
-  version: 2,
+  version: 1,
 });
 ```
 
 ### Available Configuration Options
 
 | Option        | Type   | Description                                      |
-|--------------|--------|--------------------------------------------------|
+|---------------|--------|--------------------------------------------------|
 | `providerUrl` | String | The URL of the Qubic RPC node.                  |
-| `version`    | Number | The API version to use when making requests.    |
+| `version`     | Number | The API version to use when making requests.    |
 
 ## ✅ Next Steps
 
