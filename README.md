@@ -2,131 +2,42 @@
 
 **Qubic.js** is an NPM library designed to facilitate seamless interaction with the **Qubic network**. This library enables developers to connect their applications to the Qubic blockchain efficiently.
 
-## Features
+### 🚀 Getting Started
+- [Installation](docs/getting-started.md#installation)
+- [Initialization](docs/getting-started.md#initialization)
+- [Configuration](docs/getting-started.md#configuration)
 
-- 🛠 **Easy Integration** – Connect your application to the Qubic network with minimal setup.
-- 🔒 **Secure Transactions** -  Sign and verify transactions with advanced cryptographic security.
-- 📺 **Smart Contract Interaction** – Read and write data on Qubic smart contracts.
-- ⚡ **Efficient Performance** – Optimized connection handling and transaction execution.
+### ⛓️ Chain
 
----
+### 🔑 Identity
+- [Creating an Identity](docs/identity.md#creating-an-identity)
+- [Fetching Account Balance](docs/identity.md#fetching-account-balance)
+- [Identity Security](docs/identity.md#identity-security)
 
-## 📦 Installation
+### 💰 Transactions
+- [Creating a Transaction](docs/transactions.md#creating-a-transaction)
+- [Signing a Transaction](docs/transactions.md#signing-a-transaction)
+- [Broadcasting a Transaction](docs/transactions.md#broadcasting-a-transaction)
 
-You can install **Qubic.js** via **npm** or **yarn**:
+### 🛠 Utilities
+- [Encoding & Decoding Transactions](docs/utils.md#encoding--decoding-transactions)
+- [Address Formatting](docs/utils.md#address-formatting)
 
-```sh
-# Using npm
-npm install @ardata-tech/qubic-js
+### ⚡ QX
+- [Overview](docs/qx.md#overview)
+- [Interacting with QX](docs/qx.md#interacting-with-qx)
 
-# Using yarn
-yarn add @ardata-tech/qubic-js
-```
-
----
-
-## 🚀 Getting Started
-
-### Import the Library
-
-```javascript
-import Qubic from '@ardata-tech/qubic-js';
-```
-
-### Initialize the Connection
-
-```javascript
-const qubic = new Qubic({
-  providerUrl: "https://rpc.qubic.org",
-  version: 1,
-});
-```
-
----
-
-## 💡 Fetching Account Balance
-
-```javascript
-const response = await qubic.identity.getBalanceByAddress(
-  walletAddress,
-);
-```
-
----
-
-## 💰 Sending Transactions
-
-```javascript
-// Create a transaction
-const transaction = await qubic.transaction.createTransaction(
-  fromWalletAddress,
-  toWalletAddress,
-  amount,
-  targetTick,
-)
-
-// Sign the transaction
-const signedTransaction = await qubic.transaction.signTransaction(
-  transaction,
-  privateKey,
-)
-
-// Encode the transaction to base64
-const encodedTransaction = qubic.transaction.encodeTransactionToBase64(signedTransaction)
-
-// Broadcast the transaction
-const response = await qubic.transaction.broadcastTransaction(encodedTransaction);
-```
-
----
-
-## 💜 Smart Contract Interaction
-
-### Reading Data from a Smart Contract
-
-```javascript
-// Coming soon
-```
-
-### Writing Data to a Smart Contract
-
-```javascript
-// Coming soon
-```
-
----
-
-## 🛠 Development
-
-### Clone the Repository
-
-```sh
-git clone https://github.com/ardata-tech/qubic-js.git
-cd qubic-js
-```
-
-### Install Dependencies
-
-```sh
-npm install
-```
-
-### Run Tests
-
-```sh
-npm test
-```
-
-### Run Example Scripts
-
-```sh
-npx ts-node examples/identity/createIdentity.ts
-```
-
----
+### 🧑‍💻 Development & Contribution
+- [Setting Up the Development Environment](docs/development.md#setting-up-the-development-environment)
+- [Running Tests](docs/development.md#running-tests)
+- [Example Scripts](docs/development.md#example-scripts)
 
 ## 🌐 Links
-
 - [Qubic Network](https://qubic.org/)
+- [NPM Package](https://www.npmjs.com/package/@ardata-tech/qubic-js)
+- [GitHub Repository](https://github.com/ardata-tech/qubic-js)
 
 ---
+
+# 📜 License
+Qubic.js is open-source and available under the [ISC License](LICENSE).
