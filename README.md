@@ -4,8 +4,6 @@
 
 ---
 
-## 📖 Documentation
-
 ### 🚀 Getting Started
 - [Installation](docs/getting-started.md#installation)
 - [Initialization](docs/getting-started.md#initialization)
