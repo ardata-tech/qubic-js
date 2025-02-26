@@ -20,68 +20,74 @@ export class TransactionService extends QubicBase {
    * Retrieves a list of approved transactions for the given tick.
    *
    * @param {number} tickNumber - The tick number for which to fetch approved transactions.
-   * @returns {Promise<any>} A promise that resolves to the list of approved transactions, or null if an error occurred.
+   * @returns {Promise<IGetApproveTransactions>} A promise that resolves to the list of approved transactions.
    */
   async getApprovedTransactions(
     tickNumber: number,
-  ): Promise<IGetApproveTransactions | null> {
-    return await this.httpClient
-      .call<IGetApproveTransactions>(
+  ): Promise<IGetApproveTransactions> {
+    try {
+      return await this.httpClient.call<IGetApproveTransactions>(
         `/${this.version}/ticks/${tickNumber}/approved-transactions`,
         "GET",
-      )
-      .catch((error) => {
-        return null;
-      });
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch approved transactions for tick number ${tickNumber}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves the status of a specific transaction.
    *
    * @param {number} txId - The transaction ID for which to fetch the status.
-   * @returns {Promise<any>} A promise that resolves to the transaction status, or null if an error occurred.
+   * @returns {Promise<IGetTransactionsStatus>} A promise that resolves to the transaction status.
    */
   async getTransactionsStatus(
     txId: string,
-  ): Promise<IGetTransactionsStatus | null> {
-    return await this.httpClient
-      .call<IGetTransactionsStatus>(`/${this.version}/tx-status/${txId}`, "GET")
-      .catch((error) => {
-        return null;
-      });
+  ): Promise<IGetTransactionsStatus> {
+    try {
+      return await this.httpClient.call<IGetTransactionsStatus>(
+        `/${this.version}/tx-status/${txId}`,
+        "GET",
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch transaction status for transaction ID ${txId}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves details of a specific transaction.
    *
    * @param {number} txId - The transaction ID for which to fetch transaction details.
-   * @returns {Promise<any>} A promise that resolves to the transaction details, or null if an error occurred.
+   * @returns {Promise<IGetTransaction>} A promise that resolves to the transaction details.
    */
-  async getTransactions(txId: string): Promise<IGetTransaction | null> {
-    return await this.httpClient
-      .call<IGetTransaction>(`/${this.version}/transactions/${txId}`, "GET")
-      .catch((error) => {
-        return null;
-      });
+  async getTransactions(txId: string): Promise<IGetTransaction> {
+    try {
+      return await this.httpClient.call<IGetTransaction>(
+        `/${this.version}/transactions/${txId}`,
+        "GET",
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch transaction details for transaction ID ${txId}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves transfer transactions for a specific identity within a tick range.
    *
    * @param {number} identity - The identity for which to fetch transfer transactions.
-   * @returns {Promise<any>} A promise that resolves to the list of transfer transactions, or null if an error occurred.
+   * @returns {Promise<IGetTransferTransaction>} A promise that resolves to the list of transfer transactions.
    */
   async getTransferTransactions(
     identity: string,
-  ): Promise<IGetTransferTransaction | null> {
-    return await this.httpClient
-      .call<IGetTransferTransaction>(
+  ): Promise<IGetTransferTransaction> {
+    try {
+      return await this.httpClient.call<IGetTransferTransaction>(
         `/${this.version}/identities/${identity}/transfer-transactions`,
         "GET",
-      )
-      .catch((error) => {
-        return null;
-      });
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch transfer transactions for identity ${identity}: ${(error as any).message}`);
+    }
   }
 
   /**
@@ -171,11 +177,11 @@ export class TransactionService extends QubicBase {
    * Broadcast a transaction.
    *
    * @param {string} encodedTransaction The encoded transaction to be broadcast.
-   * @returns {Promise<IBroadcastTransactionResponse | null>} A promise that resolves to the broadcast transaction response, or null if an error occurred.
+   * @returns {Promise<IBroadcastTransactionResponse>} A promise that resolves to the broadcast transaction response.
    */
   async broadcastTransaction(
     encodedTransaction: string,
-  ): Promise<IBroadcastTransactionResponse | null> {
+  ): Promise<IBroadcastTransactionResponse> {
     try {
       return await this.httpClient.call<IBroadcastTransactionResponse>(
         `/${this.version}/broadcast-transaction`,
@@ -183,7 +189,7 @@ export class TransactionService extends QubicBase {
         { encodedTransaction },
       );
     } catch (error) {
-      return null;
+      throw new Error(`Failed to broadcast transaction: ${(error as any).message}`);
     }
   }
 }

@@ -17,80 +17,85 @@ export class IdentityService extends QubicBase {
    * Retrieves the list of assets owned by a specific identity.
    *
    * @param {string} identity - The identity for which to fetch owned assets.
-   * @returns {Promise<any>} A promise that resolves to the list of owned assets, or null if an error occurred.
+   * @returns {Promise<IGetOwnedAssets>} A promise that resolves to the list of owned assets.
    */
-  async getOwnedAssets(identity: string): Promise<IGetOwnedAssets | null> {
-    return await this.httpClient
-      .call<IGetOwnedAssets>(`/${this.version}/assets/${identity}/owned`, "GET")
-      .catch((error) => {
-        return null;
-      });
+  async getOwnedAssets(identity: string): Promise<IGetOwnedAssets> {
+    try {
+      return await this.httpClient.call<IGetOwnedAssets>(
+        `/${this.version}/assets/${identity}/owned`,
+        "GET",
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch owned assets for identity ${identity}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves the list of assets possessed by a specific identity.
    *
    * @param {string} identity - The identity for which to fetch possessed assets.
-   * @returns {Promise<any>} A promise that resolves to the list of possessed assets, or null if an error occurred.
+   * @returns {Promise<IGetPossessedAssets>} A promise that resolves to the list of possessed assets.
    */
-  async getPossessedAssets(
-    identity: string,
-  ): Promise<IGetPossessedAssets | null> {
-    return this.httpClient
-      .call<IGetPossessedAssets>(
+  async getPossessedAssets(identity: string): Promise<IGetPossessedAssets> {
+    try {
+      return await this.httpClient.call<IGetPossessedAssets>(
         `/${this.version}/assets/${identity}/possessed`,
         "GET",
-      )
-      .catch((error) => {
-        return null;
-      });
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch possessed assets for identity ${identity}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves the list of assets issued by a specific identity.
    *
    * @param {string} identity - The identity for which to fetch issued assets.
-   * @returns {Promise<any>} A promise that resolves to the list of issued assets, or null if an error occurred.
+   * @returns {Promise<IGetIssuedAssets>} A promise that resolves to the list of issued assets.
    */
-  async getIssuedAssets(identity: string): Promise<IGetIssuedAssets | null> {
-    return await this.httpClient
-      .call<IGetIssuedAssets>(
+  async getIssuedAssets(identity: string): Promise<IGetIssuedAssets> {
+    try {
+      return await this.httpClient.call<IGetIssuedAssets>(
         `/${this.version}/assets/${identity}/issued`,
         "GET",
-      )
-      .catch((error) => {
-        return null;
-      });
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch issued assets for identity ${identity}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Fetches the balance of a specific address ID.
    *
    * @param {string} addressID The address ID for which to fetch the balance.
-   * @returns {Promise<any>} A promise that resolves to the balance, or null if an error occurred.
+   * @returns {Promise<any>} A promise that resolves to the balance.
    */
   async getBalanceByAddress(addressID: string): Promise<any> {
-    return await this.httpClient
-      .call(`/${this.version}/balances/${addressID}`, "GET")
-      .catch((error) => {
-        return null;
-      });
+    try {
+      return await this.httpClient.call(
+        `/${this.version}/balances/${addressID}`,
+        "GET",
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch balance for address ID ${addressID}: ${(error as any).message}`);
+    }
   }
 
   /**
    * Retrieves the balance of a specific identity.
    *
    * @param {string} Id The identity for which to fetch the balance.
-   * @returns {Promise<IGetBalanceByIdentity | null>} A promise that resolves to the balance, or null if an error occurred.
+   * @returns {Promise<IGetBalanceByIdentity>} A promise that resolves to the balance.
    */
-  async getBalanceByIdentity(
-    Id: string,
-  ): Promise<IGetBalanceByIdentity | null> {
-    return await this.httpClient
-      .call<IGetBalanceByIdentity>(`/${this.version}/balances/${Id}`, "GET")
-      .catch((error) => {
-        return null;
-      });
+  async getBalanceByIdentity(Id: string): Promise<IGetBalanceByIdentity> {
+    try {
+      return await this.httpClient.call<IGetBalanceByIdentity>(
+        `/${this.version}/balances/${Id}`,
+        "GET",
+      );
+    } catch (error) {
+      throw new Error(`Failed to fetch balance for identity ${Id}: ${(error as any).message}`);
+    }
   }
 
   /**

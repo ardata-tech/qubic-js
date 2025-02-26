@@ -15,7 +15,7 @@ export class ContractService extends QubicBase {
 
   async querySmartContract(
     body: IPostQuerySmartContractBody,
-  ): Promise<IPostQuerySmartContractResponse | null> {
+  ): Promise<IPostQuerySmartContractResponse> {
     try {
       return await this.httpClient.call<IPostQuerySmartContractResponse>(
         `/${this.version}/querySmartContract`,
@@ -23,7 +23,7 @@ export class ContractService extends QubicBase {
         body,
       );
     } catch (error) {
-      return null;
+      throw new Error(`Failed to query smart contract: ${(error as any).message}`);
     }
   }
 }
