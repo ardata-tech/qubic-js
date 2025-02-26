@@ -29,14 +29,14 @@
 - [Verifying Identity](docs/identity.md#verifying-identity)
 
 ### 💰 Transactions
-- [Creating a Transaction](docs/transactions.md#creating-a-transaction)
-- [Signing a Transaction](docs/transactions.md#signing-a-transaction)
-- [Encoding Transactions](docs/transactions.md#encoding-transactions)
-- [Broadcasting a Transaction](docs/transactions.md#broadcasting-a-transaction)
-- [Getting Approved Transactions](docs/transactions.md#getting-approved-transactions)
-- [Fetching Transaction Status](docs/transactions.md#fetching-transaction-status)
-- [Retrieving Transaction Details](docs/transactions.md#retrieving-transaction-details)
-- [Getting Transfer Transactions](docs/transactions.md#getting-transfer-transactions)
+- [Creating a Transaction](docs/transaction.md#creating-a-transaction)
+- [Signing a Transaction](docs/transaction.md#signing-a-transaction)
+- [Encoding Transactions](docs/transaction.md#encoding-transactions)
+- [Broadcasting a Transaction](docs/transaction.md#broadcasting-a-transaction)
+- [Getting Approved Transactions](docs/transaction.md#getting-approved-transactions)
+- [Fetching Transaction Status](docs/transaction.md#fetching-transaction-status)
+- [Retrieving Transaction Details](docs/transaction.md#retrieving-transaction-details)
+- [Getting Transfer Transactions](docs/transaction.md#getting-transfer-transactions)
 
 ### 🛠 Utilities
 - [Creating a Secure Seed](docs/utils.md#creating-a-secure-seed)
