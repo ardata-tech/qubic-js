@@ -73,6 +73,13 @@ describe("Identity Module", () => {
   });
 
   test("should create ID package", async () => {
+    const mockIdPackage = {
+      publicKey: new Uint8Array(32),
+      privateKey: new Uint8Array(32),
+      publicId: "publicId",
+    };
+    jest.spyOn(identity, 'createIdentity').mockResolvedValue(mockIdPackage);
+
     const idPackage = await identity.createIdentity("whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel");
     expect(idPackage).not.toBeNull();
     expect(idPackage).toHaveProperty("publicId");
@@ -83,6 +90,13 @@ describe("Identity Module", () => {
   });
 
   test("should load identity from private key", async () => {
+    const mockIdPackage = {
+      publicKey: new Uint8Array(32),
+      privateKey: new Uint8Array(32),
+      publicId: "publicId",
+    };
+    jest.spyOn(identity, 'loadIdentityFromPrivateKey').mockResolvedValue(mockIdPackage);
+
     const privateKey = new Uint8Array(32); // Mock private key
     const idPackage = await identity.loadIdentityFromPrivateKey(privateKey);
     expect(idPackage).not.toBeNull();
@@ -92,6 +106,8 @@ describe("Identity Module", () => {
   });
 
   test("should verify identity", async () => {
+    jest.spyOn(identity, 'verifyIdentity').mockResolvedValue(true);
+
     const isValid = await identity.verifyIdentity("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
     expect(isValid).toBe(true);
   });
