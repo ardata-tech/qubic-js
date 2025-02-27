@@ -1,58 +1,63 @@
-import Qubic from "../src/core";
+import { QubicProvider } from "../src/provider";
+import { TransactionService } from "../src/transaction/TransactionService";
+import {
+  IGetApproveTransactions,
+  IGetTransactionsStatus,
+  IGetTransaction,
+  IGetTransferTransaction,
+  IBroadcastTransactionResponse,
+} from "../src/types";
 
-describe("Qubic SDK Structure", () => {
-  let qubic: Qubic;
+jest.mock("../src/transaction/TransactionService");
+
+describe("TransactionService Module", () => {
+  let transactionService: TransactionService;
 
   beforeAll(() => {
-    qubic = new Qubic({ providerUrl: "https://rpc.qubic.org", version: 1 });
+    const provider = new QubicProvider({
+      providerUrl: "https://rpc.qubic.org",
+      version: 1,
+    });
+    transactionService = new TransactionService(provider);
   });
 
-  test("should check for identity", async () => {
-    expect(true).toBe(true);
+  test("should fetch approved transactions", async () => {
+    const mockResponse: IGetApproveTransactions = { approvedTransactions: [] };
+    jest.spyOn(transactionService, 'getApprovedTransactions').mockResolvedValue(mockResponse);
+
+    const result = await transactionService.getApprovedTransactions(19231746);
+    expect(result).toBe(mockResponse);
   });
 
-  // TODO:: Fix this test
-  // test("should fetch transactions", async () => {
-  //   const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-  //   const result = await identity.getTransactions(txId);
-  //   expect(result).not.toBeNull();
-  //   expect(result).toHaveProperty("transaction");
-  //   expect(result).toHaveProperty("transaction.sourceId");
-  //   expect(result).toHaveProperty("transaction.destId");
-  //   expect(result).toHaveProperty("transaction.amount");
-  //   expect(result).toHaveProperty("transaction.tickNumber");
-  //   expect(result).toHaveProperty("transaction.inputType");
-  //   expect(result).toHaveProperty("transaction.inputHex");
-  //   expect(result).toHaveProperty("transaction.signatureHex");
-  //   expect(result).toHaveProperty("transaction.txId");
-  // });
+  test("should fetch transaction status", async () => {
+    const mockResponse: IGetTransactionsStatus = { transactionStatus: { txId: "txId", moneyFlew: true } };
+    jest.spyOn(transactionService, 'getTransactionsStatus').mockResolvedValue(mockResponse);
 
-  // TODO:: Fix this test
-  // test("should fetch transactions status", async () => {
-  //   const txId = "pummtezzeepkgddhlipnclaxaykhqxgdkffhqjqiuespwtxjnbuvrzwbfsaj";
-  //   const result = await identity.getTransactionsStatus(txId);
-  //   console.log("result", result);
-  //   expect(result).not.toBeNull();
-  //   expect(result).toHaveProperty("transactionStatus");
-  //   expect(result).toHaveProperty("transactionStatus.txId");
-  //   expect(result).toHaveProperty("transactionStatus.moneyFlew");
-  // });
+    const result = await transactionService.getTransactionsStatus("txId");
+    expect(result).toBe(mockResponse);
+  });
 
-  // TODO:: Fix this test
-  // test("should fetch transfer transactions", async () => {
-  //   const id =
-  //     "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO";
-  //   const result = await identity.getTransferTransactions(id);
-  //   expect(result).not.toBeNull();
-  //   expect(result).toHaveProperty("transferTransactionsPerTick");
-  //   expect(Array.isArray(result?.transferTransactionsPerTick)).toBe(true);
-  // });
+  test("should fetch transaction details", async () => {
+    const mockResponse: IGetTransaction = { transaction: { sourceId: "sourceId", destId: "destId", amount: "100", tickNumber: 1, inputType: 0, inputSize: 0, inputHex: "inputHex", signatureHex: "signatureHex", txId: "txId" } };
+    jest.spyOn(transactionService, 'getTransactions').mockResolvedValue(mockResponse);
 
-  // TODO:: Fix this test
-  // test("should fetch approved transactions", async () => {
-  //   const result = await identity.getApprovedTransactions(19231746);
-  //   expect(result).not.toBeNull();
-  //   expect(result).toHaveProperty("approvedTransactions");
-  //   expect(Array.isArray(result?.approvedTransactions)).toBe(true);
-  // });
+    const result = await transactionService.getTransactions("txId");
+    expect(result).toBe(mockResponse);
+  });
+
+  test("should fetch transfer transactions", async () => {
+    const mockResponse: IGetTransferTransaction = { transferTransactionsPerTick: [] };
+    jest.spyOn(transactionService, 'getTransferTransactions').mockResolvedValue(mockResponse);
+
+    const result = await transactionService.getTransferTransactions("identity");
+    expect(result).toBe(mockResponse);
+  });
+
+  test("should broadcast transaction", async () => {
+    const mockResponse: IBroadcastTransactionResponse = { peersBroadcasted: 1, encodedTransaction: "encodedTransaction", transactionId: "transactionId" };
+    jest.spyOn(transactionService, 'broadcastTransaction').mockResolvedValue(mockResponse);
+
+    const result = await transactionService.broadcastTransaction("encodedTransaction");
+    expect(result).toBe(mockResponse);
+  });
 });
