@@ -85,8 +85,6 @@ describe("Identity Module", () => {
     expect(idPackage).toHaveProperty("publicId");
     expect(idPackage).toHaveProperty("publicKey");
     expect(idPackage).toHaveProperty("privateKey");
-
-    console.log(`ID Package: ${JSON.stringify(idPackage)}`);
   });
 
   test("should load identity from private key", async () => {
