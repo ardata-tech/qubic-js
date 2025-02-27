@@ -67,10 +67,26 @@ describe("Identity Module", () => {
       "whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel",
     );
     expect(idPackage).not.toBeNull();
-    expect(idPackage).toHaveProperty("id");
+    expect(idPackage).toHaveProperty("publicId");
     expect(idPackage).toHaveProperty("publicKey");
     expect(idPackage).toHaveProperty("privateKey");
 
     console.log(`ID Package: ${JSON.stringify(idPackage)}`);
+  });
+
+  test("should load identity from private key", async () => {
+    const privateKey = new Uint8Array(32); // Mock private key
+    const idPackage = await identity.loadIdentityFromPrivateKey(privateKey);
+    expect(idPackage).not.toBeNull();
+    expect(idPackage).toHaveProperty("publicKey");
+    expect(idPackage).toHaveProperty("privateKey");
+    expect(idPackage).toHaveProperty("publicId");
+  });
+
+  test("should verify identity", async () => {
+    const isValid = await identity.verifyIdentity(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
+    expect(isValid).toBe(true);
   });
 });
