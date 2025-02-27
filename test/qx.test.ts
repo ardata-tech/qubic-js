@@ -1,6 +1,12 @@
 import { QubicProvider } from "../src/provider";
 import { QxService } from "../src/qx/QxService";
-import { IQxAssetAskOrders, IQxAssetBidOrders, IQxEntityAskOrders, IQxEntityBidOrders, IQxFees } from "../src/types";
+import { 
+  IQxAssetAskOrders, 
+  IQxAssetBidOrders, 
+  IQxEntityAskOrders, 
+  IQxEntityBidOrders, 
+  IQxFees 
+} from "../src/types";
 
 jest.mock("../src/qx/QxService");
 
@@ -16,7 +22,7 @@ describe("QxService Module", () => {
   });
 
   test("should fetch ask orders for asset", async () => {
-    const mockResponse: IQxAssetAskOrders = { orders: [] };
+    const mockResponse: IQxAssetAskOrders = { orders: [{ entityId: "entity1", price: "100", numberOfShares: "10" }] };
     jest.spyOn(qxService, 'getAskOrders').mockResolvedValue(mockResponse);
 
     const result = await qxService.getAskOrders("assetName", "issuerId", "0");
@@ -24,7 +30,7 @@ describe("QxService Module", () => {
   });
 
   test("should fetch bid orders for asset", async () => {
-    const mockResponse: IQxAssetBidOrders = { orders: [] };
+    const mockResponse: IQxAssetBidOrders = { orders: [{ entityId: "entity1", price: "100", numberOfShares: "10" }] };
     jest.spyOn(qxService, 'getAssetBidOrders').mockResolvedValue(mockResponse);
 
     const result = await qxService.getAssetBidOrders("assetName", "issuerId", "0");
@@ -32,7 +38,7 @@ describe("QxService Module", () => {
   });
 
   test("should fetch ask orders for entity", async () => {
-    const mockResponse: IQxEntityAskOrders = { orders: [] };
+    const mockResponse: IQxEntityAskOrders = { orders: [{ issuerId: "issuer1", assetName: "asset1", price: "100", numberOfShares: "10" }] };
     jest.spyOn(qxService, 'getEntityAskOrders').mockResolvedValue(mockResponse);
 
     const result = await qxService.getEntityAskOrders("entityId", "0");
@@ -40,7 +46,7 @@ describe("QxService Module", () => {
   });
 
   test("should fetch bid orders for entity", async () => {
-    const mockResponse: IQxEntityBidOrders = { orders: [] };
+    const mockResponse: IQxEntityBidOrders = { orders: [{ issuerId: "issuer1", assetName: "asset1", price: "100", numberOfShares: "10" }] };
     jest.spyOn(qxService, 'getEntityBidOrders').mockResolvedValue(mockResponse);
 
     const result = await qxService.getEntityBidOrders("entityId", "0");
