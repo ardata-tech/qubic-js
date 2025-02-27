@@ -1,5 +1,5 @@
 import { QubicProvider } from "../src/provider";
-import { ContractService } from "../src/contract";
+import { ContractService } from "../src/contract/ContractService";
 import { IPostQuerySmartContractBody, IPostQuerySmartContractResponse } from "../src/types";
 
 jest.mock("../src/contract/ContractService");
