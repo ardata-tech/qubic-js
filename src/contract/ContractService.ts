@@ -23,7 +23,9 @@ export class ContractService extends QubicBase {
         body,
       );
     } catch (error) {
-      throw new Error(`Failed to query smart contract: ${(error as any).message}`);
+      throw new Error(
+        `Failed to query smart contract: ${(error as any).message}`,
+      );
     }
   }
 }

@@ -31,7 +31,9 @@ export class TransactionService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch approved transactions for tick number ${tickNumber}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch approved transactions for tick number ${tickNumber}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -41,16 +43,16 @@ export class TransactionService extends QubicBase {
    * @param {number} txId - The transaction ID for which to fetch the status.
    * @returns {Promise<IGetTransactionsStatus>} A promise that resolves to the transaction status.
    */
-  async getTransactionsStatus(
-    txId: string,
-  ): Promise<IGetTransactionsStatus> {
+  async getTransactionsStatus(txId: string): Promise<IGetTransactionsStatus> {
     try {
       return await this.httpClient.call<IGetTransactionsStatus>(
         `/${this.version}/tx-status/${txId}`,
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch transaction status for transaction ID ${txId}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch transaction status for transaction ID ${txId}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -67,7 +69,9 @@ export class TransactionService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch transaction details for transaction ID ${txId}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch transaction details for transaction ID ${txId}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -86,7 +90,9 @@ export class TransactionService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch transfer transactions for identity ${identity}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch transfer transactions for identity ${identity}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -189,7 +195,9 @@ export class TransactionService extends QubicBase {
         { encodedTransaction },
       );
     } catch (error) {
-      throw new Error(`Failed to broadcast transaction: ${(error as any).message}`);
+      throw new Error(
+        `Failed to broadcast transaction: ${(error as any).message}`,
+      );
     }
   }
 }

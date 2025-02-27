@@ -23,41 +23,72 @@ describe("TransactionService Module", () => {
 
   test("should fetch approved transactions", async () => {
     const mockResponse: IGetApproveTransactions = { approvedTransactions: [] };
-    jest.spyOn(transactionService, 'getApprovedTransactions').mockResolvedValue(mockResponse);
+    jest
+      .spyOn(transactionService, "getApprovedTransactions")
+      .mockResolvedValue(mockResponse);
 
     const result = await transactionService.getApprovedTransactions(19231746);
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch transaction status", async () => {
-    const mockResponse: IGetTransactionsStatus = { transactionStatus: { txId: "txId", moneyFlew: true } };
-    jest.spyOn(transactionService, 'getTransactionsStatus').mockResolvedValue(mockResponse);
+    const mockResponse: IGetTransactionsStatus = {
+      transactionStatus: { txId: "txId", moneyFlew: true },
+    };
+    jest
+      .spyOn(transactionService, "getTransactionsStatus")
+      .mockResolvedValue(mockResponse);
 
     const result = await transactionService.getTransactionsStatus("txId");
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch transaction details", async () => {
-    const mockResponse: IGetTransaction = { transaction: { sourceId: "sourceId", destId: "destId", amount: "100", tickNumber: 1, inputType: 0, inputSize: 0, inputHex: "inputHex", signatureHex: "signatureHex", txId: "txId" } };
-    jest.spyOn(transactionService, 'getTransactions').mockResolvedValue(mockResponse);
+    const mockResponse: IGetTransaction = {
+      transaction: {
+        sourceId: "sourceId",
+        destId: "destId",
+        amount: "100",
+        tickNumber: 1,
+        inputType: 0,
+        inputSize: 0,
+        inputHex: "inputHex",
+        signatureHex: "signatureHex",
+        txId: "txId",
+      },
+    };
+    jest
+      .spyOn(transactionService, "getTransactions")
+      .mockResolvedValue(mockResponse);
 
     const result = await transactionService.getTransactions("txId");
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch transfer transactions", async () => {
-    const mockResponse: IGetTransferTransaction = { transferTransactionsPerTick: [] };
-    jest.spyOn(transactionService, 'getTransferTransactions').mockResolvedValue(mockResponse);
+    const mockResponse: IGetTransferTransaction = {
+      transferTransactionsPerTick: [],
+    };
+    jest
+      .spyOn(transactionService, "getTransferTransactions")
+      .mockResolvedValue(mockResponse);
 
     const result = await transactionService.getTransferTransactions("identity");
     expect(result).toBe(mockResponse);
   });
 
   test("should broadcast transaction", async () => {
-    const mockResponse: IBroadcastTransactionResponse = { peersBroadcasted: 1, encodedTransaction: "encodedTransaction", transactionId: "transactionId" };
-    jest.spyOn(transactionService, 'broadcastTransaction').mockResolvedValue(mockResponse);
+    const mockResponse: IBroadcastTransactionResponse = {
+      peersBroadcasted: 1,
+      encodedTransaction: "encodedTransaction",
+      transactionId: "transactionId",
+    };
+    jest
+      .spyOn(transactionService, "broadcastTransaction")
+      .mockResolvedValue(mockResponse);
 
-    const result = await transactionService.broadcastTransaction("encodedTransaction");
+    const result =
+      await transactionService.broadcastTransaction("encodedTransaction");
     expect(result).toBe(mockResponse);
   });
 });

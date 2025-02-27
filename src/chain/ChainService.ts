@@ -49,7 +49,9 @@ export class ChainService extends QubicBase {
       );
       return response;
     } catch (error) {
-      throw new Error(`Failed to fetch tick data for tick number ${tickNumber}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch tick data for tick number ${tickNumber}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -83,7 +85,9 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch chain hash for tick number ${tickNumber}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch chain hash for tick number ${tickNumber}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -102,7 +106,9 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch quorum tick data for tick number ${tickNumber}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch quorum tick data for tick number ${tickNumber}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -119,7 +125,9 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error: any) {
-      throw new Error(`Failed to fetch store hash for tick number ${tickNumber}: ${error.message}`);
+      throw new Error(
+        `Failed to fetch store hash for tick number ${tickNumber}: ${error.message}`,
+      );
     }
   }
 
@@ -132,7 +140,9 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/healthcheck`, "GET");
     } catch (error) {
-      throw new Error(`Failed to perform health check: ${(error as any).message}`);
+      throw new Error(
+        `Failed to perform health check: ${(error as any).message}`,
+      );
     }
   }
 
@@ -149,7 +159,9 @@ export class ChainService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch computors for epoch ${epoch}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch computors for epoch ${epoch}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -175,7 +187,9 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/block-height`, "GET");
     } catch (error) {
-      throw new Error(`Failed to fetch block height: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch block height: ${(error as any).message}`,
+      );
     }
   }
 
@@ -188,7 +202,9 @@ export class ChainService extends QubicBase {
     try {
       return await this.httpClient.call(`/${this.version}/latest-stats`, "GET");
     } catch (error) {
-      throw new Error(`Failed to fetch latest stats: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch latest stats: ${(error as any).message}`,
+      );
     }
   }
 }

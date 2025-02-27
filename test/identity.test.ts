@@ -34,41 +34,53 @@ describe("Identity Module", () => {
         numberOfOutgoingTransfers: 2,
       },
     };
-    jest.spyOn(identity, 'getBalanceByIdentity').mockResolvedValue(mockResponse);
+    jest
+      .spyOn(identity, "getBalanceByIdentity")
+      .mockResolvedValue(mockResponse);
 
-    const result = await identity.getBalanceByIdentity("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const result = await identity.getBalanceByIdentity(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch Issued Assets", async () => {
     const mockResponse: IGetIssuedAssets = { issuedAssets: [] };
-    jest.spyOn(identity, 'getIssuedAssets').mockResolvedValue(mockResponse);
+    jest.spyOn(identity, "getIssuedAssets").mockResolvedValue(mockResponse);
 
-    const result = await identity.getIssuedAssets("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const result = await identity.getIssuedAssets(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch owned Assets", async () => {
     const mockResponse: IGetOwnedAssets = { ownedAssets: [] };
-    jest.spyOn(identity, 'getOwnedAssets').mockResolvedValue(mockResponse);
+    jest.spyOn(identity, "getOwnedAssets").mockResolvedValue(mockResponse);
 
-    const result = await identity.getOwnedAssets("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const result = await identity.getOwnedAssets(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch possessed assets", async () => {
     const mockResponse: IGetPossessedAssets = { possessedAssets: [] };
-    jest.spyOn(identity, 'getPossessedAssets').mockResolvedValue(mockResponse);
+    jest.spyOn(identity, "getPossessedAssets").mockResolvedValue(mockResponse);
 
-    const result = await identity.getPossessedAssets("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const result = await identity.getPossessedAssets(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(result).toBe(mockResponse);
   });
 
   test("should fetch balance by address", async () => {
     const mockResponse = { balance: "1000" };
-    jest.spyOn(identity, 'getBalanceByAddress').mockResolvedValue(mockResponse);
+    jest.spyOn(identity, "getBalanceByAddress").mockResolvedValue(mockResponse);
 
-    const result = await identity.getBalanceByAddress("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const result = await identity.getBalanceByAddress(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(result).toBe(mockResponse);
   });
 
@@ -78,9 +90,11 @@ describe("Identity Module", () => {
       privateKey: new Uint8Array(32),
       publicId: "publicId",
     };
-    jest.spyOn(identity, 'createIdentity').mockResolvedValue(mockIdPackage);
+    jest.spyOn(identity, "createIdentity").mockResolvedValue(mockIdPackage);
 
-    const idPackage = await identity.createIdentity("whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel");
+    const idPackage = await identity.createIdentity(
+      "whtvfwregijarxrhqzcedqhsyqpjgerwcvgkvqjucomppamaaltluel",
+    );
     expect(idPackage).not.toBeNull();
     expect(idPackage).toHaveProperty("publicId");
     expect(idPackage).toHaveProperty("publicKey");
@@ -93,7 +107,9 @@ describe("Identity Module", () => {
       privateKey: new Uint8Array(32),
       publicId: "publicId",
     };
-    jest.spyOn(identity, 'loadIdentityFromPrivateKey').mockResolvedValue(mockIdPackage);
+    jest
+      .spyOn(identity, "loadIdentityFromPrivateKey")
+      .mockResolvedValue(mockIdPackage);
 
     const privateKey = new Uint8Array(32); // Mock private key
     const idPackage = await identity.loadIdentityFromPrivateKey(privateKey);
@@ -104,9 +120,11 @@ describe("Identity Module", () => {
   });
 
   test("should verify identity", async () => {
-    jest.spyOn(identity, 'verifyIdentity').mockResolvedValue(true);
+    jest.spyOn(identity, "verifyIdentity").mockResolvedValue(true);
 
-    const isValid = await identity.verifyIdentity("JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO");
+    const isValid = await identity.verifyIdentity(
+      "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVKHO",
+    );
     expect(isValid).toBe(true);
   });
 });

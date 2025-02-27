@@ -28,7 +28,9 @@ describe("Chain Module", () => {
 
   test("should fetch latest tick", async () => {
     const mockResponse: IGetLatestTick = { latestTick: 19231746 };
-    jest.spyOn(chain, 'getLatestTick').mockResolvedValue(mockResponse.latestTick);
+    jest
+      .spyOn(chain, "getLatestTick")
+      .mockResolvedValue(mockResponse.latestTick);
 
     const result = await chain.getLatestTick();
     expect(result).toBe(mockResponse.latestTick);
@@ -48,7 +50,7 @@ describe("Chain Module", () => {
         signatureHex: "signatureHex",
       },
     };
-    jest.spyOn(chain, 'getTickData').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getTickData").mockResolvedValue(mockResponse);
 
     const result = await chain.getTickData(19231746);
     expect(result).toBe(mockResponse);
@@ -59,10 +61,17 @@ describe("Chain Module", () => {
       lastProcessedTick: { tickNumber: 19231746, epoch: 1 },
       lastProcessedTicksPerEpoch: { "1": 19231746 },
       skippedTicks: [{ startTick: 19231740, endTick: 19231745 }],
-      processedTickIntervalsPerEpoch: [{ epoch: 1, intervals: [{ initialProcessedTick: 19231740, lastProcessedTick: 19231746 }] }],
+      processedTickIntervalsPerEpoch: [
+        {
+          epoch: 1,
+          intervals: [
+            { initialProcessedTick: 19231740, lastProcessedTick: 19231746 },
+          ],
+        },
+      ],
       emptyTicksPerEpoch: { "1": 0 },
     };
-    jest.spyOn(chain, 'getRpcStatus').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getRpcStatus").mockResolvedValue(mockResponse);
 
     const result = await chain.getRpcStatus();
     expect(result).toBe(mockResponse);
@@ -70,7 +79,7 @@ describe("Chain Module", () => {
 
   test("should fetch chain hash", async () => {
     const mockResponse: IChainHash = { hexDigest: "hexDigest" };
-    jest.spyOn(chain, 'getChainHash').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getChainHash").mockResolvedValue(mockResponse);
 
     const result = await chain.getChainHash(19231746);
     expect(result).toBe(mockResponse);
@@ -90,7 +99,7 @@ describe("Chain Module", () => {
           txDigestHex: "txDigestHex",
         },
         quorumDiffPerComputor: {
-          "computor1": {
+          computor1: {
             saltedResourceTestingDigestHex: "saltedResourceTestingDigestHex",
             saltedSpectrumDigestHex: "saltedSpectrumDigestHex",
             saltedUniverseDigestHex: "saltedUniverseDigestHex",
@@ -101,7 +110,7 @@ describe("Chain Module", () => {
         },
       },
     };
-    jest.spyOn(chain, 'getQuorumTickData').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getQuorumTickData").mockResolvedValue(mockResponse);
 
     const result = await chain.getQuorumTickData(19231746);
     expect(result).toBe(mockResponse);
@@ -109,7 +118,7 @@ describe("Chain Module", () => {
 
   test("should fetch store hash", async () => {
     const mockResponse: IChainHash = { hexDigest: "hexDigest" };
-    jest.spyOn(chain, 'getStoreHash').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getStoreHash").mockResolvedValue(mockResponse);
 
     const result = await chain.getStoreHash(19231746);
     expect(result).toBe(mockResponse);
@@ -117,7 +126,7 @@ describe("Chain Module", () => {
 
   test("should perform health check", async () => {
     const mockResponse: IGetHealthCheck = { status: true };
-    jest.spyOn(chain, 'getHealthCheck').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getHealthCheck").mockResolvedValue(mockResponse);
 
     const result = await chain.getHealthCheck();
     expect(result).toBe(mockResponse);
@@ -131,7 +140,7 @@ describe("Chain Module", () => {
         signatureHex: "signatureHex",
       },
     };
-    jest.spyOn(chain, 'getComputors').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getComputors").mockResolvedValue(mockResponse);
 
     const result = await chain.getComputors(1);
     expect(result).toBe(mockResponse);
@@ -146,7 +155,7 @@ describe("Chain Module", () => {
         initialTick: 19231740,
       },
     };
-    jest.spyOn(chain, 'getTickInfo').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getTickInfo").mockResolvedValue(mockResponse);
 
     const result = await chain.getTickInfo();
     expect(result).toBe(mockResponse);
@@ -161,7 +170,7 @@ describe("Chain Module", () => {
         initialTick: 19231740,
       },
     };
-    jest.spyOn(chain, 'getBlockHeight').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getBlockHeight").mockResolvedValue(mockResponse);
 
     const result = await chain.getBlockHeight();
     expect(result).toBe(mockResponse);
@@ -183,7 +192,7 @@ describe("Chain Module", () => {
         burnedQus: "1000",
       },
     };
-    jest.spyOn(chain, 'getLatestStats').mockResolvedValue(mockResponse);
+    jest.spyOn(chain, "getLatestStats").mockResolvedValue(mockResponse);
 
     const result = await chain.getLatestStats();
     expect(result).toBe(mockResponse);

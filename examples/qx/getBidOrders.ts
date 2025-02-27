@@ -13,7 +13,11 @@ async function getAssetBidOrders() {
   const offset = "0";
 
   try {
-    const response = await qubic.qx.getAssetBidOrders(assetName, issuerId, offset);
+    const response = await qubic.qx.getAssetBidOrders(
+      assetName,
+      issuerId,
+      offset,
+    );
     console.log(JSON.stringify(response));
   } catch (error) {
     console.error("Error fetching: ", error);

@@ -26,7 +26,9 @@ export class IdentityService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch owned assets for identity ${identity}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch owned assets for identity ${identity}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -43,7 +45,9 @@ export class IdentityService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch possessed assets for identity ${identity}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch possessed assets for identity ${identity}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -60,7 +64,9 @@ export class IdentityService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch issued assets for identity ${identity}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch issued assets for identity ${identity}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -77,7 +83,9 @@ export class IdentityService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch balance for address ID ${addressID}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch balance for address ID ${addressID}: ${(error as any).message}`,
+      );
     }
   }
 
@@ -94,7 +102,9 @@ export class IdentityService extends QubicBase {
         "GET",
       );
     } catch (error) {
-      throw new Error(`Failed to fetch balance for identity ${Id}: ${(error as any).message}`);
+      throw new Error(
+        `Failed to fetch balance for identity ${Id}: ${(error as any).message}`,
+      );
     }
   }
 

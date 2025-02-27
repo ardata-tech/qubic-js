@@ -1,6 +1,9 @@
 import { QubicProvider } from "../src/provider";
 import { ContractService } from "../src/contract/ContractService";
-import { IPostQuerySmartContractBody, IPostQuerySmartContractResponse } from "../src/types";
+import {
+  IPostQuerySmartContractBody,
+  IPostQuerySmartContractResponse,
+} from "../src/types";
 
 jest.mock("../src/contract/ContractService");
 
@@ -27,7 +30,7 @@ describe("Contract Module", () => {
       responseData: "mock-data",
     };
 
-    jest.spyOn(contract, 'querySmartContract').mockResolvedValue(mockResponse);
+    jest.spyOn(contract, "querySmartContract").mockResolvedValue(mockResponse);
 
     const result = await contract.querySmartContract(requestBody);
     expect(result).not.toBeNull();
