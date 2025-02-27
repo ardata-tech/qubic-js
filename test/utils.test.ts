@@ -65,4 +65,16 @@ describe("UtilityService Module", () => {
     expect(hex).toBeDefined();
     expect(typeof hex).toBe("string");
   });
+
+  test("should convert bytes to string", () => {
+    const bytes = new Uint8Array([72, 101, 108, 108, 111]);
+    const str = UtilityService.bytes32ToString(bytes);
+    expect(typeof str).toBe("string");
+  });
+
+  test("should convert string to bytes", () => {
+    const str = "Hello";
+    const bytes = UtilityService.seedStringToBytes(str);
+    expect(bytes).toBeInstanceOf(Uint8Array);
+  });
 });
