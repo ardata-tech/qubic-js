@@ -23,17 +23,16 @@ export class UtilityService {
         const { randomBytes } = require("crypto");
         return new Uint8Array(randomBytes(size));
       }
-      throw new Error("No cryptographic random source available");
     };
   
     const randomValues = getRandomValues(length);
-  
+    
     for (let i = 0; i < length; i++) {
-      seed += alphabet[randomValues[i] % alphabetLength];
+      seed += alphabet[randomValues![i] % alphabetLength];
     }
   
     return seed;
-  }
+  }  
 
   /**
    * Convert a byte array to a shifted hexadecimal representation.
