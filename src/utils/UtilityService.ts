@@ -1,4 +1,3 @@
-import { randomInt } from "crypto";
 import { QubicConstants } from "../constants";
 
 export class UtilityService {
@@ -9,17 +8,17 @@ export class UtilityService {
    */
   static createSeed(): string {
     const length = 55;
+    const alphabet = QubicConstants.SEED_ALPHABET;
+    const alphabetLength = alphabet.length;
     let seed = "";
-
+  
     for (let i = 0; i < length; i++) {
-      seed +=
-        QubicConstants.SEED_ALPHABET[
-          randomInt(0, QubicConstants.SEED_ALPHABET.length)
-        ];
+      seed += alphabet[Math.floor(Math.random() * alphabetLength)];
     }
-
+  
     return seed;
   }
+  
 
   /**
    * Convert a byte array to a shifted hexadecimal representation.
