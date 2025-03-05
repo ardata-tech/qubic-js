@@ -12,13 +12,24 @@ export class UtilityService {
     const alphabetLength = alphabet.length;
     let seed = "";
   
+    let randomValues: Uint8Array;
+  
+    if (typeof window !== "undefined" && window.crypto) {
+      // Browser environment
+      randomValues = new Uint8Array(length);
+      window.crypto.getRandomValues(randomValues);
+    } else {
+      // Node.js environment
+      const { randomBytes } = require("crypto");
+      randomValues = new Uint8Array(randomBytes(length));
+    }
+  
     for (let i = 0; i < length; i++) {
-      seed += alphabet[Math.floor(Math.random() * alphabetLength)];
+      seed += alphabet[randomValues[i] % alphabetLength];
     }
   
     return seed;
   }
-  
 
   /**
    * Convert a byte array to a shifted hexadecimal representation.
